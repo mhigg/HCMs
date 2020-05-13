@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Battle : MonoBehaviour
+public class ObstacleScene : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
@@ -17,11 +17,19 @@ public class Battle : MonoBehaviour
         if (!isCalledOnce)
         {
             ///ここを任意のボタンにしましょう。
+            ///クリアしたらリザルトへ
             if (Input.GetKeyDown("space"))
             {
                 isCalledOnce = true;
-                FadeManager.Instance.LoadScene("BattleResult", 2.0f);
+                FadeManager.Instance.LoadScene("TimeAttackResult", 2.0f);
                 Debug.Log("Resultへ");
+            }
+            ///ゲームオーバーならゲームオーバー画面へ
+            if (Input.GetKeyDown("enter"))
+            {
+                isCalledOnce = true;
+                FadeManager.Instance.LoadScene("GameOverScene", 2.0f);
+                Debug.Log("GameOverへ");
             }
         }
     }

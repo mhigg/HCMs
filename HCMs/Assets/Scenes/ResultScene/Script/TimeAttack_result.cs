@@ -24,6 +24,12 @@ public class TimeAttack_result : MonoBehaviour
                 Debug.Log("Titleへ");
                 //もしくはメニューに戻る
             }
+            if (Input.GetKeyDown("return"))
+            {
+                isCalledOnce = true;
+                FadeManager.Instance.LoadScene("MenuScene", 2.0f);
+                Debug.Log("Menuへ");
+            }
         }
     }
 }

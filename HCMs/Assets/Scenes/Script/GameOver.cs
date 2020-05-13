@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Battle : MonoBehaviour
+public class GameOver : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
@@ -17,11 +17,19 @@ public class Battle : MonoBehaviour
         if (!isCalledOnce)
         {
             ///ここを任意のボタンにしましょう。
+            ///タイトルに戻る
             if (Input.GetKeyDown("space"))
+            {         
+                isCalledOnce = true;
+                FadeManager.Instance.LoadScene("TitleScene", 2.0f);
+                Debug.Log("Titleへ");             
+            }
+            //もしくはメニューに戻る
+            if (Input.GetKeyDown("return"))
             {
                 isCalledOnce = true;
-                FadeManager.Instance.LoadScene("BattleResult", 2.0f);
-                Debug.Log("Resultへ");
+                FadeManager.Instance.LoadScene("MenuScene", 2.0f);
+                Debug.Log("Menuへ");
             }
         }
     }
