@@ -10,9 +10,20 @@ public class MenuScene : MonoBehaviour
         
     }
 
+    bool isCalledOnce = false;
+
     // Update is called once per frame
     void Update()
     {
-        
+        if (!isCalledOnce)
+        {
+            ///ここを任意のボタンにしましょう。
+            if (Input.GetKeyDown("space"))
+            {
+                isCalledOnce = true;
+                FadeManager.Instance.LoadScene("TimeAttackScene", 2.0f);
+                Debug.Log("TimeAttackへ");
+            }
+        }
     }
 }
