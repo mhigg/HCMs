@@ -10,8 +10,7 @@ public class TimeRanking : MonoBehaviour
     public Text limitText = null;           // 表示数の限界数
     public Text timeText = null;            // ランキングのタイム表示テキスト
 
-    public InputField testScore = null;     // スコア入力用（テスト）
-    public Text testScoreText = null;
+    public InputField inputTime = null;     // タイム入力用
     
     private const string RANKING_KEY = "ranking";   // ランキング呼び出し用キー
     private const int RANK_MAX = 10;                // ランキングの最大保存数
@@ -23,14 +22,13 @@ public class TimeRanking : MonoBehaviour
         rankingLimit = rankingLimit.GetComponent<InputField>();
         limitText = limitText.GetComponent<Text>();
 
-        testScore = testScore.GetComponent<InputField>();
-        testScoreText = testScoreText.GetComponent<Text>();
+        inputTime = inputTime.GetComponent<InputField>();
 
-        // オブジェクトからTextコンポーネントを取得
         timeText = timeText.GetComponent<Text>();
 
         for (int idx = 0; idx < ranking.Length; idx++)
         {
+            // ランキングの初期化
             ranking[idx] = 999.0f;
         }
     }
@@ -40,36 +38,6 @@ public class TimeRanking : MonoBehaviour
         //テキストにinputFieldの内容を反映
         limitText.text = rankingLimit.text;
     }
-
-    // 新しく計測されたタイムをPlayerPrefsに保存
-    public void SetNewTime()
-    {
-        testScoreText.text = testScore.text;
-        float newTime = float.Parse(testScoreText.text);
-        if (ranking.Length > 0)
-        {
-            float tmp = 0.0f;
-            for (int idx = 0; idx < ranking.Length; idx++)
-            {
-                // 降順
-                if (ranking[idx] > newTime)
-                {
-                    // 1つずつ順位をずらしていく
-                    tmp = ranking[idx];
-                    ranking[idx] = newTime;
-                    newTime = tmp;
-                }
-           }
-        }
-        else
-        {
-            ranking[0] = newTime;
-        }
-        // 配列を文字列に変換して PlayerPrefs に格納
-        string ranking_string = string.Join(",", ranking);
-        PlayerPrefs.SetString(RANKING_KEY, ranking_string);
-    }
-
 
     void Update()
     {
@@ -105,6 +73,36 @@ public class TimeRanking : MonoBehaviour
     }
 
     // 新しく計測されたタイムをPlayerPrefsに保存
+    // Textコンポーネントから数値を読み取る
+    public void SetNewTime()
+    {
+        float newTime = float.Parse(inputTime.text);
+        if (ranking.Length > 0)
+        {
+            float tmp = 0.0f;
+            for (int idx = 0; idx < ranking.Length; idx++)
+            {
+                // 降順
+                if (ranking[idx] > newTime)
+                {
+                    // 1つずつ順位をずらしていく
+                    tmp = ranking[idx];
+                    ranking[idx] = newTime;
+                    newTime = tmp;
+                }
+            }
+        }
+        else
+        {
+            ranking[0] = newTime;
+        }
+        // 配列を文字列に変換して PlayerPrefs に格納
+        string ranking_string = string.Join(",", ranking);
+        PlayerPrefs.SetString(RANKING_KEY, ranking_string);
+    }
+
+    // 新しく計測されたタイムをPlayerPrefsに保存
+    // 引数から数値を読み取る
     public void SetNewTime(float newTime)
     {
         if(ranking.Length > 0)
