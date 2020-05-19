@@ -1,23 +1,61 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Video;
-
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 public class MultiMovie : MonoBehaviour
 {
 	public List<VideoClip> videoClipList;
 	public bool loop;
 	[HideInInspector] private List<VideoPlayer> videoPlayerList;
 	[HideInInspector] private int videoIndex = 0;
+	[SerializeField] EventSystem eventSystem;
 	[SerializeField] RenderTexture _texture;
+	Button _timeAtt;
+	Button _battle;
+	Button _obst;
+	GameObject _selectObj;
 
 	void Start()
 	{
+		_timeAtt = GameObject.Find("/Canvas/TimeAttack").GetComponent<Button>();
+		_battle = GameObject.Find("/Canvas/Battle").GetComponent<Button>();
+		_obst = GameObject.Find("/Canvas/Obs").GetComponent<Button>();
+
+		_timeAtt.Select();
 		StartCoroutine(playVideo());    // コルーチンの呼び出し
 	}
 	
 	IEnumerator playVideo(bool firstRun = true)
-	{   // コルーチンの宣言
+	{
+		//あってもなくてもかわらん
+		if (Input.GetMouseButton(0))
+		{
+			try
+			{
+				_selectObj = eventSystem.currentSelectedGameObject.gameObject;
+			}
+			// 例外処理的なやつ
+			catch (NullReferenceException ex)
+			{
+			}
+
+			if (_selectObj == _timeAtt)
+			{
+				videoIndex = 0;
+			}
+			if (_selectObj == _battle)
+			{
+				videoIndex = 1;
+			}
+			if (_selectObj == _obst)
+			{
+				videoIndex = 2;
+			}
+		}
+		// コルーチンの宣言
 		int listLen = videoClipList.Count;
 		if (videoClipList == null || listLen <= 0)
 		{
@@ -34,7 +72,7 @@ public class MultiMovie : MonoBehaviour
 		}
 
 		if (firstRun)
-		{   // 最初に呼び出された時にのみ実行する処理
+		{   // ビデオの設定
 			videoPlayerList = new List<VideoPlayer>();
 			for (int i = 0; i < listLen; i++)
 			{
@@ -68,7 +106,6 @@ public class MultiMovie : MonoBehaviour
 			yield return null;  // 再生中は、ここでコルーチンを中断する。
 
 		videoPlayerList[videoIndex].Stop(); // 動画の時刻を0に戻す。
-		videoIndex++;   // インデックスを進める。
 
 		StartCoroutine(playVideo(false));   // 反復処理中に呼び出された時は、中盤の処理を省く。
 	}
