@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Video;
 
-public class MultiVP : MonoBehaviour
+public class MultiMovie : MonoBehaviour
 {
 	public List<VideoClip> videoClipList;
 	public bool loop;
