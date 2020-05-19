@@ -9,6 +9,7 @@ public class MultiMovie : MonoBehaviour
 	public bool loop;
 	[HideInInspector] private List<VideoPlayer> videoPlayerList;
 	[HideInInspector] private int videoIndex = 0;
+	[SerializeField] RenderTexture _texture;
 
 	void Start()
 	{
@@ -50,9 +51,9 @@ public class MultiMovie : MonoBehaviour
 
 				videoPlayer.isLooping = false;  // trueとすると、次のVideoClipが再生されない。
 
-				videoPlayer.renderMode = VideoRenderMode.MaterialOverride;  // レンダリング方法の設定
-				videoPlayer.targetMaterialRenderer = GetComponent<Renderer>();  // レンダリング先の設定
-
+				videoPlayer.renderMode = VideoRenderMode.RenderTexture;  // レンダリング方法の設定
+				videoPlayer.targetTexture = _texture;  // レンダリング先の設定
+				
 				videoPlayer.audioOutputMode = VideoAudioOutputMode.Direct;  // 音声の出力方法の設定
 			}
 		}
