@@ -110,7 +110,7 @@ public class TimeRanking : MonoBehaviour
             for(int idx = 0; idx < ranking.Length; idx++)
             {
                 // 降順
-                if(ranking[idx] < newTime)
+                if(ranking[idx] > newTime)
                 {
                     // 1つずつ順位をずらしていく
                     tmp = ranking[idx];
