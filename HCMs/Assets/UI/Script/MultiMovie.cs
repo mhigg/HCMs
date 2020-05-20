@@ -26,7 +26,6 @@ public class MultiMovie : MonoBehaviour
 		_obst = GameObject.Find("/Canvas/Obs").GetComponent<Button>();
 
 		_timeAtt.Select();
-		//StartCoroutine(playVideo());    // コルーチンの呼び出し
 	}
 
 	private void Update()
