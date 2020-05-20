@@ -4,15 +4,24 @@ using UnityEngine;
 
 public class TimeSel : MonoBehaviour
 {
-    // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
-    // Update is called once per frame
+    bool isCalledOnce = false;
+
     void Update()
     {
-        
+        if (!isCalledOnce)
+        {
+            ///ここを任意のボタンにしましょう。
+            if (Input.GetKeyDown("space"))
+            {
+                isCalledOnce = true;
+                FadeManager.Instance.LoadScene("TimeAttackScene", 2.0f);
+                Debug.Log("TAへ");
+            }
+        }
     }
 }
