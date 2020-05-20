@@ -6,13 +6,13 @@ using UnityEngine.SceneManagement;
 
 public class TimeAttack : MonoBehaviour
 {
-    public FadeManager fadeManager = null;
+    //public FadeManager fadeManager = null;
     public TimeCount timeCounter = null;
 
     // Start is called before the first frame update
     void Start()
     {
-        fadeManager = fadeManager.GetComponent<FadeManager>();
+        //fadeManager = fadeManager.GetComponent<FadeManager>();
         timeCounter = timeCounter.GetComponent<TimeCount>();
     }
 
@@ -30,7 +30,8 @@ public class TimeAttack : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 isCalledOnce = true;
-                fadeManager.LoadScene("TimeAttackResult", 2.0f);
+                //fadeManager.LoadScene("TimeAttackResult", 2.0f);
+                FadeManager.Instance.LoadScene("TimeAttackResult", 2.0f);
                 Debug.Log("Resultへ");
             }
         }

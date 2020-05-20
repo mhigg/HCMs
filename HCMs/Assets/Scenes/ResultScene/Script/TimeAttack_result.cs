@@ -9,7 +9,9 @@ public class TimeAttack_result : MonoBehaviour
     {
         
     }
+
     bool isCalledOnce = false;
+
     // Update is called once per frame
     void Update()
     {
