@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // ランキングデータの取得
-public class GetRanking : MonoBehaviour
+public class RankingStorage : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
@@ -32,8 +32,25 @@ public class GetRanking : MonoBehaviour
         else
         {
             Debug.Log("ランキングデータなし");
+            for (int idx = 0; idx < DATA_MAX; idx++)
+            {
+                retRanking[idx] = 999.0f;
+            }
         }
 
         return retRanking;
     }
+
+    // ランキングの削除
+    public void DeleteRanking(string KEY)
+    {
+        string _ranking = PlayerPrefs.GetString(KEY);
+        if (_ranking.Length > 0)
+        {
+            PlayerPrefs.DeleteKey(KEY);
+            string ranking_string = string.Join(",", _ranking);
+            PlayerPrefs.SetString(KEY, ranking_string);
+        }
+    }
+
 }

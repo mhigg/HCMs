@@ -6,40 +6,40 @@ using UnityEngine.UI;
 // ランキング表示データ作成・表示
 public class DispRanking : MonoBehaviour
 {
-    public InputField rankingLimit = null;  // ランキング表示数の限界
-    public Text limitText = null;           // 表示数の限界数
+    //public InputField rankingLimit = null;  // ランキング表示数の限界
+    //public Text limitText = null;           // 表示数の限界数
     public Text rankingText = null;         // ランキングのタイム表示テキスト
 
     private const string RANKING_KEY = "ranking";   // ランキング呼び出し用キー
     private const int RANK_MAX = 10;                // ランキングの最大保存数
     private float[] ranking = new float[RANK_MAX];  // ランキング保存用（10個まで）
 
-    public GetRanking getRanking = null;
+    public RankingStorage rankingStorage = null;
 
     void Start()
     {
         //Componentを扱えるようにする
-        rankingLimit = rankingLimit.GetComponent<InputField>();
-        limitText = limitText.GetComponent<Text>();
+        //rankingLimit = rankingLimit.GetComponent<InputField>();
+        //limitText = limitText.GetComponent<Text>();
 
         rankingText = rankingText.GetComponent<Text>();
 
         // ランキングデータを取得し、表示用データに反映する
-        getRanking = getRanking.GetComponent<GetRanking>();
-        ranking = getRanking.GetRankingData(RANKING_KEY, RANK_MAX);
+        rankingStorage = rankingStorage.GetComponent<RankingStorage>();
+        ranking = rankingStorage.GetRankingData(RANKING_KEY, RANK_MAX);
     }
 
     public void InputText()
     {
         //テキストにinputFieldの内容を反映
-        limitText.text = rankingLimit.text;
+        //limitText.text = rankingLimit.text;
     }
 
     void Update()
     {
         string ranking_string = "";  // ランキング表示用
 
-        int limit = int.Parse(limitText.text);
+        int limit = 10/*int.Parse(limitText.text)*/;
         //using System;
         //int limit = 0;
         //Int32.TryParse(limitText.text, out limit);

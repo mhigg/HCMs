@@ -12,24 +12,24 @@ public class TimeRanking : MonoBehaviour
     private const int RANK_MAX = 10;                // ランキングの最大保存数
     private float[] ranking = new float[RANK_MAX];  // ランキング保存用（10個まで）
 
+    public RankingStorage storage = null;           // ランキング保管スクリプト
+
     void Start()
     {
         inputTime = inputTime.GetComponent<InputField>();
 
-        // 仮ランキングデータ初期化
-        // 現状だとTimeAttackSceneに入るたびにオールクリアされる
-        for(int idx = 0; idx < ranking.Length; idx++)
-        {
-            ranking[idx] = 999.0f;
-        }
+        storage = storage.GetComponent<RankingStorage>();
     }
 
     // 新しく計測されたタイムをPlayerPrefsに保存
     // Textコンポーネントから数値を読み取る
+    // Debug用
     public void SetNewTime()
     {
         float newTime = float.Parse(inputTime.text);
-        if (ranking.Length > 0)
+        ranking = storage.GetRankingData(RANKING_KEY, RANK_MAX);
+
+        if (ranking != null)
         {
             Debug.Log("SetNewTime引数なし");
             float tmp = 0.0f;
@@ -81,14 +81,5 @@ public class TimeRanking : MonoBehaviour
         // 配列を文字列に変換して PlayerPrefs に格納
         string ranking_string = string.Join(",", ranking);
         PlayerPrefs.SetString(RANKING_KEY, ranking_string);
-    }
-
-    // ランキングの削除
-    void DeleteRanking()
-    {
-        if (ranking.Length > 0)
-        {
-            PlayerPrefs.DeleteKey(RANKING_KEY);
-        }
     }
 }
