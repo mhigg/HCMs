@@ -12,7 +12,6 @@ public class TimeAttack : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //fadeManager = fadeManager.GetComponent<FadeManager>();
         timeCounter = timeCounter.GetComponent<TimeCount>();
     }
 
@@ -30,7 +29,6 @@ public class TimeAttack : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 isCalledOnce = true;
-                //fadeManager.LoadScene("TimeAttackResult", 2.0f);
                 FadeManager.Instance.LoadScene("TimeAttackResult", 2.0f);
                 Debug.Log("Resultへ");
             }
@@ -42,6 +40,7 @@ public class TimeAttack : MonoBehaviour
             if(Input.GetKeyDown(KeyCode.LeftShift))
             {
                 StartCall = true;
+                FinishCall = false;
                 timeCounter.StartCount();
             }
         }
@@ -52,23 +51,9 @@ public class TimeAttack : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.LeftControl))
             {
                 FinishCall = true;
+                StartCall = false;
                 timeCounter.FinishCount();
             }
         }
     }
-
-    // 保留中
-    // SceneManagerを使う必要あり
-    //private void ResultSceneLoaded(Scene next, LoadSceneMode mode)
-    //{
-    //    // 次のシーンに入ったら実行される処理
-
-    //    var gameManager = GameObject.FindWithTag("TimeCounter").GetComponent<TimeCount>();
-
-    //    // データを渡す処理
-    //    //gameManager.SetTime(100);
-
-    //    // イベントから削除
-    //    SceneManager.sceneLoaded -= ResultSceneLoaded;
-    //}
 }

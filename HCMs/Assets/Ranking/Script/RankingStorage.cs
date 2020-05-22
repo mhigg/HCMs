@@ -32,9 +32,13 @@ public class RankingStorage : MonoBehaviour
         else
         {
             Debug.Log("ランキングデータなし");
+
+            // DeleteRanking呼び出し後など、
+            // 何も値を入れないと返り値として渡す配列の中がすべて0になってしまうので、
+            // 一番大きい数値を入れて初期化しておく
             for (int idx = 0; idx < DATA_MAX; idx++)
             {
-                retRanking[idx] = 999.0f;
+                retRanking[idx] = 1000.0f;
             }
         }
 
@@ -42,14 +46,14 @@ public class RankingStorage : MonoBehaviour
     }
 
     // ランキングの削除
+    // @KEY string型：削除するランキングのキー
     public void DeleteRanking(string KEY)
     {
         string _ranking = PlayerPrefs.GetString(KEY);
         if (_ranking.Length > 0)
         {
+            Debug.Log("ランキング削除");
             PlayerPrefs.DeleteKey(KEY);
-            string ranking_string = string.Join(",", _ranking);
-            PlayerPrefs.SetString(KEY, ranking_string);
         }
     }
 

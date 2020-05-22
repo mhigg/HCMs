@@ -22,7 +22,7 @@ public class TimeRanking : MonoBehaviour
     }
 
     // 新しく計測されたタイムをPlayerPrefsに保存
-    // Textコンポーネントから数値を読み取る
+    // Textコンポーネントから数値を読み取る(手入力)
     // Debug用
     public void SetNewTime()
     {
@@ -59,8 +59,12 @@ public class TimeRanking : MonoBehaviour
     // 引数から数値を読み取る
     public void SetNewTime(float newTime)
     {
-        if (ranking.Length > 0)
+        ranking = storage.GetRankingData(RANKING_KEY, RANK_MAX);
+
+        if (ranking != null)
         {
+            Debug.Log("SetNewTime引数あり");
+
             float tmp = 0.0f;
             for (int idx = 0; idx < ranking.Length; idx++)
             {
