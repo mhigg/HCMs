@@ -12,15 +12,15 @@ public class DispRanking : MonoBehaviour
     private const int RANK_MAX = 10;                // ランキングの最大保存数
     private float[] ranking = new float[RANK_MAX];  // ランキング保存用（10個まで）
 
-    public RankingStorage rankingStorage = null;
+    public DataStorage rankingStorage = null;       // 表示用ランキングの取得用
 
     void Start()
     {
         rankingText = rankingText.GetComponent<Text>();
 
         // ランキングデータを取得し、表示用データに反映する
-        rankingStorage = rankingStorage.GetComponent<RankingStorage>();
-        ranking = rankingStorage.GetRankingData(RANKING_KEY, RANK_MAX);
+        rankingStorage = rankingStorage.GetComponent<DataStorage>();
+        ranking = rankingStorage.GetData(RANKING_KEY, RANK_MAX);
     }
 
     public void InputText()

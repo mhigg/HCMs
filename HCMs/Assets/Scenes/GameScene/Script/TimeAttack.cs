@@ -20,6 +20,7 @@ public class TimeAttack : MonoBehaviour
     bool StartCall  = false;     // StartCountテスト用
     bool FinishCall = false;    // FinishCountテスト用
 
+    int rapCnt = 0;
     // Update is called once per frame
     void Update()
     {
@@ -50,9 +51,17 @@ public class TimeAttack : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.LeftControl))
             {
-                FinishCall = true;
-                StartCall = false;
-                timeCounter.FinishCount();
+                if(rapCnt < 3)
+                {
+                    rapCnt++;
+                    timeCounter.RapCount();
+                }
+                else
+                {
+                    FinishCall = true;
+                    StartCall = false;
+                    timeCounter.FinishCount();
+                }
             }
         }
     }

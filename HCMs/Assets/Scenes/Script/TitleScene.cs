@@ -4,14 +4,15 @@ using UnityEngine;
 
 public class TitleScene : MonoBehaviour
 {
+    public DataStorage rankingStorage = null;
 
     void Start()
     {
-        
+        rankingStorage = rankingStorage.GetComponent<DataStorage>();
     }
 
     bool isCalledOnce = false;
-
+    bool isDeleteOnce = false;
     void Update()
     {
         if (!isCalledOnce)
@@ -24,5 +25,17 @@ public class TitleScene : MonoBehaviour
                 Debug.Log("Menuへ");
             }
         }
+
+        if (!isDeleteOnce)
+        {
+            ///ここを任意のボタンにしましょう。
+            if (Input.GetKeyDown(KeyCode.F1))
+            {
+                isDeleteOnce = true;
+                rankingStorage.DeleteData("ranking");
+                Debug.Log("デリート");
+            }
+        }
+
     }
 }

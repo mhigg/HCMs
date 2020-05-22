@@ -12,7 +12,8 @@ public class TimeCount : MonoBehaviour
     public TimeRanking timeRanking = null;
 
     private float _timeCount = 0.0f;    // タイムカウント用変数
-    private bool _endFlag = true;      // カウント停止中true カウント中false
+    private float _rapTimeCount = 0.0f; // ラップタイムカウント用変数
+    private bool _endFlag = true;       // カウント停止中true カウント中false
 
     // Start is called before the first frame update
     void Start()
@@ -40,6 +41,14 @@ public class TimeCount : MonoBehaviour
         Debug.Log("カウントスタート");
         _endFlag = false;
         _timeCount = 0.0f;
+    }
+
+    // ラップタイムを保存する
+    public void RapCount()
+    {
+        Debug.Log("ラップタイム");
+        timeRanking.SetRapTime(_rapTimeCount);
+        _rapTimeCount = 0.0f;
     }
 
     // カウントを停止する
