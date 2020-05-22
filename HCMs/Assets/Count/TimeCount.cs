@@ -13,7 +13,6 @@ public class TimeCount : MonoBehaviour
 
     private float _timeCount = 0.0f;    // タイムカウント用変数
     private bool _endFlag = true;      // カウント停止中true カウント中false
-    private string TIMEATTACK_TIME_KEY = "time_attack";
 
     // Start is called before the first frame update
     void Start()
