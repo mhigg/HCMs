@@ -6,8 +6,6 @@ using UnityEngine.UI;
 // ランキング表示データ作成・表示
 public class DispRanking : MonoBehaviour
 {
-    //public InputField rankingLimit = null;  // ランキング表示数の限界
-    //public Text limitText = null;           // 表示数の限界数
     public Text rankingText = null;         // ランキングのタイム表示テキスト
 
     private const string RANKING_KEY = "ranking";   // ランキング呼び出し用キー
@@ -18,10 +16,6 @@ public class DispRanking : MonoBehaviour
 
     void Start()
     {
-        //Componentを扱えるようにする
-        //rankingLimit = rankingLimit.GetComponent<InputField>();
-        //limitText = limitText.GetComponent<Text>();
-
         rankingText = rankingText.GetComponent<Text>();
 
         // ランキングデータを取得し、表示用データに反映する
@@ -31,22 +25,17 @@ public class DispRanking : MonoBehaviour
 
     public void InputText()
     {
-        //テキストにinputFieldの内容を反映
-        //limitText.text = rankingLimit.text;
     }
 
     void Update()
     {
         string ranking_string = "";  // ランキング表示用
 
-        int limit = 10/*int.Parse(limitText.text)*/;
-        //using System;
-        //int limit = 0;
-        //Int32.TryParse(limitText.text, out limit);
-
-        for (int idx = 0; idx < limit; idx++)
+        string time = "";
+        for (int idx = 0; idx < RANK_MAX; idx++)
         {
-            ranking_string = ranking_string + (idx + 1) + "位 " + ranking[idx] + "秒\n";
+            time = (ranking[idx] < 1000.0f ? ranking[idx].ToString("f3") + "秒\n" : "―――\n");
+            ranking_string = ranking_string + (idx + 1) + "位 " + time;
         }
 
         // テキストの表示を入れ替える

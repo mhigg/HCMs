@@ -8,6 +8,9 @@ public class TimeCount : MonoBehaviour
     // タイム表示用テキストコンポーネント
     public Text timeText = null;
 
+    // タイムを保存するためのコンポーネント
+    public TimeRanking timeRanking = null;
+
     private float _timeCount = 0.0f;    // タイムカウント用変数
     private bool _endFlag = true;      // カウント停止中true カウント中false
     private string TIMEATTACK_TIME_KEY = "time_attack";
@@ -16,6 +19,7 @@ public class TimeCount : MonoBehaviour
     void Start()
     {
         timeText = timeText.GetComponent<Text>();
+        timeRanking = timeRanking.GetComponent<TimeRanking>();
     }
 
     // Update is called once per frame
@@ -26,7 +30,7 @@ public class TimeCount : MonoBehaviour
             // 毎フレームごとにタイム加算
             // 現在 確認用にTime.timeを使用中
             // 後からtimeCountを使用したタイム計算に変更
-            timeText.text = (Time.time >= 0 ? Time.time.ToString("f3") : "0.000");
+            timeText.text = (_timeCount >= 0 ? _timeCount.ToString("f3") : "0.000");
             _timeCount += Time.deltaTime;
         }
     }
@@ -34,6 +38,7 @@ public class TimeCount : MonoBehaviour
     // カウントを開始する
     public void StartCount()
     {
+        Debug.Log("カウントスタート");
         _endFlag = false;
         _timeCount = 0.0f;
     }
@@ -41,8 +46,8 @@ public class TimeCount : MonoBehaviour
     // カウントを停止する
     public void FinishCount()
     {
+        Debug.Log("カウントストップ");
         _endFlag = true;
-        PlayerPrefs.SetFloat(TIMEATTACK_TIME_KEY, _timeCount);
-        PlayerPrefs.Save();
+        timeRanking.SetNewTime(_timeCount);
     }
 }
