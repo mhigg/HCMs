@@ -15,7 +15,8 @@ public class DataStorage : MonoBehaviour
     // float型配列
     // @KEY string型：データ読み出しのキー
     // @DATA_MAX int型：データを保存する配列の最大サイズ
-    public float[] GetData(string KEY, int DATA_MAX)
+    // @defData float型：デフォルトで(初期値として)入れておく値
+    public float[] GetData(string KEY, int DATA_MAX, float defData)
     {
         string data = PlayerPrefs.GetString(KEY);
         float[] retData = new float[DATA_MAX];
@@ -38,7 +39,7 @@ public class DataStorage : MonoBehaviour
             // 一番大きい数値を入れて初期化しておく
             for (int idx = 0; idx < DATA_MAX; idx++)
             {
-                retData[idx] = 1000.0f;
+                retData[idx] = defData;
             }
         }
 
@@ -49,11 +50,18 @@ public class DataStorage : MonoBehaviour
     // @KEY string型：削除するデータのキー
     public void DeleteData(string KEY)
     {
-        string data = PlayerPrefs.GetString(KEY);
-        if (data.Length > 0)
+        if(PlayerPrefs.HasKey(KEY))
         {
-            Debug.Log("データ削除");
-            PlayerPrefs.DeleteKey(KEY);
+            string data = PlayerPrefs.GetString(KEY);
+            if (data.Length > 0)
+            {
+                Debug.Log("データ削除");
+                PlayerPrefs.DeleteKey(KEY);
+            }
+        }
+        else
+        {
+            Debug.Log("キーが存在しません");
         }
     }
 

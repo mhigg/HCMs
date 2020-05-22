@@ -32,6 +32,7 @@ public class TimeCount : MonoBehaviour
             // 後からtimeCountを使用したタイム計算に変更
             timeText.text = (_timeCount >= 0 ? _timeCount.ToString("f3") : "0.000");
             _timeCount += Time.deltaTime;
+            _rapTimeCount += Time.deltaTime;
         }
     }
     

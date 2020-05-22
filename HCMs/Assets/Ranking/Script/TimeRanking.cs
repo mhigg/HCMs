@@ -10,11 +10,9 @@ public class TimeRanking : MonoBehaviour
 
     private const string RANKING_KEY = "ranking";   // ランキング呼び出し用キー
     private const int RANK_MAX = 10;                // ランキングの最大保存数
-//    private float[] ranking = new float[RANK_MAX];  // ランキング保存用
 
     private const string RAPTIME_KEY = "raptime";   // ラップタイム呼び出し用キー
     private const int RAP_MAX = 3;                  // ラップタイムの最大保存数
-//    private float[] rapTime = new float[RAP_MAX];   // ラップタイム保存用
 
     public DataStorage storage = null;           // ランキング保管スクリプト
 
@@ -32,7 +30,7 @@ public class TimeRanking : MonoBehaviour
     {
         Debug.Log("SetNewTime引数なし");
         float newTime = float.Parse(inputTime.text);
-        float[] ranking = SaveAndSortData(RANKING_KEY, RANK_MAX, newTime);
+        float[] ranking = AddAndSortRanking(RANKING_KEY, RANK_MAX, newTime);
 
         // 配列を文字列に変換して PlayerPrefs に格納
         string ranking_string = string.Join(",", ranking);
@@ -44,11 +42,40 @@ public class TimeRanking : MonoBehaviour
     public void SetNewTime(float newTime)
     {
         Debug.Log("SetNewTime引数あり");
-        float[] ranking = SaveAndSortData(RANKING_KEY, RANK_MAX, newTime);
+        float[] ranking = AddAndSortRanking(RANKING_KEY, RANK_MAX, newTime);
 
         // 配列を文字列に変換して PlayerPrefs に格納
         string ranking_string = string.Join(",", ranking);
         PlayerPrefs.SetString(RANKING_KEY, ranking_string);
+    }
+
+    // @KEY string:読み出すランキングのキー
+    // @DATA_MAX int:読み出すデータ数（配列の最大値）
+    // @newTime float:新しく追加するタイム
+    private float[] AddAndSortRanking(string KEY, int DATA_MAX, float newTime)
+    {
+        float[] retRanking = storage.GetData(KEY, DATA_MAX, 1000.0f);
+
+        if (retRanking != null)
+        {
+            float tmp = 0.0f;
+            for (int idx = 0; idx < retRanking.Length; idx++)
+            {
+                // 降順
+                if (retRanking[idx] > newTime)
+                {
+                    // 1つずつ順位をずらしていく
+                    tmp = retRanking[idx];
+                    retRanking[idx] = newTime;
+                    newTime = tmp;
+                }
+            }
+        }
+        else
+        {
+            retRanking[0] = newTime;
+        }
+        return retRanking;
     }
 
     // 新しく計測されたラップタイムをPlayerPrefsに保存
@@ -58,7 +85,7 @@ public class TimeRanking : MonoBehaviour
     {
         Debug.Log("SetRapTime引数なし");
         float newRapTime = float.Parse(inputTime.text);
-        float[] rapTime = SaveAndSortData(RAPTIME_KEY, RAP_MAX, newRapTime);
+        float[] rapTime = AddRapTime(RAPTIME_KEY, RAP_MAX, newRapTime);
 
         // 配列を文字列に変換して PlayerPrefs に格納
         string ranking_string = string.Join(",", rapTime);
@@ -71,7 +98,7 @@ public class TimeRanking : MonoBehaviour
     public void SetRapTime(float newRapTime)
     {
         Debug.Log("SetRapTime引数あり");
-        float[] rapTime = SaveAndSortData(RAPTIME_KEY, RAP_MAX, newRapTime);
+        float[] rapTime = AddRapTime(RAPTIME_KEY, RAP_MAX, newRapTime);
 
         // 配列を文字列に変換して PlayerPrefs に格納
         string ranking_string = string.Join(",", rapTime);
@@ -80,30 +107,21 @@ public class TimeRanking : MonoBehaviour
 
     // @KEY string:読み出すデータのキー
     // @DATA_MAX int:読み出すデータ数（配列の最大値）
-    // @newData float:新しく追加するデータ
-    private float[] SaveAndSortData(string KEY, int DATA_MAX, float newData)
+    // @newTime float:新しく追加するデータ
+    private float[] AddRapTime(string KEY, int DATA_MAX, float newTime)
     {
-        float[] retData = storage.GetData(KEY, DATA_MAX);
+        float[] retRapTime = storage.GetData(KEY, DATA_MAX, 0.0f);
 
-        if (retData != null)
+        for (int idx = 0; idx < retRapTime.Length; idx++)
         {
-            float tmp = 0.0f;
-            for (int idx = 0; idx < retData.Length; idx++)
+            if (retRapTime[idx] == 0.0f)
             {
-                // 降順
-                if (retData[idx] > newData)
-                {
-                    // 1つずつ順位をずらしていく
-                    tmp = retData[idx];
-                    retData[idx] = newData;
-                    newData = tmp;
-                }
+                // データが無かったらラップタイムを入れ、breakする
+                retRapTime[idx] = newTime;
+                break;
             }
         }
-        else
-        {
-            retData[0] = newData;
-        }
-        return retData;
+        return retRapTime;
     }
+
 }

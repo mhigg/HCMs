@@ -20,7 +20,7 @@ public class DispRanking : MonoBehaviour
 
         // ランキングデータを取得し、表示用データに反映する
         rankingStorage = rankingStorage.GetComponent<DataStorage>();
-        ranking = rankingStorage.GetData(RANKING_KEY, RANK_MAX);
+        ranking = rankingStorage.GetData(RANKING_KEY, RANK_MAX, 1000.0f);
     }
 
     public void InputText()
@@ -31,7 +31,7 @@ public class DispRanking : MonoBehaviour
     {
         string ranking_string = "";  // ランキング表示用
 
-        string time = "";
+        string time;
         for (int idx = 0; idx < RANK_MAX; idx++)
         {
             time = (ranking[idx] < 1000.0f ? ranking[idx].ToString("f3") + "秒\n" : "―――\n");
