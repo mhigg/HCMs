@@ -13,6 +13,8 @@ public class TitleScene : MonoBehaviour
 
     bool isCalledOnce = false;
     bool isDeleteOnce = false;
+    bool isDeleteRapOnce = false;
+
     void Update()
     {
         if (!isCalledOnce)
@@ -33,6 +35,17 @@ public class TitleScene : MonoBehaviour
             {
                 isDeleteOnce = true;
                 rankingStorage.DeleteData("ranking");
+                Debug.Log("デリート");
+            }
+        }
+
+        if (!isDeleteRapOnce)
+        {
+            ///ここを任意のボタンにしましょう。
+            if (Input.GetKeyDown(KeyCode.F2))
+            {
+                isDeleteOnce = true;
+                rankingStorage.DeleteData("raprank");
                 Debug.Log("デリート");
             }
         }

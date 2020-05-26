@@ -57,6 +57,6 @@ public class TimeCount : MonoBehaviour
     {
         Debug.Log("カウントストップ");
         _endFlag = true;
-        timeRanking.SetNewTime(_timeCount);
+        timeRanking.SetGoalTime();
     }
 }

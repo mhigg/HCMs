@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class TimeRanking : MonoBehaviour
 {
     public InputField inputTime = null;             // タイム入力用(デバッグ用)
+    public InputField inputRap = null;              // ラップタイム入力用(デバッグ用)
 
     private const string RANKING_KEY = "ranking";   // ランキング呼び出し用キー
     private const int RANK_MAX = 10;                // ランキングの最大保存数
@@ -14,13 +15,59 @@ public class TimeRanking : MonoBehaviour
     private const string RAPTIME_KEY = "raptime";   // ラップタイム呼び出し用キー
     private const int RAP_MAX = 3;                  // ラップタイムの最大保存数
 
-    public DataStorage storage = null;           // ランキング保管スクリプト
+    private const string RAP_RANK_KEY = "raprank";          // ラップタイムのランキング呼び出しキー
+    private const int RAP_RANK_MAX = RANK_MAX * RAP_MAX;    // ラップタイムのランキングの最大保存数
+
+    public DataStorage storage = null;              // ランキング保管スクリプト
 
     void Start()
     {
         inputTime = inputTime.GetComponent<InputField>();
+        inputRap = inputRap.GetComponent<InputField>();
 
         storage = storage.GetComponent<DataStorage>();
+    }
+
+    // 新しく計測されたラップタイムをPlayerPrefsに保存
+    // Textコンポーネントから数値を読み取る(手入力)
+    // Debug用
+    public void SetRapTime()
+    {
+        Debug.Log("SetRapTime引数なし");
+        float newRapTime = float.Parse(inputRap.text);
+        AddRapTime(RAPTIME_KEY, RAP_MAX, newRapTime);
+    }
+
+    // 新しく計測されたラップタイムをPlayerPrefsに保存
+    // 引数から数値を読み取る
+    public void SetRapTime(float newRapTime)
+    {
+        Debug.Log("SetRapTime引数あり");
+        AddRapTime(RAPTIME_KEY, RAP_MAX, newRapTime);
+    }
+
+    // ラップタイムを集計していく関数
+    // １ラップ終了ごとに呼び出す
+    // @KEY string:読み出すデータのキー
+    // @DATA_MAX int:読み出すデータ数（配列の最大値）
+    // @newTime float:新しく追加するデータ
+    private void AddRapTime(string KEY, int DATA_MAX, float newTime)
+    {
+        float[] rapTime = storage.GetData(KEY, DATA_MAX, 0.0f);
+
+        for (int idx = 0; idx < rapTime.Length; idx++)
+        {
+            if (rapTime[idx] == 0.0f)
+            {
+                // データが無かったらラップタイムを入れ、breakする
+                rapTime[idx] = newTime;
+                break;
+            }
+        }
+
+        // 配列を文字列に変換して PlayerPrefs に格納
+        string raptime_string = string.Join(",", rapTime);
+        PlayerPrefs.SetString(RAPTIME_KEY, raptime_string);
     }
 
     // 新しく計測されたタイムをPlayerPrefsに保存
@@ -30,98 +77,95 @@ public class TimeRanking : MonoBehaviour
     {
         Debug.Log("SetNewTime引数なし");
         float newTime = float.Parse(inputTime.text);
-        float[] ranking = AddAndSortRanking(RANKING_KEY, RANK_MAX, newTime);
-
-        // 配列を文字列に変換して PlayerPrefs に格納
-        string ranking_string = string.Join(",", ranking);
-        PlayerPrefs.SetString(RANKING_KEY, ranking_string);
+        AddAndSortGoalTimeRanking(RANKING_KEY, RANK_MAX, newTime);
     }
 
-    // 新しく計測されたタイムをPlayerPrefsに保存
-    // 引数から数値を読み取る
-    public void SetNewTime(float newTime)
+    // ラップタイムとゴールタイムを集計しランキングに保存する
+    // レース終了時に呼び出す
+    public void SetGoalTime()
     {
-        Debug.Log("SetNewTime引数あり");
-        float[] ranking = AddAndSortRanking(RANKING_KEY, RANK_MAX, newTime);
+        Debug.Log("SetGoalTime");
+        float[] rapTime = storage.GetData(RAPTIME_KEY, RAP_MAX, 0.0f);
+        float goalTime = rapTime[0] + rapTime[1] + rapTime[2];
 
-        // 配列を文字列に変換して PlayerPrefs に格納
-        string ranking_string = string.Join(",", ranking);
-        PlayerPrefs.SetString(RANKING_KEY, ranking_string);
+        AddAndSortRapTimeRanking(RAP_RANK_KEY, RAP_RANK_MAX, rapTime);
+        AddAndSortGoalTimeRanking(RANKING_KEY, RANK_MAX, goalTime);
+
+        storage.DeleteData(RAPTIME_KEY);
     }
 
+    // ゴールタイムを保存しランキングに反映する関数
     // @KEY string:読み出すランキングのキー
     // @DATA_MAX int:読み出すデータ数（配列の最大値）
     // @newTime float:新しく追加するタイム
-    private float[] AddAndSortRanking(string KEY, int DATA_MAX, float newTime)
+    private void AddAndSortGoalTimeRanking(string KEY, int DATA_MAX, float newTime)
     {
-        float[] retRanking = storage.GetData(KEY, DATA_MAX, 1000.0f);
+        float[] ranking = storage.GetData(KEY, DATA_MAX, 1000.0f);
 
-        if (retRanking != null)
+        if (ranking != null)
         {
-            float tmp = 0.0f;
-            for (int idx = 0; idx < retRanking.Length; idx++)
+            float tmp;
+            for (int idx = 0; idx < ranking.Length; idx++)
             {
                 // 降順
-                if (retRanking[idx] > newTime)
+                if (ranking[idx] > newTime)
                 {
                     // 1つずつ順位をずらしていく
-                    tmp = retRanking[idx];
-                    retRanking[idx] = newTime;
+                    tmp = ranking[idx];
+                    ranking[idx] = newTime;
                     newTime = tmp;
                 }
             }
         }
         else
         {
-            retRanking[0] = newTime;
+            ranking[0] = newTime;
         }
-        return retRanking;
-    }
-
-    // 新しく計測されたラップタイムをPlayerPrefsに保存
-    // Textコンポーネントから数値を読み取る(手入力)
-    // Debug用
-    public void SetRapTime()
-    {
-        Debug.Log("SetRapTime引数なし");
-        float newRapTime = float.Parse(inputTime.text);
-        float[] rapTime = AddRapTime(RAPTIME_KEY, RAP_MAX, newRapTime);
 
         // 配列を文字列に変換して PlayerPrefs に格納
-        string ranking_string = string.Join(",", rapTime);
-        PlayerPrefs.SetString(RAPTIME_KEY, ranking_string);
+        string ranking_string = string.Join(",", ranking);
+        PlayerPrefs.SetString(KEY, ranking_string);
     }
 
-
-    // 新しく計測されたラップタイムをPlayerPrefsに保存
-    // 引数から数値を読み取る
-    public void SetRapTime(float newRapTime)
-    {
-        Debug.Log("SetRapTime引数あり");
-        float[] rapTime = AddRapTime(RAPTIME_KEY, RAP_MAX, newRapTime);
-
-        // 配列を文字列に変換して PlayerPrefs に格納
-        string ranking_string = string.Join(",", rapTime);
-        PlayerPrefs.SetString(RAPTIME_KEY, ranking_string);
-    }
-
-    // @KEY string:読み出すデータのキー
+    // ３周分のラップタイムを保存しランキングに反映する関数
+    // @KEY string:読み出すランキングのキー
     // @DATA_MAX int:読み出すデータ数（配列の最大値）
-    // @newTime float:新しく追加するデータ
-    private float[] AddRapTime(string KEY, int DATA_MAX, float newTime)
+    // @newTime float[]:新しく追加するタイム(３周分の配列)
+    private void AddAndSortRapTimeRanking(string KEY, int DATA_MAX, float[] newTime)
     {
-        float[] retRapTime = storage.GetData(KEY, DATA_MAX, 0.0f);
+        float[] ranking = storage.GetData(KEY, DATA_MAX, 1000.0f);
 
-        for (int idx = 0; idx < retRapTime.Length; idx++)
+        if (ranking != null)
         {
-            if (retRapTime[idx] == 0.0f)
+            float tmp;
+            for (int idx = 0; idx < ranking.Length; idx += 3)
             {
-                // データが無かったらラップタイムを入れ、breakする
-                retRapTime[idx] = newTime;
-                break;
+                float retTime = ranking[idx] + ranking[idx + 1] + ranking[idx + 2];
+                float goalTime = newTime[0] + newTime[1] + newTime[2];
+                // 降順
+                if (retTime > goalTime)
+                {
+                    // １つずつ順位をずらしていく
+                    // 最大ラップ数ごとに１つとして扱う
+                    for(int sortIdx = 0; sortIdx < RAP_MAX; sortIdx++)
+                    {
+                        tmp = ranking[idx + sortIdx];
+                        ranking[idx + sortIdx] = newTime[sortIdx];
+                        newTime[sortIdx] = tmp;
+                    }
+                }
             }
         }
-        return retRapTime;
-    }
+        else
+        {
+            for (int idx = 0; idx < RAP_MAX; idx++)
+            {
+                ranking[idx] = newTime[idx];
+            }
+        }
 
+        // 配列を文字列に変換して PlayerPrefs に格納
+        string rapRanking_string = string.Join(",", ranking);
+        PlayerPrefs.SetString(KEY, rapRanking_string);
+    }
 }

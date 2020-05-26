@@ -441,7 +441,7 @@ MonoBehaviour:
     m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 0
-    m_HorizontalOverflow: 1
+    m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 
@@ -719,7 +719,7 @@ GameObject:
   - component: {fileID: 1077240893}
   - component: {fileID: 1077240892}
   m_Layer: 5
-  m_Name: InputField
+  m_Name: InputRap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -788,13 +788,13 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1077240893}
   m_TextComponent: {fileID: 428461382}
   m_Placeholder: {fileID: 258830681}
-  m_ContentType: 2
+  m_ContentType: 0
   m_InputType: 0
   m_AsteriskChar: 42
-  m_KeyboardType: 4
-  m_LineType: 0
+  m_KeyboardType: 0
+  m_LineType: 2
   m_HideMobileInput: 0
-  m_CharacterValidation: 1
+  m_CharacterValidation: 0
   m_CharacterLimit: 0
   m_OnEndEdit:
     m_PersistentCalls:
@@ -1014,7 +1014,7 @@ GameObject:
   - component: {fileID: 1463145870}
   - component: {fileID: 1463145869}
   m_Layer: 5
-  m_Name: InputField
+  m_Name: InputTime
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1083,13 +1083,13 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1463145870}
   m_TextComponent: {fileID: 1646642487}
   m_Placeholder: {fileID: 117014805}
-  m_ContentType: 2
+  m_ContentType: 0
   m_InputType: 0
   m_AsteriskChar: 42
-  m_KeyboardType: 4
-  m_LineType: 0
+  m_KeyboardType: 0
+  m_LineType: 2
   m_HideMobileInput: 0
-  m_CharacterValidation: 1
+  m_CharacterValidation: 0
   m_CharacterLimit: 0
   m_OnEndEdit:
     m_PersistentCalls:
@@ -1272,6 +1272,11 @@ PrefabInstance:
       propertyPath: storage
       value: 
       objectReference: {fileID: 718808927}
+    - target: {fileID: 233494385657830652, guid: 62bfd892fceeae047ba6f39fbe4590f5,
+        type: 3}
+      propertyPath: inputRap
+      value: 
+      objectReference: {fileID: 1077240892}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 62bfd892fceeae047ba6f39fbe4590f5, type: 3}
 --- !u!114 &1537658595 stripped
@@ -1351,7 +1356,7 @@ MonoBehaviour:
     m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 0
-    m_HorizontalOverflow: 1
+    m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 

@@ -42,7 +42,7 @@ public class TimeAttack : MonoBehaviour
             {
                 Debug.Log("レーススタート");
                 StartCall = true;
-                FinishCall = false;
+//                FinishCall = false; // デバッグ用
                 timeCounter.StartCount();
             }
         }
@@ -52,18 +52,15 @@ public class TimeAttack : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.LeftControl))
             {
-                if(rapCnt < 3)
-                {
-                    Debug.Log("ラップタイム");
-                    rapCnt++;
-                    timeCounter.RapCount();
-                }
-                else
+                Debug.Log("ラップタイム");
+                rapCnt++;
+                timeCounter.RapCount();
+                if (!(rapCnt <= 3))
                 {
                     Debug.Log("ゴール");
-                    rapCnt = 1;
+//                    rapCnt = 1; // デバッグ用
                     FinishCall = true;
-                    StartCall = false;
+//                    StartCall = false; // デバッグ用
                     timeCounter.FinishCount();
                 }
             }
