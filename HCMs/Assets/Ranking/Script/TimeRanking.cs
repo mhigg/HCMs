@@ -9,7 +9,9 @@ public class TimeRanking : MonoBehaviour
     public InputField inputTime = null;             // タイム入力用(デバッグ用)
     public InputField inputRap = null;              // ラップタイム入力用(デバッグ用)
 
-    private const string RANKING_KEY = "ranking";   // ランキング呼び出し用キー
+    private int rapCnt = 1;                         // デバッグ用ラップカウント
+
+    private const string RANKING_KEY = "timeAttack";   // ランキング呼び出し用キー
     private const int RANK_MAX = 10;                // ランキングの最大保存数
 
     private const string RAPTIME_KEY = "raptime";   // ラップタイム呼び出し用キー
@@ -25,6 +27,8 @@ public class TimeRanking : MonoBehaviour
         inputTime = inputTime.GetComponent<InputField>();
         inputRap = inputRap.GetComponent<InputField>();
 
+        rapCnt = 1;
+
         storage = storage.GetComponent<DataStorage>();
     }
 
@@ -34,8 +38,13 @@ public class TimeRanking : MonoBehaviour
     public void SetRapTime()
     {
         Debug.Log("SetRapTime引数なし");
+        rapCnt++;
         float newRapTime = float.Parse(inputRap.text);
         AddRapTime(RAPTIME_KEY, RAP_MAX, newRapTime);
+        if (!(rapCnt <= RAP_MAX))
+        {
+            SetGoalTime();
+        }
     }
 
     // 新しく計測されたラップタイムをPlayerPrefsに保存
@@ -67,7 +76,7 @@ public class TimeRanking : MonoBehaviour
 
         // 配列を文字列に変換して PlayerPrefs に格納
         string raptime_string = string.Join(",", rapTime);
-        PlayerPrefs.SetString(RAPTIME_KEY, raptime_string);
+        PlayerPrefs.SetString(KEY, raptime_string);
     }
 
     // 新しく計測されたタイムをPlayerPrefsに保存
@@ -86,7 +95,11 @@ public class TimeRanking : MonoBehaviour
     {
         Debug.Log("SetGoalTime");
         float[] rapTime = storage.GetData(RAPTIME_KEY, RAP_MAX, 0.0f);
-        float goalTime = rapTime[0] + rapTime[1] + rapTime[2];
+        float goalTime = 0.0f;
+        for (int idx = 0; idx < RAP_MAX; idx++)
+        {
+            goalTime += rapTime[idx];
+        }
 
         AddAndSortRapTimeRanking(RAP_RANK_KEY, RAP_RANK_MAX, rapTime);
         AddAndSortGoalTimeRanking(RANKING_KEY, RANK_MAX, goalTime);
@@ -127,10 +140,10 @@ public class TimeRanking : MonoBehaviour
         PlayerPrefs.SetString(KEY, ranking_string);
     }
 
-    // ３周分のラップタイムを保存しランキングに反映する関数
+    // 周回数分のラップタイムを保存しランキングに反映する関数
     // @KEY string:読み出すランキングのキー
     // @DATA_MAX int:読み出すデータ数（配列の最大値）
-    // @newTime float[]:新しく追加するタイム(３周分の配列)
+    // @newTime float[]:新しく追加するタイム(周回数分の配列)
     private void AddAndSortRapTimeRanking(string KEY, int DATA_MAX, float[] newTime)
     {
         float[] ranking = storage.GetData(KEY, DATA_MAX, 1000.0f);
@@ -138,10 +151,16 @@ public class TimeRanking : MonoBehaviour
         if (ranking != null)
         {
             float tmp;
-            for (int idx = 0; idx < ranking.Length; idx += 3)
+            for (int idx = 0; idx < ranking.Length; idx += RAP_MAX)
             {
-                float retTime = ranking[idx] + ranking[idx + 1] + ranking[idx + 2];
-                float goalTime = newTime[0] + newTime[1] + newTime[2];
+                float retTime = 0.0f;
+                float goalTime = 0.0f;
+                for (int sumIdx = 0; sumIdx < RAP_MAX; sumIdx++)
+                {
+                    retTime += ranking[idx + sumIdx];
+                    goalTime += newTime[sumIdx];
+                }
+                
                 // 降順
                 if (retTime > goalTime)
                 {

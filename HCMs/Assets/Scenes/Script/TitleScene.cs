@@ -34,7 +34,7 @@ public class TitleScene : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.F1))
             {
                 isDeleteOnce = true;
-                rankingStorage.DeleteData("ranking");
+                rankingStorage.DeleteData("timeAttack");
                 Debug.Log("デリート");
             }
         }

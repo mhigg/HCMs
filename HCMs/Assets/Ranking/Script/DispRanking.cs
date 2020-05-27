@@ -6,9 +6,11 @@ using UnityEngine.UI;
 // ランキング表示データ作成・表示
 public class DispRanking : MonoBehaviour
 {
-    public Text rankingText = null;         // ランキングのタイム表示テキスト
+    public bool isTimeAttackMode;       // TimeAttackならtrue Battleならfalse
 
-    private const string RANKING_KEY = "ranking";       // ランキング呼び出し用キー
+    public Text rankingText = null;     // ランキングのタイム表示テキスト
+
+    private const string RANKING_KEY = "timeAttack";    // ランキング呼び出し用キー
     private const int RANK_MAX = 10;                    // ランキングの最大保存数
 
     private const string RAPTIME_KEY = "raptime";   // ラップタイム呼び出し用キー
@@ -17,9 +19,8 @@ public class DispRanking : MonoBehaviour
     private const string RAP_RANK_KEY = "raprank";          // ラップタイムのランキング呼び出しキー
     private const int RAP_RANK_MAX = RANK_MAX * RAP_MAX;    // ラップタイムのランキングの最大保存数
 
-    private float[] dispRanking = new float[RANK_MAX];      // ランキング保存用
-    private float[] dispRapTime = new float[RAP_RANK_MAX];  // ラップタイム保存用
-
+    private float[] dispRanking;    // ランキング保存用
+    private float[] dispRapTime;    // ラップタイム保存用
 
     public DataStorage rankingStorage = null;       // 表示用ランキングの取得用
 
@@ -28,10 +29,27 @@ public class DispRanking : MonoBehaviour
         rankingText = rankingText.GetComponent<Text>();
 
         // ランキングデータを取得し、表示用データに反映する
+        // バトルとタイムアタックで違うデ―タを取得する
         rankingStorage = rankingStorage.GetComponent<DataStorage>();
-        dispRanking = rankingStorage.GetData(RANKING_KEY, RANK_MAX, 1000.0f);
 
-        dispRapTime = rankingStorage.GetData(RAP_RANK_KEY, RAP_RANK_MAX, 1000.0f);
+        // あとで利用するかも
+        // しなかったら消します
+        if(isTimeAttackMode)
+        {
+            dispRanking = new float[RANK_MAX];
+            dispRanking = rankingStorage.GetData(RANKING_KEY, RANK_MAX, 1000.0f);
+
+            dispRapTime = new float[RAP_RANK_MAX];
+            dispRapTime = rankingStorage.GetData(RAP_RANK_KEY, RAP_RANK_MAX, 1000.0f);
+        }
+        else
+        {
+            dispRanking = new float[RANK_MAX];
+            dispRanking = rankingStorage.GetData(RANKING_KEY, RANK_MAX, 1000.0f);
+
+            dispRapTime = new float[RAP_RANK_MAX];
+            dispRapTime = rankingStorage.GetData(RAP_RANK_KEY, RAP_RANK_MAX, 1000.0f);
+        }
     }
 
     public void InputText()
