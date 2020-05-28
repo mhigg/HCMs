@@ -6,14 +6,6 @@ using UnityEngine.UI;
 // ランキング集計・保存
 public class TimeRanking : MonoBehaviour
 {
-    private const string RANKING_KEY = "timeAttack";    // ランキング呼び出し用キー(TimeAttack or Battle)
-    private const int RANK_MAX = 10;                    // ランキングの最大保存数
-
-    private const int RAP_MAX = 3;                      // ラップタイムの最大保存数
-
-    private const string RAP_RANK_KEY = "raprank";          // ラップタイムのランキング呼び出しキー(TARap or BTRap)
-    private const int RAP_RANK_MAX = RANK_MAX * RAP_MAX;    // ラップタイムのランキングの最大保存数
-
     public DataStorage storage = null;                      // ランキング保管スクリプト
 
     private string _rankingKey;     // ゴールタイムのランキング呼び出しキー
@@ -33,11 +25,20 @@ public class TimeRanking : MonoBehaviour
         _rapMax = rapMax;
         _rankingMax = playerNum;
         _rapRankMax = playerNum * rapMax;
-        _rapRankKey = (gameMode == "TimeAttack" ? "TARap" : "BTRap");
 
-        if(gameMode == "Battle")
+        if (gameMode == "Battle")
         {
+            _rapRankKey = "BTRap";
             storage.DeleteData(_rankingKey);
+            for (int playerID = 0; playerID < playerNum; playerID++)
+            {
+                storage.DeleteData(playerID.ToString());
+            }
+        }
+        else
+        {
+            _rapRankKey = "TARap";
+            storage.DeleteData("P1");
         }
     }
 
@@ -64,7 +65,7 @@ public class TimeRanking : MonoBehaviour
             if (rapTime[idx] == 0.0f)
             {
                 // データが無かったらラップタイムを入れ、breakする
-                // newTimeはレース通してのタイムなので、1つ前のタイムとの差をラップタイムとする
+                // newTimeはレース通してのタイムなので、1つ前までのタイムとの差をラップタイムとする
                 // 1周目だけはそのままのタイムをラップタイムとする
                 float subTime = 0.0f;
                 for(int subIdx = idx - 1; subIdx >= 0; subIdx--)
@@ -79,11 +80,6 @@ public class TimeRanking : MonoBehaviour
         // 配列を文字列に変換して PlayerPrefs に格納
         string raptime_string = string.Join(",", rapTime);
         PlayerPrefs.SetString(KEY, raptime_string);
-    }
-
-    public void SetNewTime(float newTime)
-    {
-        AddAndSortGoalTimeRanking(_rankingKey, _rankingMax, newTime);
     }
 
     // ラップタイムとゴールタイムを集計しランキングに保存する

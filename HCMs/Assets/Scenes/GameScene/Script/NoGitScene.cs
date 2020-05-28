@@ -10,12 +10,12 @@ public class NoGitScene : MonoBehaviour
     public TimeCount timeCounter = null;
     public Text text = null;
 
-    const int playerNum = 4;
+    const int playerNum = 4;            // プレイヤー人数
     int[] rapCnt = new int[playerNum];  // 人数分のラップカウント
     KeyCode[] playerKeyCode = new KeyCode[playerNum];
 
-    bool StartCall = false;    // StartCountテスト用
-    bool[] isFinished = new bool[playerNum];
+    bool StartCall = false;                     // StartCountテスト用
+    bool[] isFinished = new bool[playerNum];    // FinishCountテスト用
 
     public TimeRanking timeRanking = null;
 
@@ -23,7 +23,7 @@ public class NoGitScene : MonoBehaviour
     void Start()
     {
         timeRanking = timeRanking.GetComponent<TimeRanking>();
-        timeRanking.SetUpTimeRanking("Battle", 4, 3);
+        timeRanking.SetUpTimeRanking("Battle", playerNum, 3);
 
         timeCounter = timeCounter.GetComponent<TimeCount>();
         text = text.GetComponent<Text>();
@@ -34,10 +34,12 @@ public class NoGitScene : MonoBehaviour
             isFinished[idx] = false;
         }
 
-        playerKeyCode[0] = KeyCode.H;
-        playerKeyCode[1] = KeyCode.K;
-        playerKeyCode[2] = KeyCode.B;
-        playerKeyCode[3] = KeyCode.N;
+        // プレイヤーに応じたキー
+        // Debug用
+        playerKeyCode[0] = KeyCode.Z;
+        playerKeyCode[1] = KeyCode.X;
+        playerKeyCode[2] = KeyCode.C;
+        playerKeyCode[3] = KeyCode.V;
     }
 
     bool isCalledOnce = false;

@@ -11,9 +11,8 @@ public class TimeAttack : MonoBehaviour
     public TimeCount timeCounter = null;
     public Text text = null;
 
-    string playerID = "P1";     // プレイヤーごとに持っていて、プレイヤーから渡されるのが理想
-    const int playerNum = 1;    // プレイ人数
-    int[] rapCnt = new int[playerNum];  // 人数分のラップカウント
+    string playerID = "P1";     // プレイヤーごとに持っていて、プレイヤーから渡されるのが理想(タイムアタックは１つだからその限りではないが)
+    int rapCnt;                 // ラップカウント
 
     public TimeRanking timeRanking = null;
 
@@ -27,10 +26,7 @@ public class TimeAttack : MonoBehaviour
         text = text.GetComponent<Text>();
         text.text = "";
 
-        for(int idx = 0; idx < playerNum; idx++)
-        {
-            rapCnt[idx] = 1;
-        }
+        rapCnt = 1;
     }
 
     bool isCalledOnce = false;
@@ -69,9 +65,9 @@ public class TimeAttack : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.LeftControl))
             {
                 Debug.Log("ラップタイム");
-                rapCnt[0]++;    // プレイヤーごとにラップカウントをとる
+                rapCnt++;    // プレイヤーごとにラップカウントをとる
                 timeCounter.RapCount(playerID);
-                if (!(rapCnt[0] <= 3))
+                if (!(rapCnt <= 3))
                 {
                     Debug.Log("ゴール");
                     FinishCall = true;
