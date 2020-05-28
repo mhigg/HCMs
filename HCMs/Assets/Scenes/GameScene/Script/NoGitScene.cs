@@ -17,9 +17,14 @@ public class NoGitScene : MonoBehaviour
     bool StartCall = false;    // StartCountテスト用
     bool[] isFinished = new bool[playerNum];
 
+    public TimeRanking timeRanking = null;
+
     // Start is called before the first frame update
     void Start()
     {
+        timeRanking = timeRanking.GetComponent<TimeRanking>();
+        timeRanking.SetUpTimeRanking("Battle", 4, 3);
+
         timeCounter = timeCounter.GetComponent<TimeCount>();
         text = text.GetComponent<Text>();
 
@@ -35,9 +40,22 @@ public class NoGitScene : MonoBehaviour
         playerKeyCode[3] = KeyCode.N;
     }
 
+    bool isCalledOnce = false;
+
     // Update is called once per frame
     void Update()
     {
+        if (!isCalledOnce)
+        {
+            ///ここを任意のボタンにしましょう。
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                isCalledOnce = true;
+                FadeManager.Instance.LoadScene("gitにはあげないResult", 2.0f);
+                Debug.Log("Resultへ");
+            }
+        }
+
         // 特定のタイミングでStartCountを呼ぶ
         if (!StartCall)
         {
@@ -65,7 +83,7 @@ public class NoGitScene : MonoBehaviour
                         Debug.Log("ゴール");
                         isFinished[idx] = true;
                         timeCounter.FinishCount(idx.ToString());
-                        text.text = idx.ToString() + "ＧＯＡＬ！！";
+                        text.text = (idx + 1).ToString() + "ＧＯＡＬ！！";
                     }
                 }
             }

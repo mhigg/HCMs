@@ -53,7 +53,7 @@ public class TimeCount : MonoBehaviour
     public void FinishCount(string playerID)
     {
         Debug.Log("カウントストップ");
-//        _endFlag = true;
+//        _endFlag = true;  // 全員ゴールしたらtrueにするようにしたい
         timeRanking.SetGoalTime(playerID);
     }
 }

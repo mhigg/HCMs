@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TimeAttack_result : MonoBehaviour
+public class NoGitResult : MonoBehaviour
 {
     public DispRanking dispRanking = null;
 
@@ -10,7 +10,7 @@ public class TimeAttack_result : MonoBehaviour
     void Start()
     {
         dispRanking = dispRanking.GetComponent<DispRanking>();
-        dispRanking.SetUpDispRanking("TimeAttack", 10, 3);
+        dispRanking.SetUpDispRanking("Battle", 4, 3);
     }
 
     bool isCalledOnce = false;

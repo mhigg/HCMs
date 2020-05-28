@@ -15,9 +15,14 @@ public class TimeAttack : MonoBehaviour
     const int playerNum = 1;    // プレイ人数
     int[] rapCnt = new int[playerNum];  // 人数分のラップカウント
 
+    public TimeRanking timeRanking = null;
+
     // Start is called before the first frame update
     void Start()
     {
+        timeRanking = timeRanking.GetComponent<TimeRanking>();
+        timeRanking.SetUpTimeRanking("TimeAttack", 10, 3);
+
         timeCounter = timeCounter.GetComponent<TimeCount>();
         text = text.GetComponent<Text>();
         text.text = "";

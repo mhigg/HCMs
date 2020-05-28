@@ -28,13 +28,25 @@ public class TitleScene : MonoBehaviour
             }
         }
 
+        if (!isCalledOnce)
+        {
+            ///ここを任意のボタンにしましょう。
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                isCalledOnce = true;
+                FadeManager.Instance.LoadScene("gitにはあげない", 2.0f);
+                Debug.Log("Menuへ");
+            }
+        }
+
         if (!isDeleteOnce)
         {
             ///ここを任意のボタンにしましょう。
             if (Input.GetKeyDown(KeyCode.F1))
             {
                 isDeleteOnce = true;
-                rankingStorage.DeleteData("timeAttack");
+                rankingStorage.DeleteData("TimeAttack");
+                rankingStorage.DeleteData("Battle");
                 Debug.Log("デリート");
             }
         }
@@ -45,10 +57,10 @@ public class TitleScene : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.F2))
             {
                 isDeleteOnce = true;
-                rankingStorage.DeleteData("raprank");
+                rankingStorage.DeleteData("TARap");
+                rankingStorage.DeleteData("BTRap");
                 Debug.Log("デリート");
             }
         }
-
     }
 }

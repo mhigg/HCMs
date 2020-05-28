@@ -6,22 +6,17 @@ using UnityEngine.UI;
 // ランキング表示データ作成・表示
 public class DispRanking : MonoBehaviour
 {
-    public bool isTimeAttackMode;       // TimeAttackならtrue Battleならfalse
-
     public Text rankingText = null;     // ランキングのタイム表示テキスト
-
-    private const string RANKING_KEY = "timeAttack";    // ランキング呼び出し用キー
-    private const int RANK_MAX = 10;                    // ランキングの最大保存数
-
-    private const int RAP_MAX = 3;                      // ラップタイムの最大保存数
-
-    private const string RAP_RANK_KEY = "raprank";          // ラップタイムのランキング呼び出しキー
-    private const int RAP_RANK_MAX = RANK_MAX * RAP_MAX;    // ラップタイムのランキングの最大保存数
 
     private float[] dispRanking;    // ランキング保存用
     private float[] dispRapTime;    // ラップタイム保存用
 
     public DataStorage rankingStorage = null;       // 表示用ランキングの取得用
+
+    private string _rankingKey;     // ゴールタイムのランキング呼び出しキー
+    private string _rapRankKey;     // ラップタイムのランキング呼び出しキー
+    private int _rankingMax;        // ランキングの表示数(=プレイヤー人数)
+    private int _rapRankMax;        // ラップタイムランキングの表示数(=人数*周回数)
 
     void Start()
     {
@@ -30,27 +25,22 @@ public class DispRanking : MonoBehaviour
         // ランキングデータを取得し、表示用データに反映する
         // バトルとタイムアタックで違うデ―タを取得する
         rankingStorage = rankingStorage.GetComponent<DataStorage>();
+    }
 
-        isTimeAttackMode = true;
+    public void SetUpDispRanking(string gameMode, int playerNum, int rapMax)
+    {
+        _rankingKey = gameMode;
+        _rankingMax = playerNum;
+        _rapRankMax = playerNum * rapMax;
+        _rapRankKey = (gameMode == "TimeAttack" ? "TARap" : "BTRap");
 
         // あとで利用するかも
         // しなかったら消します
-        if(isTimeAttackMode)
-        {
-            dispRanking = new float[RANK_MAX];
-            dispRanking = rankingStorage.GetData(RANKING_KEY, RANK_MAX, 1000.0f);
+        dispRanking = new float[playerNum];
+        dispRanking = rankingStorage.GetData(_rankingKey, playerNum, 1000.0f);
 
-            dispRapTime = new float[RAP_RANK_MAX];
-            dispRapTime = rankingStorage.GetData(RAP_RANK_KEY, RAP_RANK_MAX, 1000.0f);
-        }
-        else
-        {
-            dispRanking = new float[RANK_MAX];
-            dispRanking = rankingStorage.GetData(RANKING_KEY, RANK_MAX, 1000.0f);
-
-            dispRapTime = new float[RAP_RANK_MAX];
-            dispRapTime = rankingStorage.GetData(RAP_RANK_KEY, RAP_RANK_MAX, 1000.0f);
-        }
+        dispRapTime = new float[_rapRankMax];
+        dispRapTime = rankingStorage.GetData(_rapRankKey, _rapRankMax, 1000.0f);
     }
 
     public void InputText()
@@ -63,7 +53,7 @@ public class DispRanking : MonoBehaviour
 
         // ランキング表示
         string time;
-        for (int idx = 0; idx < RANK_MAX; idx++)
+        for (int idx = 0; idx < _rankingMax; idx++)
         {
             time = (dispRanking[idx] < 1000.0f ? dispRanking[idx].ToString("f3") + "秒\n" : "―――\n");
             ranking_string = ranking_string + (idx + 1) + "位 " + time;
@@ -75,7 +65,7 @@ public class DispRanking : MonoBehaviour
         // タイムが無い場合は
         // １位：－－秒　－－秒　－－秒　　といった感じで表示する
         //string rap = "";
-        //for (int idx = 0; idx < RAP_RANK_MAX; idx++)
+        //for (int idx = 0; idx < _rapRankMax; idx++)
         //{
         //    // とりあえず仮に縦にずらーっと表示
         //    // ラップタイム保存確認のため

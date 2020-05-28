@@ -6,19 +6,39 @@ using UnityEngine.UI;
 // ランキング集計・保存
 public class TimeRanking : MonoBehaviour
 {
-    private const string RANKING_KEY = "timeAttack";    // ランキング呼び出し用キー
+    private const string RANKING_KEY = "timeAttack";    // ランキング呼び出し用キー(TimeAttack or Battle)
     private const int RANK_MAX = 10;                    // ランキングの最大保存数
 
     private const int RAP_MAX = 3;                      // ラップタイムの最大保存数
 
-    private const string RAP_RANK_KEY = "raprank";          // ラップタイムのランキング呼び出しキー
+    private const string RAP_RANK_KEY = "raprank";          // ラップタイムのランキング呼び出しキー(TARap or BTRap)
     private const int RAP_RANK_MAX = RANK_MAX * RAP_MAX;    // ラップタイムのランキングの最大保存数
 
     public DataStorage storage = null;                      // ランキング保管スクリプト
 
+    private string _rankingKey;     // ゴールタイムのランキング呼び出しキー
+    private string _rapRankKey;     // ラップタイムのランキング呼び出しキー
+    private int _rankingMax;        // ランキングの表示数(=プレイヤー人数)
+    private int _rapMax;            // ラップタイム数
+    private int _rapRankMax;        // ラップタイムランキングの表示数(=人数*周回数)
+
     void Start()
     {
         storage = storage.GetComponent<DataStorage>();
+    }
+    
+    public void SetUpTimeRanking(string gameMode, int playerNum, int rapMax)
+    {
+        _rankingKey = gameMode;
+        _rapMax = rapMax;
+        _rankingMax = playerNum;
+        _rapRankMax = playerNum * rapMax;
+        _rapRankKey = (gameMode == "TimeAttack" ? "TARap" : "BTRap");
+
+        if(gameMode == "Battle")
+        {
+            storage.DeleteData(_rankingKey);
+        }
     }
 
     // プレイヤーごとにラップタイムを保存
@@ -27,7 +47,7 @@ public class TimeRanking : MonoBehaviour
     public void SetRapTime(float newRapTime, string playerKey)
     {
         Debug.Log("SetRapTimeバトルモード");
-        AddRapTime(playerKey, RAP_MAX, newRapTime);
+        AddRapTime(playerKey, _rapMax, newRapTime);
     }
 
     // ラップタイムを集計していく関数
@@ -46,7 +66,12 @@ public class TimeRanking : MonoBehaviour
                 // データが無かったらラップタイムを入れ、breakする
                 // newTimeはレース通してのタイムなので、1つ前のタイムとの差をラップタイムとする
                 // 1周目だけはそのままのタイムをラップタイムとする
-                rapTime[idx] = (idx == 0 ? newTime : newTime - rapTime[idx - 1]);
+                float subTime = 0.0f;
+                for(int subIdx = idx - 1; subIdx >= 0; subIdx--)
+                {
+                    subTime += rapTime[subIdx];
+                }
+                rapTime[idx] = newTime - subTime;
                 break;
             }
         }
@@ -56,20 +81,25 @@ public class TimeRanking : MonoBehaviour
         PlayerPrefs.SetString(KEY, raptime_string);
     }
 
+    public void SetNewTime(float newTime)
+    {
+        AddAndSortGoalTimeRanking(_rankingKey, _rankingMax, newTime);
+    }
+
     // ラップタイムとゴールタイムを集計しランキングに保存する
     // プレイヤーごとにゴール時に呼び出す
     public void SetGoalTime(string playerKey)
     {
         Debug.Log("SetGoalTime");
-        float[] rapTime = storage.GetData(playerKey, RAP_MAX, 0.0f);
+        float[] rapTime = storage.GetData(playerKey, _rapMax, 0.0f);
         float goalTime = 0.0f;
-        for (int idx = 0; idx < RAP_MAX; idx++)
+        for (int idx = 0; idx < _rapMax; idx++)
         {
             goalTime += rapTime[idx];
         }
 
-        AddAndSortRapTimeRanking(RAP_RANK_KEY, RAP_RANK_MAX, rapTime);
-        AddAndSortGoalTimeRanking(RANKING_KEY, RANK_MAX, goalTime);
+        AddAndSortRapTimeRanking(_rapRankKey, _rapRankMax, rapTime);
+        AddAndSortGoalTimeRanking(_rankingKey, _rankingMax, goalTime);
 
         storage.DeleteData(playerKey);
     }
@@ -118,11 +148,11 @@ public class TimeRanking : MonoBehaviour
         if (ranking != null)
         {
             float tmp;
-            for (int idx = 0; idx < ranking.Length; idx += RAP_MAX)
+            for (int idx = 0; idx < ranking.Length; idx += _rapMax)
             {
                 float retTime = 0.0f;
                 float goalTime = 0.0f;
-                for (int sumIdx = 0; sumIdx < RAP_MAX; sumIdx++)
+                for (int sumIdx = 0; sumIdx < _rapMax; sumIdx++)
                 {
                     retTime += ranking[idx + sumIdx];
                     goalTime += newTime[sumIdx];
@@ -133,7 +163,7 @@ public class TimeRanking : MonoBehaviour
                 {
                     // １つずつ順位をずらしていく
                     // 最大ラップ数ごとに１つとして扱う
-                    for(int sortIdx = 0; sortIdx < RAP_MAX; sortIdx++)
+                    for(int sortIdx = 0; sortIdx < _rapMax; sortIdx++)
                     {
                         tmp = ranking[idx + sortIdx];
                         ranking[idx + sortIdx] = newTime[sortIdx];
@@ -144,7 +174,7 @@ public class TimeRanking : MonoBehaviour
         }
         else
         {
-            for (int idx = 0; idx < RAP_MAX; idx++)
+            for (int idx = 0; idx < _rapMax; idx++)
             {
                 ranking[idx] = newTime[idx];
             }

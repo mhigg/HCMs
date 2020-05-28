@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
     private int _playNum = 4;    // プレイ人数
     private int _rapMax = 3;     // ラップ(周回)数
 
+    #region Singleton
+
     private static GameManager s_instance;
     
     public static GameManager Instance
@@ -17,15 +19,29 @@ public class GameManager : MonoBehaviour
         {
             if (s_instance == null)
             {
-                GameObject gameObject = new GameObject("GameManager");
-                s_instance = gameObject.AddComponent<GameManager>();
+                s_instance = (GameManager)FindObjectOfType(typeof(GameManager));
+
+                if (s_instance == null)
+                {
+                    Debug.LogError(typeof(GameManager) + "is nothing");
+                }
             }
+
             return s_instance;
         }
-        set
-        {
+    }
 
+    #endregion Singleton
+
+    public void Awake()
+    {
+        if (this != Instance)
+        {
+            Destroy(this.gameObject);
+            return;
         }
+
+        DontDestroyOnLoad(this.gameObject);
     }
 
     public string GetRankingKey()
