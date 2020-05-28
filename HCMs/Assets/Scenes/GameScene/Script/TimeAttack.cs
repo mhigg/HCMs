@@ -2,25 +2,36 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class TimeAttack : MonoBehaviour
 {
     //public FadeManager fadeManager = null;
     public TimeCount timeCounter = null;
+    public Text text = null;
+
+    string playerID = "P1";     // プレイヤーごとに持っていて、プレイヤーから渡されるのが理想
+    const int playerNum = 1;
+    int[] rapCnt = new int[playerNum];  // 人数分のラップカウント
 
     // Start is called before the first frame update
     void Start()
     {
         timeCounter = timeCounter.GetComponent<TimeCount>();
+        text = text.GetComponent<Text>();
+        text.text = "";
+
+        for(int idx = 0; idx < playerNum; idx++)
+        {
+            rapCnt[idx] = 1;
+        }
     }
 
     bool isCalledOnce = false;
 
     bool StartCall  = false;    // StartCountテスト用
     bool FinishCall = false;    // FinishCountテスト用
-
-    int rapCnt = 1;
 
     // Update is called once per frame
     void Update()
@@ -53,13 +64,14 @@ public class TimeAttack : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.LeftControl))
             {
                 Debug.Log("ラップタイム");
-                rapCnt++;
-                timeCounter.RapCount();
-                if (!(rapCnt <= 3))
+                rapCnt[0]++;    // プレイヤーごとにラップカウントをとる
+                timeCounter.RapCount(playerID);
+                if (!(rapCnt[0] <= 3))
                 {
                     Debug.Log("ゴール");
                     FinishCall = true;
-                    timeCounter.FinishCount();
+                    timeCounter.FinishCount(playerID);
+                    text.text = "ＧＯＡＬ！！";
                 }
             }
         }

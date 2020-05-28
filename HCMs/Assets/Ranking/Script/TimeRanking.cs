@@ -32,27 +32,13 @@ public class TimeRanking : MonoBehaviour
         storage = storage.GetComponent<DataStorage>();
     }
 
-    // 新しく計測されたラップタイムをPlayerPrefsに保存
-    // Textコンポーネントから数値を読み取る(手入力)
-    // Debug用
-    public void SetRapTime()
+    // プレイヤーごとにラップタイムを保存
+    // @newTime float:周回時のタイム
+    // @playerKey string:プレイヤーID
+    public void SetRapTime(float newRapTime, string playerKey)
     {
-        Debug.Log("SetRapTime引数なし");
-        rapCnt++;
-        float newRapTime = float.Parse(inputRap.text);
-        AddRapTime(RAPTIME_KEY, RAP_MAX, newRapTime);
-        if (!(rapCnt <= RAP_MAX))
-        {
-            SetGoalTime();
-        }
-    }
-
-    // 新しく計測されたラップタイムをPlayerPrefsに保存
-    // 引数から数値を読み取る
-    public void SetRapTime(float newRapTime)
-    {
-        Debug.Log("SetRapTime引数あり");
-        AddRapTime(RAPTIME_KEY, RAP_MAX, newRapTime);
+        Debug.Log("SetRapTimeバトルモード");
+        AddRapTime(playerKey, RAP_MAX, newRapTime);
     }
 
     // ラップタイムを集計していく関数
@@ -69,7 +55,9 @@ public class TimeRanking : MonoBehaviour
             if (rapTime[idx] == 0.0f)
             {
                 // データが無かったらラップタイムを入れ、breakする
-                rapTime[idx] = newTime;
+                // newTimeはレース通してのタイムなので、1つ前のタイムとの差をラップタイムとする
+                // 1周目だけはそのままのタイムをラップタイムとする
+                rapTime[idx] = (idx == 0 ? newTime : newTime - rapTime[idx - 1]);
                 break;
             }
         }
@@ -79,22 +67,12 @@ public class TimeRanking : MonoBehaviour
         PlayerPrefs.SetString(KEY, raptime_string);
     }
 
-    // 新しく計測されたタイムをPlayerPrefsに保存
-    // Textコンポーネントから数値を読み取る(手入力)
-    // Debug用
-    public void SetNewTime()
-    {
-        Debug.Log("SetNewTime引数なし");
-        float newTime = float.Parse(inputTime.text);
-        AddAndSortGoalTimeRanking(RANKING_KEY, RANK_MAX, newTime);
-    }
-
     // ラップタイムとゴールタイムを集計しランキングに保存する
-    // レース終了時に呼び出す
-    public void SetGoalTime()
+    // プレイヤーごとにゴール時に呼び出す
+    public void SetGoalTime(string playerKey)
     {
         Debug.Log("SetGoalTime");
-        float[] rapTime = storage.GetData(RAPTIME_KEY, RAP_MAX, 0.0f);
+        float[] rapTime = storage.GetData(playerKey, RAP_MAX, 0.0f);
         float goalTime = 0.0f;
         for (int idx = 0; idx < RAP_MAX; idx++)
         {
@@ -104,7 +82,7 @@ public class TimeRanking : MonoBehaviour
         AddAndSortRapTimeRanking(RAP_RANK_KEY, RAP_RANK_MAX, rapTime);
         AddAndSortGoalTimeRanking(RANKING_KEY, RANK_MAX, goalTime);
 
-        storage.DeleteData(RAPTIME_KEY);
+        storage.DeleteData(playerKey);
     }
 
     // ゴールタイムを保存しランキングに反映する関数

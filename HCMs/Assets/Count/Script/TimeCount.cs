@@ -32,7 +32,7 @@ public class TimeCount : MonoBehaviour
             // 後からtimeCountを使用したタイム計算に変更
             timeText.text = (_timeCount >= 0 ? _timeCount.ToString("f3") : "0.000");
             _timeCount += Time.deltaTime;
-            _rapTimeCount += Time.deltaTime;
+//            _rapTimeCount += Time.deltaTime;
         }
     }
     
@@ -45,18 +45,18 @@ public class TimeCount : MonoBehaviour
     }
 
     // ラップタイムを保存する
-    public void RapCount()
+    public void RapCount(string playerID)
     {
         Debug.Log("ラップタイム");
-        timeRanking.SetRapTime(_rapTimeCount);
-        _rapTimeCount = 0.0f;
+        timeRanking.SetRapTime(_timeCount, playerID);
+//        _rapTimeCount = 0.0f;
     }
 
     // カウントを停止する
-    public void FinishCount()
+    public void FinishCount(string playerID)
     {
         Debug.Log("カウントストップ");
-        _endFlag = true;
-        timeRanking.SetGoalTime();
+//        _endFlag = true;
+        timeRanking.SetGoalTime(playerID);
     }
 }
