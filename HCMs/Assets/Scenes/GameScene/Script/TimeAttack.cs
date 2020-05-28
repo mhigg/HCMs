@@ -12,7 +12,7 @@ public class TimeAttack : MonoBehaviour
     public Text text = null;
 
     string playerID = "P1";     // プレイヤーごとに持っていて、プレイヤーから渡されるのが理想
-    const int playerNum = 1;
+    const int playerNum = 1;    // プレイ人数
     int[] rapCnt = new int[playerNum];  // 人数分のラップカウント
 
     // Start is called before the first frame update

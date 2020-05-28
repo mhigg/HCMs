@@ -6,23 +6,18 @@ using UnityEngine.UI;
 // ランキング集計・保存
 public class TimeRanking : MonoBehaviour
 {
-    private int rapCnt = 1;                         // デバッグ用ラップカウント
+    private const string RANKING_KEY = "timeAttack";    // ランキング呼び出し用キー
+    private const int RANK_MAX = 10;                    // ランキングの最大保存数
 
-    private const string RANKING_KEY = "timeAttack";   // ランキング呼び出し用キー
-    private const int RANK_MAX = 10;                // ランキングの最大保存数
-
-    private const string RAPTIME_KEY = "raptime";   // ラップタイム呼び出し用キー
-    private const int RAP_MAX = 3;                  // ラップタイムの最大保存数
+    private const int RAP_MAX = 3;                      // ラップタイムの最大保存数
 
     private const string RAP_RANK_KEY = "raprank";          // ラップタイムのランキング呼び出しキー
     private const int RAP_RANK_MAX = RANK_MAX * RAP_MAX;    // ラップタイムのランキングの最大保存数
 
-    public DataStorage storage = null;              // ランキング保管スクリプト
+    public DataStorage storage = null;                      // ランキング保管スクリプト
 
     void Start()
     {
-        rapCnt = 1;
-
         storage = storage.GetComponent<DataStorage>();
     }
 

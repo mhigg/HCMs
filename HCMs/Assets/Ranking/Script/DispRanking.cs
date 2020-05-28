@@ -13,8 +13,7 @@ public class DispRanking : MonoBehaviour
     private const string RANKING_KEY = "timeAttack";    // ランキング呼び出し用キー
     private const int RANK_MAX = 10;                    // ランキングの最大保存数
 
-    private const string RAPTIME_KEY = "raptime";   // ラップタイム呼び出し用キー
-    private const int RAP_MAX = 3;                  // ラップタイムの最大保存数
+    private const int RAP_MAX = 3;                      // ラップタイムの最大保存数
 
     private const string RAP_RANK_KEY = "raprank";          // ラップタイムのランキング呼び出しキー
     private const int RAP_RANK_MAX = RANK_MAX * RAP_MAX;    // ラップタイムのランキングの最大保存数
@@ -31,6 +30,8 @@ public class DispRanking : MonoBehaviour
         // ランキングデータを取得し、表示用データに反映する
         // バトルとタイムアタックで違うデ―タを取得する
         rankingStorage = rankingStorage.GetComponent<DataStorage>();
+
+        isTimeAttackMode = true;
 
         // あとで利用するかも
         // しなかったら消します
