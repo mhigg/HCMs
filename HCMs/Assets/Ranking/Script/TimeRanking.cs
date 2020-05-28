@@ -6,9 +6,6 @@ using UnityEngine.UI;
 // ランキング集計・保存
 public class TimeRanking : MonoBehaviour
 {
-    public InputField inputTime = null;             // タイム入力用(デバッグ用)
-    public InputField inputRap = null;              // ラップタイム入力用(デバッグ用)
-
     private int rapCnt = 1;                         // デバッグ用ラップカウント
 
     private const string RANKING_KEY = "timeAttack";   // ランキング呼び出し用キー
@@ -24,9 +21,6 @@ public class TimeRanking : MonoBehaviour
 
     void Start()
     {
-        inputTime = inputTime.GetComponent<InputField>();
-        inputRap = inputRap.GetComponent<InputField>();
-
         rapCnt = 1;
 
         storage = storage.GetComponent<DataStorage>();
