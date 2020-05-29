@@ -1,9 +1,7 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-//using UnityStandardAssets.CrossPlatformInput;
 
+#pragma warning disable 649
 namespace UnityStandardAssets.Vehicles.Car
 {
     internal enum CarDriveType
@@ -49,8 +47,6 @@ namespace UnityStandardAssets.Vehicles.Car
         private float m_CurrentTorque;
         private Rigidbody m_Rigidbody;
         private const float k_ReversingThreshold = 0.01f;
-        private Vector3 restartPos;
-        private Quaternion restartRot;
 
         public bool Skidding { get; private set; }
         public float BrakeInput { get; private set; }
@@ -63,9 +59,6 @@ namespace UnityStandardAssets.Vehicles.Car
         // Use this for initialization
         private void Start()
         {
-            restartPos = this.transform.position;
-            restartRot = this.transform.rotation;
-            //_startPos.y += 10;
             m_WheelMeshLocalRotations = new Quaternion[4];
             for (int i = 0; i < 4; i++)
             {
@@ -133,39 +126,9 @@ namespace UnityStandardAssets.Vehicles.Car
             Revs = ULerp(revsRangeMin, revsRangeMax, m_GearFactor);
         }
 
-        private void OnTriggerEnter(Collider other)
-        {
-            if(other.gameObject.tag == "CheckPoint")
-            {
-                restartPos = other.gameObject.transform.position;
-                restartRot = other.gameObject.transform.rotation;
-            }
-        }
 
         public void Move(float steering, float accel, float footbrake, float handbrake)
         {
-            Transform carPos = this.transform;
-            Vector3 speed;
-            speed.x = 0;
-            speed.y = 0;
-            speed.z = 0;
-            //if (carPos.position.y <= 50f
-            //    || CrossPlatformInputManager.GetButton("Restart"))
-            //{
-            //    Debug.Log("—Ž‚¿‚½");
-            //    carPos.position = restartPos;
-            //    carPos.rotation = restartRot;
-            //    m_Rigidbody = GetComponent<Rigidbody>();
-            //    m_Rigidbody.velocity = speed;
-            //}
-            if (Input.GetKey(KeyCode.A))
-            {
-                Vector3 pos;
-                pos.x = 987;
-                pos.y = 215;
-                pos.z = 924;
-                carPos.position = pos;
-            }
             for (int i = 0; i < 4; i++)
             {
                 Quaternion quat;
@@ -195,10 +158,11 @@ namespace UnityStandardAssets.Vehicles.Car
             //Assuming that wheels 2 and 3 are the rear wheels.
             if (handbrake > 0f)
             {
-                var hbTorque = handbrake * m_MaxHandbrakeTorque;
+                var hbTorque = handbrake*m_MaxHandbrakeTorque;
                 m_WheelColliders[2].brakeTorque = hbTorque;
                 m_WheelColliders[3].brakeTorque = hbTorque;
             }
+
 
             CalculateRevs();
             GearChanging();
@@ -281,23 +245,13 @@ namespace UnityStandardAssets.Vehicles.Car
                     return; // wheels arent on the ground so dont realign the rigidbody velocity
             }
 
-            //if (Mathf.Abs(m_OldRotation - transform.eulerAngles.y) < 10f)
-            //{
-            //    var turnadjust = (transform.eulerAngles.y - m_OldRotation);
-            //    Quaternion velRotation;
-            //    if (CrossPlatformInputManager.GetAxis("Drift") > 0.001f)
-            //    {
-            //        turnadjust *= 0.01f;
-            //        velRotation = Quaternion.AngleAxis(turnadjust, Vector3.up);
-            //    }
-            //    else
-            //    {
-            //        turnadjust *= m_SteerHelper;
-            //        velRotation = Quaternion.AngleAxis(turnadjust, Vector3.up);
-            //    }
-            //    //Quaternion velRotation = Quaternion.AngleAxis(turnadjust, Vector3.up);
-            //    m_Rigidbody.velocity = velRotation * m_Rigidbody.velocity;
-            //}
+            // this if is needed to avoid gimbal lock problems that will make the car suddenly shift direction
+            if (Mathf.Abs(m_OldRotation - transform.eulerAngles.y) < 10f)
+            {
+                var turnadjust = (transform.eulerAngles.y - m_OldRotation) * m_SteerHelper;
+                Quaternion velRotation = Quaternion.AngleAxis(turnadjust, Vector3.up);
+                m_Rigidbody.velocity = velRotation * m_Rigidbody.velocity;
+            }
             m_OldRotation = transform.eulerAngles.y;
         }
 
@@ -317,34 +271,34 @@ namespace UnityStandardAssets.Vehicles.Car
         // these effects are controlled through the WheelEffects class
         private void CheckForWheelSpin()
         {
-            //// loop through all wheels
-            //for (int i = 0; i < 4; i++)
-            //{
-            //    WheelHit wheelHit;
-            //    m_WheelColliders[i].GetGroundHit(out wheelHit);
+            // loop through all wheels
+            for (int i = 0; i < 4; i++)
+            {
+                WheelHit wheelHit;
+                m_WheelColliders[i].GetGroundHit(out wheelHit);
 
-            //    // is the tire slipping above the given threshhold
-            //    if (Mathf.Abs(wheelHit.forwardSlip) >= m_SlipLimit || Mathf.Abs(wheelHit.sidewaysSlip) >= m_SlipLimit)
-            //    {
-            //        m_WheelEffects[i].EmitTyreSmoke();
+                // is the tire slipping above the given threshhold
+                if (Mathf.Abs(wheelHit.forwardSlip) >= m_SlipLimit || Mathf.Abs(wheelHit.sidewaysSlip) >= m_SlipLimit)
+                {
+                    //m_WheelEffects[i].EmitTyreSmoke();
 
-            //        // avoiding all four tires screeching at the same time
-            //        // if they do it can lead to some strange audio artefacts
-            //        if (!AnySkidSoundPlaying())
-            //        {
-            //            m_WheelEffects[i].PlayAudio();
-            //        }
-            //        continue;
-            //    }
+                    // avoiding all four tires screeching at the same time
+                    // if they do it can lead to some strange audio artefacts
+                    if (!AnySkidSoundPlaying())
+                    {
+                        //m_WheelEffects[i].PlayAudio();
+                    }
+                    continue;
+                }
 
-            //    // if it wasnt slipping stop all the audio
-            //    if (m_WheelEffects[i].PlayingAudio)
-            //    {
-            //        m_WheelEffects[i].StopAudio();
-            //    }
-            //    // end the trail generation
-            //    m_WheelEffects[i].EndSkidTrail();
-            //}
+                // if it wasnt slipping stop all the audio
+                //if (m_WheelEffects[i].PlayingAudio)
+                //{
+                //    m_WheelEffects[i].StopAudio();
+                //}
+                // end the trail generation
+                //m_WheelEffects[i].EndSkidTrail();
+            }
         }
 
         // crude traction control that reduces the power to wheel if the car is wheel spinning too much
@@ -401,13 +355,13 @@ namespace UnityStandardAssets.Vehicles.Car
 
         private bool AnySkidSoundPlaying()
         {
-            //for (int i = 0; i < 4; i++)
-            //{
-            //    if (m_WheelEffects[i].PlayingAudio)
-            //    {
-            //        return true;
-            //    }
-            //}
+            for (int i = 0; i < 4; i++)
+            {
+                //if (m_WheelEffects[i].PlayingAudio)
+                //{
+                //    return true;
+                //}
+            }
             return false;
         }
     }

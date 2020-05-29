@@ -12,6 +12,11 @@ public class AxleInfo
     //public bool steering_Back;    // このホイールがエンジンにアタッチされているかどうか
     //public bool motor_Back; // このホイールがハンドルの角度を反映しているかどうか
 }
+internal enum SpeedType
+{
+    MPH,
+    KPH
+}
 
 public class CarControl : MonoBehaviour
 {
@@ -34,11 +39,17 @@ public class CarControl : MonoBehaviour
     public Transform wheelBRTrans;
     float steering = 0.0f;
     float motor = 0.0f;
+    private Rigidbody m_Rigidbody;
+    [SerializeField] private SpeedType m_SpeedType;
+    [SerializeField] private float m_Topspeed = 500;    // 速度管理
+
+    public float MaxSpeed { get { return m_Topspeed; } }
     //float steering_Back = 0.0f;
     //float motor_Back = 0.0f;
 
     void Start()
     {
+        m_Rigidbody = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -63,7 +74,7 @@ public class CarControl : MonoBehaviour
     {
         motor = -maxMotorTorque * Input.GetAxis("Vertical");
         steering = maxSteeringAngle * Input.GetAxis("Horizontal");
-
+        
         //steering_Back = -Back_maxMotorTorque * Input.GetAxis("Vertical");
         //motor_Back = Back_maxSteeringAngle * Input.GetAxis("Horizontal");
 
@@ -85,6 +96,27 @@ public class CarControl : MonoBehaviour
                 //axleInfo.leftWheel.motorTorque = motor_Back;
                 //axleInfo.rightWheel.motorTorque = motor_Back;
             }
+        }
+        CapSpeed();
+    }
+
+    private void CapSpeed()
+    {
+        float speed = m_Rigidbody.velocity.magnitude;
+        switch (m_SpeedType)
+        {
+            case SpeedType.MPH:
+
+                speed *= 2.23693629f;
+                if (speed > m_Topspeed)
+                    m_Rigidbody.velocity = (m_Topspeed / 2.23693629f) * m_Rigidbody.velocity.normalized;
+                break;
+
+            case SpeedType.KPH:
+                speed *= 3.6f;
+                if (speed > m_Topspeed)
+                    m_Rigidbody.velocity = (m_Topspeed / 3.6f) * m_Rigidbody.velocity.normalized;
+                break;
         }
     }
 
