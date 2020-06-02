@@ -45,7 +45,7 @@ public class TimeCount : MonoBehaviour
     // ラップタイムを保存する
     public void RapCount(string playerID)
     {
-        Debug.Log("ラップタイム");
+        Debug.Log("ラップタイムカウント");
         timeRanking.SetRapTime(_timeCount, playerID);
     }
 
@@ -53,7 +53,7 @@ public class TimeCount : MonoBehaviour
     public void FinishCount(string playerID)
     {
         Debug.Log("カウントストップ");
-//        _endFlag = true;  // 全員ゴールしたらtrueにするようにしたい
+        _endFlag = true;  // 全員ゴールしたらtrueにするようにしたい
         timeRanking.SetGoalTime(playerID);
     }
 }

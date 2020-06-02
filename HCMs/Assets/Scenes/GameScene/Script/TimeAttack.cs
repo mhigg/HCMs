@@ -60,21 +60,21 @@ public class TimeAttack : MonoBehaviour
         }
 
         // ゴールしたタイミングでFinishCountを呼ぶ
-        if (!FinishCall)
-        {
-            if (Input.GetKeyDown(KeyCode.LeftControl))
-            {
-                Debug.Log("ラップタイム");
-                rapCnt++;    // プレイヤーごとにラップカウントをとる
-                timeCounter.RapCount(playerID);
-                if (!(rapCnt <= 3))
-                {
-                    Debug.Log("ゴール");
-                    FinishCall = true;
-                    timeCounter.FinishCount(playerID);
-                    text.text = "ＧＯＡＬ！！";
-                }
-            }
-        }
+        //if (!FinishCall)
+        //{
+        //    if (Input.GetKeyDown(KeyCode.LeftControl))
+        //    {
+        //        Debug.Log("ラップタイム");
+        //        rapCnt++;    // プレイヤーごとにラップカウントをとる
+        //        timeCounter.RapCount(playerID);
+        //        if (!(rapCnt <= 3))
+        //        {
+        //            Debug.Log("ゴール");
+        //            FinishCall = true;
+        //            timeCounter.FinishCount(playerID);
+        //            text.text = "ＧＯＡＬ！！";
+        //        }
+        //    }
+        //}
     }
 }

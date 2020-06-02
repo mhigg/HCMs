@@ -21,6 +21,8 @@ public class TimeRanking : MonoBehaviour
     
     public void SetUpTimeRanking(string gameMode, int playerNum, int rapMax)
     {
+        Debug.Log("TimeRankingセットアップ");
+
         _rankingKey = gameMode;
         _rapMax = rapMax;
         _rankingMax = playerNum;

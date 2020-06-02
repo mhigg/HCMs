@@ -29,6 +29,8 @@ public class DispRanking : MonoBehaviour
 
     public void SetUpDispRanking(string gameMode, int playerNum, int rapMax)
     {
+        Debug.Log("DispRankingセットアップ");
+
         _rankingKey = gameMode;
         _rankingMax = playerNum;
         _rapRankMax = playerNum * rapMax;
