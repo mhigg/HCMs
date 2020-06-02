@@ -2,19 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 
 public class GoalFlag : MonoBehaviour
 {
     public Text goalText = null;
     public TimeCount timeCounter = null;
-    public CheckPoint checkPoint = null;
 
     string playerID = "P1";     // プレイヤーごとに持っていて、プレイヤーから渡されるのが理想(タイムアタックは１つだからその限りではないが)
     int rapCnt;                 // ラップカウント
     int checkPointCnt;          // チェックポイント通過カウント
+    int checkPointCntMax;       // チェックポイントの数
     bool FinishCall = false;    // FinishCountテスト用
 
-    const int checkPointCntMax = 16;
 
     // Start is called before the first frame update
     void Start()
@@ -24,10 +24,10 @@ public class GoalFlag : MonoBehaviour
 
         timeCounter = timeCounter.GetComponent<TimeCount>();
 
-        checkPoint = checkPoint.GetComponent<CheckPoint>();
-
         rapCnt = 1;
         checkPointCnt = 0;
+        checkPointCntMax = GameObject.FindGameObjectsWithTag("CheckPoint").Length;
+        Debug.Log("チェックポイント全" + checkPointCntMax + "個");
     }
 
     // Update is called once per frame
@@ -39,6 +39,11 @@ public class GoalFlag : MonoBehaviour
     public void CheckPointCount(string playerID)
     {
         checkPointCnt++;
+    }
+
+    public int GetNowCheckPointCount(string playerID)
+    {
+        return checkPointCnt;
     }
 
     private void OnTriggerEnter(Collider other)
