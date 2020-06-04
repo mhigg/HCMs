@@ -37,6 +37,7 @@ public class CheckPoint : MonoBehaviour
             if (other.gameObject.tag == "RacingCar")
             {
                 Debug.Log("第" + (checkPointCnt + 1) + "チェックポイント通過");
+                Debug.Log(this.gameObject.name);
                 goalFlag.CheckPointCount(playerID);
                 isThrough = true;
             }
