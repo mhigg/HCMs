@@ -29,7 +29,18 @@ public class TimeCount : MonoBehaviour
             // 毎フレームごとにタイム加算
             // 現在 確認用にTime.timeを使用中
             // 後からtimeCountを使用したタイム計算に変更
-            timeText.text = (_timeCount >= 0 ? _timeCount.ToString("f3") : "0.000");
+            if(_timeCount >= 0)
+            {
+                float second = _timeCount % 60.0f;
+                int minute = Mathf.FloorToInt(_timeCount / 60.0f);
+                Debug.Log(second);
+                Debug.Log(minute);
+                timeText.text = string.Format("{0:00}.", minute) + string.Format("{0:00.000}", second);
+            }
+            else
+            {
+                timeText.text = "00.00.000";
+            }
             _timeCount += Time.deltaTime;
         }
     }
