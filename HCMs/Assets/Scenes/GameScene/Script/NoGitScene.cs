@@ -79,12 +79,12 @@ public class NoGitScene : MonoBehaviour
                 {
                     Debug.Log("ラップタイム");
                     rapCnt[idx]++;    // プレイヤーごとにラップカウントをとる
-                    timeCounter.RapCount(idx.ToString());
+                    timeCounter.RapCount(idx);
                     if (!(rapCnt[idx] <= 3))
                     {
                         Debug.Log("ゴール");
                         isFinished[idx] = true;
-                        timeCounter.FinishCount(idx.ToString());
+                        timeCounter.FinishCount(idx);
                         text.text = (idx + 1).ToString() + "ＧＯＡＬ！！";
                     }
                 }

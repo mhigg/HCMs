@@ -29,18 +29,9 @@ public class TimeCount : MonoBehaviour
             // 毎フレームごとにタイム加算
             // 現在 確認用にTime.timeを使用中
             // 後からtimeCountを使用したタイム計算に変更
-            if(_timeCount >= 0)
-            {
-                float second = _timeCount % 60.0f;
-                int minute = Mathf.FloorToInt(_timeCount / 60.0f);
-                Debug.Log(second);
-                Debug.Log(minute);
-                timeText.text = string.Format("{0:00}.", minute) + string.Format("{0:00.000}", second);
-            }
-            else
-            {
-                timeText.text = "00.00.000";
-            }
+            float second = _timeCount % 60.0f;
+            int minute = Mathf.FloorToInt(_timeCount / 60.0f);
+            timeText.text = string.Format("{0:00}.", minute) + string.Format("{0:00.000}", second);
             _timeCount += Time.deltaTime;
         }
     }
@@ -54,14 +45,14 @@ public class TimeCount : MonoBehaviour
     }
 
     // ラップタイムを保存する
-    public void RapCount(string playerID)
+    public void RapCount(int playerID)
     {
         Debug.Log("ラップタイムカウント");
         timeRanking.SetRapTime(_timeCount, playerID);
     }
 
     // カウントを停止する
-    public void FinishCount(string playerID)
+    public void FinishCount(int playerID)
     {
         Debug.Log("カウントストップ");
         _endFlag = true;  // 全員ゴールしたらtrueにするようにしたい

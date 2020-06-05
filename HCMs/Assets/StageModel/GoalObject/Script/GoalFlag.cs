@@ -7,9 +7,8 @@ public class GoalFlag : MonoBehaviour
 {
     public Text goalText = null;
     public TimeCount timeCounter = null;
-
-    string playerID = "P1";     // プレイヤーごとに持っていて、プレイヤーから渡されるのが理想(タイムアタックは１つだからその限りではないが)
-    int rapCnt;                 // ラップカウント
+    public RapCount rapCount = null;
+    
     int checkPointCnt;          // チェックポイント通過カウント
     int checkPointCntMax;       // チェックポイントの数
     bool FinishCall = false;    // FinishCountテスト用
@@ -22,8 +21,8 @@ public class GoalFlag : MonoBehaviour
         goalText.gameObject.SetActive(false);
 
         timeCounter = timeCounter.GetComponent<TimeCount>();
+        rapCount = rapCount.GetComponent<RapCount>();
 
-        rapCnt = 1;
         checkPointCnt = 0;
         checkPointCntMax = GameObject.FindGameObjectsWithTag("CheckPoint").Length;
         Debug.Log("チェックポイント全" + checkPointCntMax + "個");
@@ -35,18 +34,24 @@ public class GoalFlag : MonoBehaviour
         
     }
 
-    public void CheckPointCount(string playerID)
+    // ゴールを通過するために必要なチェックポイント通過数をプレイヤーごとにカウントする
+    public void CheckPointCount(int playerID)
     {
+        // checkPointCnt[playerID]++;
         checkPointCnt++;
     }
 
-    public int GetNowCheckPointCount(string playerID)
+    // プレイヤーごとに現在通過したチェックポイント数を返す
+    public int GetNowCheckPointCount(int playerID)
     {
+        // return checkPointCnt[playerID];
         return checkPointCnt;
     }
 
+    // ゴール可能かどうかの判定を返す
     public bool CheckGoal()
     {
+        // return FinishCall[playerID];
         return FinishCall;
     }
 
@@ -56,15 +61,21 @@ public class GoalFlag : MonoBehaviour
         {
             if (other.gameObject.tag == "RacingCar")
             {
+                /*
+                 other.gameObjectのプレイヤー名を照会してその添字をplayerIDとする
+                 つまり0～3となる
+                 現状は0(1プレイヤー目)とする
+                 */
+                int playerID = 0;
+
                 if(checkPointCnt == checkPointCntMax/*チェックポイントをすべて通過していたら*/)
                 {
-                    Debug.Log("ラップタイム" + rapCnt.ToString());
-                    rapCnt++;    // プレイヤーごとにラップカウントをとる
+                    rapCount.CountRap(playerID);
                     timeCounter.RapCount(playerID);
                     checkPointCnt = 0;
                 }
 
-                if (!(rapCnt <= 3))
+                if (rapCount.CheckRapCount(playerID))
                 {
                     Debug.Log("ゴール");
                     goalText.text = "ＧＯＡＬ！！！";
