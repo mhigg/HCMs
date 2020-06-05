@@ -16,6 +16,8 @@ public class MultiMovie : MonoBehaviour
 	Button _timeAtt;
 	Button _battle;
 	Button _obst;
+    Button _operate;
+    GameObject _operateTex;
 	GameObject _selectObj;
 	bool firstRun = true;
 
@@ -24,8 +26,12 @@ public class MultiMovie : MonoBehaviour
 		_timeAtt = GameObject.Find("/Canvas/TimeAttack").GetComponent<Button>();
 		_battle = GameObject.Find("/Canvas/Battle").GetComponent<Button>();
 		_obst = GameObject.Find("/Canvas/Obs").GetComponent<Button>();
+        _operate = GameObject.Find("/Canvas/Operation").GetComponent<Button>();
 
-		_timeAtt.Select();
+        _operateTex = GameObject.Find("OperationImage");
+        _operateTex.SetActive(false);
+
+        _timeAtt.Select();
 	}
 
 	private void Update()
@@ -59,7 +65,8 @@ public class MultiMovie : MonoBehaviour
 				videoPlayer.targetTexture = _texture;  // レンダリング先の設定
 
 				videoPlayer.audioOutputMode = VideoAudioOutputMode.Direct;  // 音声の出力方法の設定
-			}
+
+            }
 			firstRun = false;
 		}
 		if (eventSystem.currentSelectedGameObject.gameObject == _selectObj)
@@ -81,6 +88,15 @@ public class MultiMovie : MonoBehaviour
 			{
 				videoIndex = 2;
 			}
+            if(_selectObj.name == _operate.name)
+            {
+                videoPlayerList[videoIndex].Pause();
+                _operateTex.SetActive(true);//操作説明画像表示
+            }
+            else
+            {
+                _operateTex.SetActive(false);//操作説明非画像表示
+            }
 			videoPlayerList[videoIndex].Prepare();
 			videoPlayerList[videoIndex].Play();
 		}
