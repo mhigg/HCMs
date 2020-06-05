@@ -21,7 +21,7 @@ public class ObstacleScene : MonoBehaviour
             if (Input.GetKeyDown("space"))
             {
                 isCalledOnce = true;
-                FadeManager.Instance.LoadScene("TimeAttackResult", 2.0f);
+                FadeManager.Instance.LoadScene("ObstacleResult", 2.0f);
                 Debug.Log("Resultへ");
             }
             ///ゲームオーバーならゲームオーバー画面へ

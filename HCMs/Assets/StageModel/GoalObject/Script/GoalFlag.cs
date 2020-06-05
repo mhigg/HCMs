@@ -45,6 +45,11 @@ public class GoalFlag : MonoBehaviour
         return checkPointCnt;
     }
 
+    public bool CheckGoal()
+    {
+        return FinishCall;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (!FinishCall)
