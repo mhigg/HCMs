@@ -57,7 +57,16 @@ public class DispRanking : MonoBehaviour
         string time;
         for (int idx = 0; idx < _rankingMax; idx++)
         {
-            time = (dispRanking[idx] < 1000.0f ? dispRanking[idx].ToString("f3") + "秒\n" : "―――\n");
+            if(dispRanking[idx] < 1000.0f)
+            {
+                float second = dispRanking[idx] % 60.0f;
+                int minute = Mathf.FloorToInt(dispRanking[idx] / 60.0f);
+                time = string.Format("{0:00}.", minute) + string.Format("{0:00.000}", second) + "\n";
+            }
+            else
+            {
+                time = "--.--.---\n";
+            }
             ranking_string = ranking_string + (idx + 1) + "位 " + time;
         }
 
