@@ -10,7 +10,7 @@ public class TimeAttack_result : MonoBehaviour
     void Start()
     {
         dispRanking = dispRanking.GetComponent<DispRanking>();
-        dispRanking.SetUpDispRanking("TimeAttack", 10, 3);
+        dispRanking.SetUpDispRanking("TimeAttack", 11, 3, true);
     }
 
     bool isCalledOnce = false;

@@ -31,7 +31,7 @@ public class TimeRanking : MonoBehaviour
         if (gameMode == "Battle")
         {
             _rapRankKey = "BTRap";
-            storage.DeleteData(_rankingKey);
+            storage.DeleteData(_rankingKey);    // バトルモードのラップタイムランキングは持ち越さないので削除
             for (int playerID = 0; playerID < playerNum; playerID++)
             {
                 storage.DeleteData(playerID.ToString());
@@ -47,10 +47,10 @@ public class TimeRanking : MonoBehaviour
     // プレイヤーごとにラップタイムを保存
     // @newTime float:周回時のタイム
     // @playerKey string:プレイヤーID
-    public void SetRapTime(float newRapTime, string playerKey)
+    public void SetRapTime(float newRapTime, int playerKey)
     {
         Debug.Log("SetRapTimeバトルモード");
-        AddRapTime(playerKey, _rapMax, newRapTime);
+        AddRapTime(playerKey.ToString(), _rapMax, newRapTime);
     }
 
     // ラップタイムを集計していく関数
@@ -86,10 +86,10 @@ public class TimeRanking : MonoBehaviour
 
     // ラップタイムとゴールタイムを集計しランキングに保存する
     // プレイヤーごとにゴール時に呼び出す
-    public void SetGoalTime(string playerKey)
+    public void SetGoalTime(int playerKey)
     {
         Debug.Log("SetGoalTime");
-        float[] rapTime = storage.GetData(playerKey, _rapMax, 0.0f);
+        float[] rapTime = storage.GetData(playerKey.ToString(), _rapMax, 0.0f);
         float goalTime = 0.0f;
         for (int idx = 0; idx < _rapMax; idx++)
         {
@@ -99,7 +99,7 @@ public class TimeRanking : MonoBehaviour
         AddAndSortRapTimeRanking(_rapRankKey, _rapRankMax, rapTime);
         AddAndSortGoalTimeRanking(_rankingKey, _rankingMax, goalTime);
 
-        storage.DeleteData(playerKey);
+        storage.DeleteData(playerKey.ToString());
     }
 
     // ゴールタイムを保存しランキングに反映する関数

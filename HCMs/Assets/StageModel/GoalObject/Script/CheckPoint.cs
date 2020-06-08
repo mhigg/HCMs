@@ -6,27 +6,30 @@ using UnityEngine.UI;
 public class CheckPoint : MonoBehaviour
 {
     public GoalFlag goalFlag = null;
-    string playerID;     // プレイヤーごとに持っていて、プレイヤーから渡されるのが理想(タイムアタックは１つだからその限りではないが)
     int checkPointCnt;
     bool isThrough;
+    int playerNum;
 
     // Start is called before the first frame update
     void Start()
     {
         goalFlag = goalFlag.GetComponent<GoalFlag>();
-        playerID = "P1";
         isThrough = false;
+        playerNum = 1;
     }
 
     // Update is called once per frame
     void Update()
     {
-        checkPointCnt = goalFlag.GetNowCheckPointCount(playerID);
-        if(isThrough && (checkPointCnt <= 0))
+        for (int playerID = 0; playerID < playerNum; playerID++)
         {
-            Debug.Log("全チェックポイント通過");
-            Debug.Log("全チェックポイントを未通過状態にする");
-            isThrough = false;
+            checkPointCnt = goalFlag.GetNowCheckPointCount(playerID);
+            if (isThrough && (checkPointCnt <= 0))
+            {
+                Debug.Log("全チェックポイント通過");
+                Debug.Log("全チェックポイントを未通過状態にする");
+                isThrough = false;
+            }
         }
     }
 
@@ -36,6 +39,13 @@ public class CheckPoint : MonoBehaviour
         {
             if (other.gameObject.tag == "RacingCar")
             {
+                /*
+                 other.gameObjectのプレイヤー名を照会してその添字をplayerIDとする
+                 つまり0～3となる
+                 現状は0(1プレイヤー目)とする
+                 */
+                int playerID = 0;
+
                 Debug.Log("第" + (checkPointCnt + 1) + "チェックポイント通過");
                 Debug.Log(this.gameObject.name);
                 goalFlag.CheckPointCount(playerID);
