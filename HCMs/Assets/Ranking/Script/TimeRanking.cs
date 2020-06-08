@@ -31,7 +31,7 @@ public class TimeRanking : MonoBehaviour
         if (gameMode == "Battle")
         {
             _rapRankKey = "BTRap";
-            storage.DeleteData(_rankingKey);
+            storage.DeleteData(_rankingKey);    // バトルモードのラップタイムランキングは持ち越さないので削除
             for (int playerID = 0; playerID < playerNum; playerID++)
             {
                 storage.DeleteData(playerID.ToString());

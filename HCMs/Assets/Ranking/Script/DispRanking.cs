@@ -6,7 +6,8 @@ using UnityEngine.UI;
 // ランキング表示データ作成・表示
 public class DispRanking : MonoBehaviour
 {
-    public Text rankingText = null;     // ランキングのタイム表示テキスト
+    public Text rankingTimeText = null;     // ランキングのタイム表示テキスト
+    public Text rankingOutText = null;      // タイムがランキング外だった際に使用
 
     private float[] dispRanking;    // ランキング保存用
     private float[] dispRapTime;    // ラップタイム保存用
@@ -17,17 +18,19 @@ public class DispRanking : MonoBehaviour
     private string _rapRankKey;     // ラップタイムのランキング呼び出しキー
     private int _rankingMax;        // ランキングの表示数(=プレイヤー人数)
     private int _rapRankMax;        // ラップタイムランキングの表示数(=人数*周回数)
+    private bool _rankOutActive;    // true:ランキング外のタイムを表示する false:表示しない
 
     void Start()
     {
-        rankingText = rankingText.GetComponent<Text>();
+        rankingTimeText = rankingTimeText.GetComponent<Text>();
+        rankingOutText = rankingOutText.GetComponent<Text>();
 
         // ランキングデータを取得し、表示用データに反映する
         // バトルとタイムアタックで違うデ―タを取得する
         rankingStorage = rankingStorage.GetComponent<DataStorage>();
     }
 
-    public void SetUpDispRanking(string gameMode, int playerNum, int rapMax)
+    public void SetUpDispRanking(string gameMode, int playerNum, int rapMax, bool rankOutActive)
     {
         Debug.Log("DispRankingセットアップ");
 
@@ -35,11 +38,12 @@ public class DispRanking : MonoBehaviour
         _rankingMax = playerNum;
         _rapRankMax = playerNum * rapMax;
         _rapRankKey = (gameMode == "TimeAttack" ? "TARap" : "BTRap");
+        _rankOutActive = rankOutActive;
 
         // あとで利用するかも
         // しなかったら消します
-        dispRanking = new float[playerNum];
-        dispRanking = rankingStorage.GetData(_rankingKey, playerNum, 1000.0f);
+        dispRanking = new float[_rankingMax];
+        dispRanking = rankingStorage.GetData(_rankingKey, _rankingMax, 1000.0f);
 
         dispRapTime = new float[_rapRankMax];
         dispRapTime = rankingStorage.GetData(_rapRankKey, _rapRankMax, 1000.0f);
@@ -52,6 +56,7 @@ public class DispRanking : MonoBehaviour
     void Update()
     {
         string ranking_string = "";  // ランキング表示用
+        string rankOut_string = "";  // ランキング外表示用
 
         // ランキング表示
         string time;
@@ -67,7 +72,17 @@ public class DispRanking : MonoBehaviour
             {
                 time = "--.--.---\n";
             }
-            ranking_string = ranking_string + (idx + 1) + "位 " + time;
+
+            if (idx == (_rankingMax - 1) && _rankOutActive)
+            {
+                // ランキング外のタイムを表示する場合、一番下の記録をランキング外として表示する
+                rankOut_string += time;
+
+                // ランキング内には表示しないのでbreakする
+                break;
+            }
+
+            ranking_string += time;
         }
 
         // ラップタイム表示
@@ -95,6 +110,7 @@ public class DispRanking : MonoBehaviour
         //}
 
         // テキストの表示を入れ替える
-        rankingText.text = ranking_string;
+        rankingTimeText.text = ranking_string;
+        rankingOutText.text = rankOut_string;
     }
 }
