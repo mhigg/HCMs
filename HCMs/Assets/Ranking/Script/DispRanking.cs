@@ -9,6 +9,9 @@ public class DispRanking : MonoBehaviour
     public Text rankingTimeText = null;     // ランキングのタイム表示テキスト
     public Text rankingOutText = null;      // タイムがランキング外だった際に使用
 
+    public Canvas dispCanvas = null;        // 表示するキャンバス
+    public Canvas hiddenCanvas = null;      // 非表示にするキャンバス
+
     private float[] dispRanking;    // ランキング保存用
     private float[] dispRapTime;    // ラップタイム保存用
 
@@ -25,6 +28,9 @@ public class DispRanking : MonoBehaviour
         rankingTimeText = rankingTimeText.GetComponent<Text>();
         rankingOutText = rankingOutText.GetComponent<Text>();
 
+        dispCanvas = dispCanvas.GetComponent<Canvas>();
+        hiddenCanvas = hiddenCanvas.GetComponent<Canvas>();
+
         // ランキングデータを取得し、表示用データに反映する
         // バトルとタイムアタックで違うデ―タを取得する
         rankingStorage = rankingStorage.GetComponent<DataStorage>();
@@ -40,6 +46,9 @@ public class DispRanking : MonoBehaviour
         _rapRankKey = (gameMode == "TimeAttack" ? "TARap" : "BTRap");
         _rankOutActive = rankOutActive;
 
+        dispCanvas.gameObject.SetActive(true);
+        hiddenCanvas.gameObject.SetActive(false);
+
         // あとで利用するかも
         // しなかったら消します
         dispRanking = new float[_rankingMax];
@@ -47,10 +56,6 @@ public class DispRanking : MonoBehaviour
 
         dispRapTime = new float[_rapRankMax];
         dispRapTime = rankingStorage.GetData(_rapRankKey, _rapRankMax, 1000.0f);
-    }
-
-    public void InputText()
-    {
     }
 
     void Update()
