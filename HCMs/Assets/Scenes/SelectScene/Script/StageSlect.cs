@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class StageSlect : MonoBehaviour
 {
+    enum Stage { TimeAttackScene };
     GameObject _nowSelect;
     public List<Image> stages;
     [SerializeField] EventSystem eventSystem;
@@ -21,6 +22,8 @@ public class StageSlect : MonoBehaviour
             _imageName.Add($"{i}");
         }
     }
+
+    bool isCalledOnce = false;
 
     // Update is called once per frame
     void Update()
@@ -44,23 +47,16 @@ public class StageSlect : MonoBehaviour
                     stages[(i + stages.Count - 1) % stages.Count].transform.localPosition = pos;
                 }
             }
-            //if(_selectObj.name == "up")
-            //{
-            //    Vector3 pos = stages[0].transform.localPosition;
-            //    pos.x = 0;
-            //    stages[0].transform.localPosition = pos;
-            //    pos.x = 1200;
-            //    stages[1].transform.localPosition = pos;
-            //}
-            //if (_selectObj.name == "down")
-            //{
-            //    Vector3 pos = stages[1].transform.localPosition;
-            //    pos.x = 0;
-            //    stages[1].transform.localPosition = pos;
-            //    pos.x = 1200;
-            //    stages[0].transform.localPosition = pos;
-            //}
-
+        }
+        if (!isCalledOnce)
+        {
+            ///ここを任意のボタンにしましょう。
+            if (Input.GetKeyDown("space"))
+            {
+                isCalledOnce = true;
+                FadeManager.Instance.LoadScene("TimeAttackScene", 2.0f);
+                Debug.Log("TAへ");
+            }
         }
     }
 }
