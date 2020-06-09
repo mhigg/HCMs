@@ -30,7 +30,7 @@ public class TimeAttack : MonoBehaviour
 
     bool isCalledOnce = false;
 
-//    bool StartCall  = false;    // StartCountテスト用
+    bool StartCall  = false;    // StartCountテスト用
 
     // Update is called once per frame
     void Update()
@@ -50,15 +50,15 @@ public class TimeAttack : MonoBehaviour
             }
         }
 
-        //// 特定のタイミングでStartCountを呼ぶ
-        //if(!StartCall)
-        //{
-        //    if(!(startCounter.startWait))
-        //    {
-        //        Debug.Log("レーススタート");
-        //        StartCall = true;
-        //        timeCounter.StartCount();
-        //    }
-        //}
+        // 特定のタイミングでStartCountを呼ぶ
+        if(!StartCall)
+        {
+            if(!(startCounter.startWait))
+            {
+                Debug.Log("レーススタート");
+                StartCall = true;
+                timeCounter.StartCount();
+            }
+        }
     }
 }
