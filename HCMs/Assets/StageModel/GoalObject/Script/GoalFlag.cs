@@ -63,6 +63,14 @@ public class GoalFlag : MonoBehaviour
             {
                 /*
                  other.gameObjectのプレイヤー名を照会してその添字をplayerIDとする
+                 ex)
+                 for(int idx = 0; idx < playerName.Length; idx++)
+                 {
+                    if(other.gameObject.name == playerName[idx])
+                    {
+                        playerID = idx;
+                    }
+                 }
                  つまり0～3となる
                  現状は0(1プレイヤー目)とする
                  */

@@ -8,7 +8,9 @@ using UnityEngine.SceneManagement;
 public class NoGitScene : MonoBehaviour
 {
     public TimeCount timeCounter = null;
-    public Text text = null;
+//    public Text goalText = null;
+
+    public GoalFlag goalFlag = null;
 
     const int playerNum = 4;            // プレイヤー人数
     int[] rapCnt = new int[playerNum];  // 人数分のラップカウント
@@ -25,8 +27,10 @@ public class NoGitScene : MonoBehaviour
         timeRanking = timeRanking.GetComponent<TimeRanking>();
         timeRanking.SetUpTimeRanking("Battle", playerNum, 3);
 
+        goalFlag = goalFlag.GetComponent<GoalFlag>();
+
         timeCounter = timeCounter.GetComponent<TimeCount>();
-        text = text.GetComponent<Text>();
+//        goalText = goalText.GetComponent<Text>();
 
         for (int idx = 0; idx < playerNum; idx++)
         {
@@ -47,14 +51,18 @@ public class NoGitScene : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!isCalledOnce)
+        if(goalFlag.CheckGoal())
         {
-            ///ここを任意のボタンにしましょう。
-            if (Input.GetKeyDown(KeyCode.Space))
+            Debug.Log("Spaceキーを押してリザルトへ");
+            if (!isCalledOnce)
             {
-                isCalledOnce = true;
-                FadeManager.Instance.LoadScene("gitにはあげないResult", 2.0f);
-                Debug.Log("Resultへ");
+                ///ここを任意のボタンにしましょう。
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    isCalledOnce = true;
+                    FadeManager.Instance.LoadScene("gitにはあげないResult", 2.0f);
+                    Debug.Log("Resultへ");
+                }
             }
         }
 
@@ -66,29 +74,29 @@ public class NoGitScene : MonoBehaviour
                 Debug.Log("レーススタート");
                 StartCall = true;
                 timeCounter.StartCount();
-                text.text = "";
+//                goalText.text = "";
             }
         }
 
         // ゴールしたタイミングでFinishCountを呼ぶ
-        for (int idx = 0; idx < playerNum; idx++)
-        {
-            if (!isFinished[idx])
-            {
-                if (Input.GetKeyDown(playerKeyCode[idx]))
-                {
-                    Debug.Log("ラップタイム");
-                    rapCnt[idx]++;    // プレイヤーごとにラップカウントをとる
-                    timeCounter.RapCount(idx);
-                    if (!(rapCnt[idx] <= 3))
-                    {
-                        Debug.Log("ゴール");
-                        isFinished[idx] = true;
-                        timeCounter.FinishCount(idx);
-                        text.text = (idx + 1).ToString() + "ＧＯＡＬ！！";
-                    }
-                }
-            }
-        }
+        //for (int idx = 0; idx < playerNum; idx++)
+        //{
+        //    if (!isFinished[idx])
+        //    {
+        //        if (Input.GetKeyDown(playerKeyCode[idx]))
+        //        {
+        //            Debug.Log("ラップタイム");
+        //            rapCnt[idx]++;    // プレイヤーごとにラップカウントをとる
+        //            timeCounter.RapCount(idx);
+        //            if (!(rapCnt[idx] <= 3))
+        //            {
+        //                Debug.Log("ゴール");
+        //                isFinished[idx] = true;
+        //                timeCounter.FinishCount(idx);
+        //                goalText.text = (idx + 1).ToString() + "ＧＯＡＬ！！";
+        //            }
+        //        }
+        //    }
+        //}
     }
 }
