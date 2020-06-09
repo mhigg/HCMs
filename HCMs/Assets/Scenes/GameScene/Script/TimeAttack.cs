@@ -9,7 +9,6 @@ public class TimeAttack : MonoBehaviour
 {
     //public FadeManager fadeManager = null;
     public TimeCount timeCounter = null;
-    public Text text = null;
 
     public TimeRanking timeRanking = null;
     public GoalFlag goalFlag = null;
@@ -23,8 +22,6 @@ public class TimeAttack : MonoBehaviour
         goalFlag = goalFlag.GetComponent<GoalFlag>();
 
         timeCounter = timeCounter.GetComponent<TimeCount>();
-        text = text.GetComponent<Text>();
-        text.text = "";
     }
 
     bool isCalledOnce = false;
