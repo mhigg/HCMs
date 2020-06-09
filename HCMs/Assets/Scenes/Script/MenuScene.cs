@@ -34,18 +34,20 @@ public class MenuScene : MonoBehaviour
                 {
                     FadeManager.Instance.LoadScene("TimeSelectScene", 2.0f);
                     Debug.Log("TimeSelectScene");
+                    isCalledOnce = true;
                 }
                 if (_selectObj.name == _battle.name)
                 {
                     FadeManager.Instance.LoadScene("BattleSelectScene", 2.0f);
                     Debug.Log("BattleSelectScene");
+                    isCalledOnce = true;
                 }
                 if (_selectObj.name == _obst.name)
                 {
                     FadeManager.Instance.LoadScene("ObstacleSelectScene", 2.0f);
                     Debug.Log("ObstacleSelectScene");
+                    isCalledOnce = true;
                 }
-                isCalledOnce = true;
             }
         }
     }
