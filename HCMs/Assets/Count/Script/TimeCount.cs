@@ -32,6 +32,7 @@ public class TimeCount : MonoBehaviour
             float second = _timeCount % 60.0f;
             int minute = Mathf.FloorToInt(_timeCount / 60.0f);
             timeText.text = string.Format("{0:00}.", minute) + string.Format("{0:00.000}", second);
+            Debug.Log(timeText.text);
             _timeCount += Time.deltaTime;
         }
     }
@@ -47,7 +48,7 @@ public class TimeCount : MonoBehaviour
     // ラップタイムを保存する
     public void RapCount(int playerID)
     {
-        Debug.Log("ラップタイムカウント");
+        Debug.Log("ラップタイム" + _timeCount);
         timeRanking.SetRapTime(_timeCount, playerID);
     }
 

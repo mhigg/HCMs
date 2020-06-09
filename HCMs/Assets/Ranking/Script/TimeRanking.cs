@@ -49,7 +49,7 @@ public class TimeRanking : MonoBehaviour
     // @playerKey string:プレイヤーID
     public void SetRapTime(float newRapTime, int playerKey)
     {
-        Debug.Log("SetRapTimeバトルモード");
+        Debug.Log("SetRapTime");
         AddRapTime(playerKey.ToString(), _rapMax, newRapTime);
     }
 
