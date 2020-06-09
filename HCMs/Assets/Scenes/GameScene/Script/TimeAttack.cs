@@ -13,6 +13,8 @@ public class TimeAttack : MonoBehaviour
     public TimeRanking timeRanking = null;
     public GoalFlag goalFlag = null;
 
+    public StartStopController startCounter = null;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,6 +24,8 @@ public class TimeAttack : MonoBehaviour
         goalFlag = goalFlag.GetComponent<GoalFlag>();
 
         timeCounter = timeCounter.GetComponent<TimeCount>();
+
+        startCounter = startCounter.GetComponent<StartStopController>();
     }
 
     bool isCalledOnce = false;
@@ -49,7 +53,7 @@ public class TimeAttack : MonoBehaviour
         // 特定のタイミングでStartCountを呼ぶ
         if(!StartCall)
         {
-            if(Input.GetKeyDown(KeyCode.LeftShift))
+            if(!(startCounter.startWait))
             {
                 Debug.Log("レーススタート");
                 StartCall = true;
