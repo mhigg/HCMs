@@ -28,9 +28,9 @@ public class TimeAttack : MonoBehaviour
         startCounter = startCounter.GetComponent<StartStopController>();
     }
 
-    bool isCalledOnce = false;
+    private bool isCalledOnce = false;
 
-    bool StartCall  = false;    // StartCountテスト用
+    private bool StartCall  = false;    // StartCountテスト用
 
     // Update is called once per frame
     void Update()
@@ -50,8 +50,20 @@ public class TimeAttack : MonoBehaviour
             }
         }
 
+        // Debug用　横転等で動けなくなったとき用
+        if (!isCalledOnce)
+        {
+            ///ここを任意のボタンにしましょう。
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                isCalledOnce = true;
+                FadeManager.Instance.LoadScene("TimeAttackScene", 2.0f);
+                Debug.Log("再スタート");
+            }
+        }
+
         // 特定のタイミングでStartCountを呼ぶ
-        if(!StartCall)
+        if (!StartCall)
         {
             if(!(startCounter.startWait))
             {

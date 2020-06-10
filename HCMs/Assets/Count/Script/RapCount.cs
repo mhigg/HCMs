@@ -7,9 +7,9 @@ public class RapCount : MonoBehaviour
 {
     public TextMeshProUGUI rapText;
 
-    int[] rapCnt;   // ラップカウント
-    int rapMax;     // 規定ラップ数 最終的にはコースごとに持たせたい
-    int playerNum;  // プレイヤー数
+    private int[] rapCnt;   // ラップカウント
+    private int rapMax;     // 規定ラップ数 最終的にはコースごとに持たせたい
+    private int playerNum;  // プレイヤー数
 
     // Start is called before the first frame update
     void Start()

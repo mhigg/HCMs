@@ -13,7 +13,7 @@ public class NoGitResult : MonoBehaviour
         dispRanking.SetUpDispRanking("Battle", 4, 3, false);
     }
 
-    bool isCalledOnce = false;
+    private bool isCalledOnce = false;
 
     // Update is called once per frame
     void Update()

@@ -13,7 +13,7 @@ public class TimeAttack_result : MonoBehaviour
         dispRanking.SetUpDispRanking("TimeAttack", 11, 3, true);
     }
 
-    bool isCalledOnce = false;
+    private bool isCalledOnce = false;
 
     // Update is called once per frame
     void Update()

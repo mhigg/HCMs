@@ -12,12 +12,12 @@ public class NoGitScene : MonoBehaviour
 
     public GoalFlag goalFlag = null;
 
-    const int playerNum = 4;            // プレイヤー人数
-    int[] rapCnt = new int[playerNum];  // 人数分のラップカウント
-    KeyCode[] playerKeyCode = new KeyCode[playerNum];
+    private const int playerNum = 4;            // プレイヤー人数
+    private int[] rapCnt = new int[playerNum];  // 人数分のラップカウント
+    private KeyCode[] playerKeyCode = new KeyCode[playerNum];
 
-    bool StartCall = false;                     // StartCountテスト用
-    bool[] isFinished = new bool[playerNum];    // FinishCountテスト用
+    private bool StartCall = false;                     // StartCountテスト用
+    private bool[] isFinished = new bool[playerNum];    // FinishCountテスト用
 
     public TimeRanking timeRanking = null;
 

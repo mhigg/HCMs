@@ -9,9 +9,9 @@ public class GoalFlag : MonoBehaviour
     public TimeCount timeCounter = null;
     public RapCount rapCount = null;
     
-    int checkPointCnt;          // チェックポイント通過カウント
-    int checkPointCntMax;       // チェックポイントの数
-    bool FinishCall = false;    // FinishCountテスト用
+    private int checkPointCnt;          // チェックポイント通過カウント
+    private int checkPointCntMax;       // チェックポイントの数
+    private bool FinishCall = false;    // FinishCountテスト用
 
 
     // Start is called before the first frame update
@@ -24,6 +24,8 @@ public class GoalFlag : MonoBehaviour
         rapCount = rapCount.GetComponent<RapCount>();
 
         checkPointCnt = 0;
+
+        // ゴールによってカウントするチェックポイントのタグを変える
         checkPointCntMax = GameObject.FindGameObjectsWithTag("CheckPoint").Length;
         Debug.Log("チェックポイント全" + checkPointCntMax + "個");
     }

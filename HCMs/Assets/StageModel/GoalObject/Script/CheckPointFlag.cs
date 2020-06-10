@@ -3,19 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CheckPoint : MonoBehaviour
+public class CheckPointFlag : MonoBehaviour
 {
     public GoalFlag goalFlag = null;
-    int checkPointCnt;
-    bool isThrough;
-    int playerNum;
+    private int checkPointCnt;
+    private int playerNum;
+    private bool[] isThrough;
 
     // Start is called before the first frame update
     void Start()
     {
         goalFlag = goalFlag.GetComponent<GoalFlag>();
-        isThrough = false;
         playerNum = 1;
+        isThrough = new bool[playerNum];
+        for (int idx = 0; idx < playerNum; idx++)
+        {
+            isThrough[idx] = false;
+        }
     }
 
     // Update is called once per frame
@@ -24,32 +28,32 @@ public class CheckPoint : MonoBehaviour
         for (int playerID = 0; playerID < playerNum; playerID++)
         {
             checkPointCnt = goalFlag.GetNowCheckPointCount(playerID);
-            if (isThrough && (checkPointCnt <= 0))
+            if (isThrough[playerID] && (checkPointCnt <= 0))
             {
                 Debug.Log("全チェックポイント通過");
                 Debug.Log("全チェックポイントを未通過状態にする");
-                isThrough = false;
+                isThrough[playerID] = false;
             }
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!isThrough)
+        /*
+         other.gameObjectのプレイヤー名を照会してその添字をplayerIDとする
+         つまり0～3となる
+         現状は0(1プレイヤー目)とする
+         */
+        int playerID = 0;
+
+        if (!isThrough[playerID])
         {
             if (other.gameObject.tag == "RacingCar")
             {
-                /*
-                 other.gameObjectのプレイヤー名を照会してその添字をplayerIDとする
-                 つまり0～3となる
-                 現状は0(1プレイヤー目)とする
-                 */
-                int playerID = 0;
-
                 Debug.Log("第" + (checkPointCnt + 1) + "チェックポイント通過");
                 Debug.Log(this.gameObject.name);
                 goalFlag.CheckPointCount(playerID);
-                isThrough = true;
+                isThrough[playerID] = true;
             }
         }
     }
