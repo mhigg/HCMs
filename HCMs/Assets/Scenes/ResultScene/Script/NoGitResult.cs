@@ -10,7 +10,7 @@ public class NoGitResult : MonoBehaviour
     void Start()
     {
         dispRanking = dispRanking.GetComponent<DispRanking>();
-        dispRanking.SetUpDispRanking("Battle", 4, 3, false);
+        dispRanking.SetUpDispRanking("Battle", 4, 3, false, 1000.0f);
     }
 
     private bool isCalledOnce = false;

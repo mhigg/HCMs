@@ -5,7 +5,8 @@ using UnityEngine.UI;
 
 public class CheckPointFlag : MonoBehaviour
 {
-    public GoalFlag goalFlag = null;
+    public CheckPointCount checkPointCount = null;
+
     private int checkPointCnt;
     private int playerNum;
     private bool[] isThrough;
@@ -13,7 +14,8 @@ public class CheckPointFlag : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        goalFlag = goalFlag.GetComponent<GoalFlag>();
+        checkPointCount = checkPointCount.GetComponent<CheckPointCount>();
+
         playerNum = 1;
         isThrough = new bool[playerNum];
         for (int idx = 0; idx < playerNum; idx++)
@@ -27,7 +29,7 @@ public class CheckPointFlag : MonoBehaviour
     {
         for (int playerID = 0; playerID < playerNum; playerID++)
         {
-            checkPointCnt = goalFlag.GetNowCheckPointCount(playerID);
+            checkPointCnt = checkPointCount.GetNowThroughCheckPointNum(playerID);
             if (isThrough[playerID] && (checkPointCnt <= 0))
             {
                 Debug.Log("全チェックポイント通過");
@@ -52,7 +54,7 @@ public class CheckPointFlag : MonoBehaviour
             {
                 Debug.Log("第" + (checkPointCnt + 1) + "チェックポイント通過");
                 Debug.Log(this.gameObject.name);
-                goalFlag.CheckPointCount(playerID);
+                checkPointCount.CountCheckPoint(playerID);
                 isThrough[playerID] = true;
             }
         }

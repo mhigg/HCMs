@@ -35,7 +35,8 @@ public class TimeAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (goalFlag.CheckGoal())
+        int playerID = 0;   // Debug用 1プレイヤー目の0
+        if (goalFlag.CheckGoal(playerID))
         {
             Debug.Log("Spaceキーを押してリザルトへ");
             if (!isCalledOnce)

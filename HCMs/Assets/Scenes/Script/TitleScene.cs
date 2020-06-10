@@ -34,8 +34,8 @@ public class TitleScene : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Return))
             {
                 isCalledOnce = true;
-                FadeManager.Instance.LoadScene("gitにはあげない", 2.0f);
-                Debug.Log("Menuへ");
+                FadeManager.Instance.LoadScene("NoGitScene", 2.0f);
+                Debug.Log("BattleSceneの代替Sceneへ");
             }
         }
 
@@ -47,7 +47,7 @@ public class TitleScene : MonoBehaviour
                 isDeleteOnce = true;
                 rankingStorage.DeleteData("TimeAttack");
                 rankingStorage.DeleteData("Battle");
-                Debug.Log("デリート");
+                Debug.Log("全ランキングデリート");
             }
         }
 
@@ -59,7 +59,7 @@ public class TitleScene : MonoBehaviour
                 isDeleteOnce = true;
                 rankingStorage.DeleteData("TARap");
                 rankingStorage.DeleteData("BTRap");
-                Debug.Log("デリート");
+                Debug.Log("全ラップランキングデリート");
             }
         }
     }

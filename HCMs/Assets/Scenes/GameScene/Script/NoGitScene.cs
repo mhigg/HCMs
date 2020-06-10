@@ -50,17 +50,20 @@ public class NoGitScene : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(goalFlag.CheckGoal())
+        for (int playerID = 0; playerID < playerNum; playerID++)
         {
-            Debug.Log("Spaceキーを押してリザルトへ");
-            if (!isCalledOnce)
+            if (goalFlag.CheckGoal(playerID))
             {
-                ///ここを任意のボタンにしましょう。
-                if (Input.GetKeyDown(KeyCode.Space))
+                Debug.Log("Spaceキーを押してリザルトへ");
+                if (!isCalledOnce)
                 {
-                    isCalledOnce = true;
-                    FadeManager.Instance.LoadScene("gitにはあげないResult", 2.0f);
-                    Debug.Log("Resultへ");
+                    ///ここを任意のボタンにしましょう。
+                    if (Input.GetKeyDown(KeyCode.Space))
+                    {
+                        isCalledOnce = true;
+                        FadeManager.Instance.LoadScene("NoGitResult", 2.0f);
+                        Debug.Log("Resultへ");
+                    }
                 }
             }
         }

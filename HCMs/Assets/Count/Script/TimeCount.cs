@@ -29,11 +29,11 @@ public class TimeCount : MonoBehaviour
             // 毎フレームごとにタイム加算
             // 現在 確認用にTime.timeを使用中
             // 後からtimeCountを使用したタイム計算に変更
+            _timeCount += Time.deltaTime;
             float second = _timeCount % 60.0f;
             int minute = Mathf.FloorToInt(_timeCount / 60.0f);
             timeText.text = string.Format("{0:00}.", minute) + string.Format("{0:00.000}", second);
-            Debug.Log(timeText.text);
-            _timeCount += Time.deltaTime;
+//            Debug.Log(timeText.text);
         }
     }
     
