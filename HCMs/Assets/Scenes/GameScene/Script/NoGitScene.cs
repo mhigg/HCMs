@@ -30,7 +30,6 @@ public class NoGitScene : MonoBehaviour
         goalFlag = goalFlag.GetComponent<GoalFlag>();
 
         timeCounter = timeCounter.GetComponent<TimeCount>();
-//        goalText = goalText.GetComponent<Text>();
 
         for (int idx = 0; idx < playerNum; idx++)
         {
@@ -74,9 +73,14 @@ public class NoGitScene : MonoBehaviour
                 Debug.Log("レーススタート");
                 StartCall = true;
                 timeCounter.StartCount();
-//                goalText.text = "";
             }
         }
+
+        // 順位付け
+        /*
+         
+         
+         */
 
         // ゴールしたタイミングでFinishCountを呼ぶ
         //for (int idx = 0; idx < playerNum; idx++)
@@ -93,7 +97,6 @@ public class NoGitScene : MonoBehaviour
         //                Debug.Log("ゴール");
         //                isFinished[idx] = true;
         //                timeCounter.FinishCount(idx);
-        //                goalText.text = (idx + 1).ToString() + "ＧＯＡＬ！！";
         //            }
         //        }
         //    }
