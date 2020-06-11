@@ -7,37 +7,41 @@ public class RapCount : MonoBehaviour
 {
     public TextMeshProUGUI rapText;
 
-    int[] rapCnt;   // ラップカウント
-    int rapMax;     // 規定ラップ数 最終的にはコースごとに持たせたい
-    int playerNum;  // プレイヤー数
+    private int[] _rapCnt;   // ラップカウント
+    private int _rapMax;     // 規定ラップ数 最終的にはコースごとに持たせたい
+    private int _playerNum;  // プレイヤー数
 
-    // Start is called before the first frame update
-    void Start()
+    public void SetUpRapCount(int playerNum, int rapMax)
     {
-        playerNum = 1;
-        rapCnt = new int[playerNum];
-        for(int idx = 0; idx < playerNum; idx++)
+        _playerNum = playerNum;
+        _rapCnt = new int[_playerNum];
+        for (int idx = 0; idx < _playerNum; idx++)
         {
-            rapCnt[idx] = 1;
+            _rapCnt[idx] = 1;
         }
-        rapMax = 3;
+
+        _rapMax = rapMax;
 
         rapText = rapText.GetComponent<TextMeshProUGUI>();
-        rapText.text = rapCnt[0] + " / " + rapMax;
+        // 現状、全プレイヤーの画面にプレイヤー１の周回数が反映されている
+        // これを各プレイヤーごとにそれぞれの周回数表示に変更する必要がある
+        // 画面分割、プレイヤーごとのカメラの設定などの作業中に関わってくると思われるため、
+        // それまでは全プレイヤーにプレイヤー１の周回数を表示しておく
+        rapText.text = _rapCnt[0] + " / " + _rapMax;
     }
 
     public void CountRap(int playerID)
     {
-        rapCnt[playerID]++;    // プレイヤーごとにラップカウントをとる
-        if(rapCnt[playerID] <= rapMax)
+        _rapCnt[playerID]++;    // プレイヤーごとにラップカウントをとる
+        if(_rapCnt[playerID] <= _rapMax)
         {
-            rapText.text = (rapCnt[playerID]) + " / " + rapMax;
+            rapText.text = (_rapCnt[playerID]) + " / " + _rapMax;
         }
         Debug.Log(rapText.text);
     }
 
     public bool CheckRapCount(int playerID)
     {
-        return !(rapCnt[playerID] <= rapMax);
+        return !(_rapCnt[playerID] <= _rapMax);
     }
 }

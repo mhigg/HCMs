@@ -8,11 +8,10 @@ public class GoalFlag : MonoBehaviour
     public Text goalText = null;
     public TimeCount timeCounter = null;
     public RapCount rapCount = null;
+    public CheckPointCount checkPointCount = null;
     
-    int checkPointCnt;          // チェックポイント通過カウント
-    int checkPointCntMax;       // チェックポイントの数
-    bool FinishCall = false;    // FinishCountテスト用
-
+    private bool[] FinishCall;    // FinishCountテスト用
+    private int _playerNum;
 
     // Start is called before the first frame update
     void Start()
@@ -23,64 +22,53 @@ public class GoalFlag : MonoBehaviour
         timeCounter = timeCounter.GetComponent<TimeCount>();
         rapCount = rapCount.GetComponent<RapCount>();
 
-        checkPointCnt = 0;
-        checkPointCntMax = GameObject.FindGameObjectsWithTag("CheckPoint").Length;
-        Debug.Log("チェックポイント全" + checkPointCntMax + "個");
+        checkPointCount = checkPointCount.GetComponent<CheckPointCount>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void SetUpGoalFlag(int playerNum, int rapMax)
     {
-        
-    }
+        _playerNum = playerNum;
+        FinishCall = new bool[_playerNum];
+        for (int playerID = 0; playerID < _playerNum; playerID++)
+        {
+            FinishCall[playerID] = false;
+        }
 
-    // ゴールを通過するために必要なチェックポイント通過数をプレイヤーごとにカウントする
-    public void CheckPointCount(int playerID)
-    {
-        // checkPointCnt[playerID]++;
-        checkPointCnt++;
-    }
-
-    // プレイヤーごとに現在通過したチェックポイント数を返す
-    public int GetNowCheckPointCount(int playerID)
-    {
-        // return checkPointCnt[playerID];
-        return checkPointCnt;
+        rapCount.SetUpRapCount(_playerNum, rapMax);
+        checkPointCount.SetUpCheckPointCount(_playerNum);
     }
 
     // ゴール可能かどうかの判定を返す
-    public bool CheckGoal()
+    public bool CheckGoal(int playerID)
     {
-        // return FinishCall[playerID];
-        return FinishCall;
+        return FinishCall[playerID];
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!FinishCall)
+        /*
+         other.gameObjectのプレイヤー名を照会してその添字をplayerIDとする
+         ex)
+         for(int idx = 0; idx < playerName.Length; idx++)
+         {
+            if(other.gameObject.name == playerName[idx])
+            {
+                playerID = idx;
+            }
+         }
+         つまり0～3となる
+         現状は0(1プレイヤー目)とする
+         */
+        int playerID = 0;
+
+        if (!FinishCall[playerID])
         {
             if (other.gameObject.tag == "RacingCar")
             {
-                /*
-                 other.gameObjectのプレイヤー名を照会してその添字をplayerIDとする
-                 ex)
-                 for(int idx = 0; idx < playerName.Length; idx++)
-                 {
-                    if(other.gameObject.name == playerName[idx])
-                    {
-                        playerID = idx;
-                    }
-                 }
-                 つまり0～3となる
-                 現状は0(1プレイヤー目)とする
-                 */
-                int playerID = 0;
-
-                if(checkPointCnt == checkPointCntMax/*チェックポイントをすべて通過していたら*/)
+                if(checkPointCount.JudgThroughGoalSpace(playerID))
                 {
                     rapCount.CountRap(playerID);
                     timeCounter.RapCount(playerID);
-                    checkPointCnt = 0;
                 }
 
                 if (rapCount.CheckRapCount(playerID))
@@ -89,7 +77,7 @@ public class GoalFlag : MonoBehaviour
                     goalText.text = "ＧＯＡＬ！！！";
                     goalText.gameObject.SetActive(true);
                     timeCounter.FinishCount(playerID);
-                    FinishCall = true;
+                    FinishCall[playerID] = true;
                 }
             }
         }

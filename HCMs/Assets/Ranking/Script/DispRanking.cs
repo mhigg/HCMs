@@ -22,6 +22,7 @@ public class DispRanking : MonoBehaviour
     private int _rankingMax;        // ランキングの表示数(=プレイヤー人数)
     private int _rapRankMax;        // ラップタイムランキングの表示数(=人数*周回数)
     private bool _rankOutActive;    // true:ランキング外のタイムを表示する false:表示しない
+    private float _defaultTime;     // タイムの初期値もとい限界値
 
     void Start()
     {
@@ -36,7 +37,7 @@ public class DispRanking : MonoBehaviour
         rankingStorage = rankingStorage.GetComponent<DataStorage>();
     }
 
-    public void SetUpDispRanking(string gameMode, int playerNum, int rapMax, bool rankOutActive)
+    public void SetUpDispRanking(string gameMode, int playerNum, int rapMax, bool rankOutActive, float defaultTime)
     {
         Debug.Log("DispRankingセットアップ");
 
@@ -45,6 +46,7 @@ public class DispRanking : MonoBehaviour
         _rapRankMax = playerNum * rapMax;
         _rapRankKey = (gameMode == "TimeAttack" ? "TARap" : "BTRap");
         _rankOutActive = rankOutActive;
+        _defaultTime = defaultTime;
 
         dispCanvas.gameObject.SetActive(true);
         hiddenCanvas.gameObject.SetActive(false);
@@ -52,10 +54,10 @@ public class DispRanking : MonoBehaviour
         // あとで利用するかも
         // しなかったら消します
         dispRanking = new float[_rankingMax];
-        dispRanking = rankingStorage.GetData(_rankingKey, _rankingMax, 1000.0f);
+        dispRanking = rankingStorage.GetData(_rankingKey, _rankingMax, _defaultTime);
 
         dispRapTime = new float[_rapRankMax];
-        dispRapTime = rankingStorage.GetData(_rapRankKey, _rapRankMax, 1000.0f);
+        dispRapTime = rankingStorage.GetData(_rapRankKey, _rapRankMax, _defaultTime);
     }
 
     void Update()
@@ -67,7 +69,7 @@ public class DispRanking : MonoBehaviour
         string time;
         for (int idx = 0; idx < _rankingMax; idx++)
         {
-            if(dispRanking[idx] < 1000.0f)
+            if(dispRanking[idx] < _defaultTime)
             {
                 float second = dispRanking[idx] % 60.0f;
                 int minute = Mathf.FloorToInt(dispRanking[idx] / 60.0f);
@@ -75,6 +77,7 @@ public class DispRanking : MonoBehaviour
             }
             else
             {
+                // デフォルト(1000.0f)ならタイム表記を表示しない
                 time = "--.--.---\n";
             }
 
@@ -100,7 +103,7 @@ public class DispRanking : MonoBehaviour
         //{
         //    // とりあえず仮に縦にずらーっと表示
         //    // ラップタイム保存確認のため
-        //    rap = (dispRapTime[idx] < 1000.0f ? dispRapTime[idx].ToString("f3") + "秒\n" : "―――\n");
+        //    rap = (dispRapTime[idx] < _defaultTime ? dispRapTime[idx].ToString("f3") + "秒\n" : "―――\n");
         //    ranking_string = ranking_string + (idx + 1) + "位 " + rap;
 
         //    //rap += (dispRapTime[idx] > 0.0f ? dispRapTime[idx].ToString("f3") + "秒　" : "――秒　");

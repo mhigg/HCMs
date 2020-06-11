@@ -5,12 +5,6 @@ using UnityEngine;
 // 保存データの取得
 public class DataStorage : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     // PlayerPrefsに保存したデータをretData配列に格納し返り値として返す
     // float型配列
     // @KEY string型：データ読み出しのキー

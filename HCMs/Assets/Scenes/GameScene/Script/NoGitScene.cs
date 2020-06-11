@@ -12,12 +12,12 @@ public class NoGitScene : MonoBehaviour
 
     public GoalFlag goalFlag = null;
 
-    const int playerNum = 4;            // プレイヤー人数
-    int[] rapCnt = new int[playerNum];  // 人数分のラップカウント
-    KeyCode[] playerKeyCode = new KeyCode[playerNum];
+    private const int playerNum = 4;            // プレイヤー人数
+    private int[] rapCnt = new int[playerNum];  // 人数分のラップカウント
+    private KeyCode[] playerKeyCode = new KeyCode[playerNum];
 
-    bool StartCall = false;                     // StartCountテスト用
-    bool[] isFinished = new bool[playerNum];    // FinishCountテスト用
+    private bool StartCall = false;                     // StartCountテスト用
+    private bool[] isFinished = new bool[playerNum];    // FinishCountテスト用
 
     public TimeRanking timeRanking = null;
 
@@ -28,6 +28,7 @@ public class NoGitScene : MonoBehaviour
         timeRanking.SetUpTimeRanking("Battle", playerNum, 3);
 
         goalFlag = goalFlag.GetComponent<GoalFlag>();
+        goalFlag.SetUpGoalFlag(playerNum, 3);
 
         timeCounter = timeCounter.GetComponent<TimeCount>();
 
@@ -50,17 +51,20 @@ public class NoGitScene : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(goalFlag.CheckGoal())
+        for (int playerID = 0; playerID < playerNum; playerID++)
         {
-            Debug.Log("Spaceキーを押してリザルトへ");
-            if (!isCalledOnce)
+            if (goalFlag.CheckGoal(playerID))
             {
-                ///ここを任意のボタンにしましょう。
-                if (Input.GetKeyDown(KeyCode.Space))
+                Debug.Log("Spaceキーを押してリザルトへ");
+                if (!isCalledOnce)
                 {
-                    isCalledOnce = true;
-                    FadeManager.Instance.LoadScene("gitにはあげないResult", 2.0f);
-                    Debug.Log("Resultへ");
+                    ///ここを任意のボタンにしましょう。
+                    if (Input.GetKeyDown(KeyCode.Space))
+                    {
+                        isCalledOnce = true;
+                        FadeManager.Instance.LoadScene("NoGitResult", 2.0f);
+                        Debug.Log("Resultへ");
+                    }
                 }
             }
         }
