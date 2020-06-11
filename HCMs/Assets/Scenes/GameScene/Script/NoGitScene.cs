@@ -28,6 +28,7 @@ public class NoGitScene : MonoBehaviour
         timeRanking.SetUpTimeRanking("Battle", playerNum, 3);
 
         goalFlag = goalFlag.GetComponent<GoalFlag>();
+        goalFlag.SetUpGoalFlag(playerNum, 3);
 
         timeCounter = timeCounter.GetComponent<TimeCount>();
 

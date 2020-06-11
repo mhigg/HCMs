@@ -16,7 +16,7 @@ public class CheckPointFlag : MonoBehaviour
     {
         checkPointCount = checkPointCount.GetComponent<CheckPointCount>();
 
-        playerNum = 1;
+        playerNum = 1;  // ここをTimeAttack,Battleで切り替える方法を考える
         isThrough = new bool[playerNum];
         for (int idx = 0; idx < playerNum; idx++)
         {

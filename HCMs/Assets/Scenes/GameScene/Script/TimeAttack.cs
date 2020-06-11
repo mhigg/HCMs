@@ -22,6 +22,7 @@ public class TimeAttack : MonoBehaviour
         timeRanking.SetUpTimeRanking("TimeAttack", 11, 3);
 
         goalFlag = goalFlag.GetComponent<GoalFlag>();
+        goalFlag.SetUpGoalFlag(1, 3);
 
         timeCounter = timeCounter.GetComponent<TimeCount>();
 

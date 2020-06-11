@@ -6,15 +6,14 @@ public class CheckPointCount : MonoBehaviour
 {
     private int[] checkPointCnt;        // チェックポイント通過カウント
     private int checkPointCntMax;       // チェックポイントの数
-    private int playerNum;              // プレイヤー数
+    private int _playerNum;             // プレイヤー数
 
-    // Start is called before the first frame update
-    void Start()
+    public void SetUpCheckPointCount(int playerNum)
     {
-        playerNum = 1;
+        _playerNum = playerNum;
 
-        checkPointCnt = new int[playerNum];
-        for (int playerID = 0; playerID < playerNum; playerID++)
+        checkPointCnt = new int[_playerNum];
+        for (int playerID = 0; playerID < _playerNum; playerID++)
         {
             checkPointCnt[playerID] = 0;
         }

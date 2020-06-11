@@ -35,6 +35,7 @@ public class GoalFlag : MonoBehaviour
         }
 
         rapCount.SetUpRapCount(_playerNum, rapMax);
+        checkPointCount.SetUpCheckPointCount(_playerNum);
     }
 
     // ゴール可能かどうかの判定を返す
