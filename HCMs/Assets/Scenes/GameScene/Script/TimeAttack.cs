@@ -59,7 +59,7 @@ public class TimeAttack : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Return))
             {
                 isCalledOnce = true;
-                FadeManager.Instance.LoadScene("TimeAttackScene", 2.0f);
+                FadeManager.Instance.LoadScene("TimeAttack02", 2.0f);
                 Debug.Log("再スタート");
             }
         }

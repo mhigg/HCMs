@@ -38,7 +38,6 @@ public class CheckPointCount : MonoBehaviour
     // GoalSpaceを通過可能か判定し結果を返す
     public bool JudgThroughGoalSpace(int playerID)
     {
-        // return FinishCall[playerID];
         bool retFlag = (checkPointCnt[playerID] == checkPointCntMax);
         if (retFlag)
         {
