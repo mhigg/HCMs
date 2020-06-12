@@ -54,8 +54,8 @@ public class StageSlect : MonoBehaviour
             if (Input.GetKeyDown("space"))
             {
                 isCalledOnce = true;
-                FadeManager.Instance.LoadScene("TimeAttackScene", 2.0f);
-                Debug.Log("TAへ");
+                FadeManager.Instance.LoadScene("TimeAttackScene_01", 2.0f);
+                Debug.Log("TA01へ");
             }
         }
     }
