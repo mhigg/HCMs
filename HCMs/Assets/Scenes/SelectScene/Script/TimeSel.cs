@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class TimeSel : MonoBehaviour
 {
     enum Stage { TimeAttackScene };
-    GameObject _nowSelect;
+    int _nowSelected;
     public List<Image> stages;
     [SerializeField] EventSystem eventSystem;
     GameObject _selectObj;
@@ -45,6 +45,7 @@ public class TimeSel : MonoBehaviour
                     stages[(i + 1) % stages.Count].transform.localPosition = pos;
                     pos.x = -1200;
                     stages[(i + stages.Count - 1) % stages.Count].transform.localPosition = pos;
+                    _nowSelected = i;
                 }
             }
         }
@@ -54,7 +55,7 @@ public class TimeSel : MonoBehaviour
             if (Input.GetKeyDown("space"))
             {
                 isCalledOnce = true;
-                FadeManager.Instance.LoadScene("TimeAttack02", 2.0f);
+                FadeManager.Instance.LoadScene("TimeAttack0" + $"{_nowSelected + 1}", 2.0f);
                 Debug.Log("01へ");
             }
         }
