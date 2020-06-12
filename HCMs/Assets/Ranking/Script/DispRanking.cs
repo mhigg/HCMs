@@ -44,7 +44,7 @@ public class DispRanking : MonoBehaviour
         _rankingKey = gameMode;
         _rankingMax = playerNum;
         _rapRankMax = playerNum * rapMax;
-        _rapRankKey = (gameMode == "TimeAttack" ? "TARap" : "BTRap");
+        _rapRankKey = (gameMode == "Battle" ? "BTRap" : "TARap");
         _rankOutActive = rankOutActive;
         _defaultTime = defaultTime;
 

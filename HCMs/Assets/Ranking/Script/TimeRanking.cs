@@ -19,19 +19,19 @@ public class TimeRanking : MonoBehaviour
         storage = storage.GetComponent<DataStorage>();
     }
     
-    // @gameMode string型：ゲームモード
+    // @course string型：走行コース名 バトルモードはBattleでいい
     // @indicateRanks int型：表示するランキング数
     // @rapMax int型：最大周回数
-    public void SetUpTimeRanking(string gameMode, int indicateRanks, int rapMax)
+    public void SetUpTimeRanking(string course, int indicateRanks, int rapMax)
     {
         Debug.Log("TimeRankingセットアップ");
 
-        _rankingKey = gameMode;
+        _rankingKey = course;
         _rapMax = rapMax;
         _rankingMax = indicateRanks;
         _rapRankMax = indicateRanks * rapMax;
 
-        if (gameMode == "Battle")
+        if (course == "Battle")
         {
             _rapRankKey = "BTRap";
             storage.DeleteData(_rankingKey);    // バトルモードのラップタイムランキングは持ち越さないので削除

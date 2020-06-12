@@ -7,17 +7,20 @@ public class TimeCount : MonoBehaviour
 {
     // タイム表示用テキストコンポーネント
     public Text timeText = null;
+    public Text rapTimeText = null;
 
     // タイムを保存するためのコンポーネント
     public TimeRanking timeRanking = null;
 
     private float _timeCount = 0.0f;    // タイムカウント用変数
+    private float _rapTimeCount = 0.0f;
     private bool _endFlag = true;       // カウント停止中true カウント中false
 
     // Start is called before the first frame update
     void Start()
     {
         timeText = timeText.GetComponent<Text>();
+        rapTimeText = rapTimeText.GetComponent<Text>();
         timeRanking = timeRanking.GetComponent<TimeRanking>();
     }
 
@@ -30,11 +33,22 @@ public class TimeCount : MonoBehaviour
             // 現在 確認用にTime.timeを使用中
             // 後からtimeCountを使用したタイム計算に変更
             _timeCount += Time.deltaTime;
-            float second = _timeCount % 60.0f;
-            int minute = Mathf.FloorToInt(_timeCount / 60.0f);
-            timeText.text = string.Format("{0:00}.", minute) + string.Format("{0:00.000}", second);
-//            Debug.Log(timeText.text);
+            timeText.text = ChangeTimeNotationAndTimeText(_timeCount);
+            //float second = _timeCount % 60.0f;
+            //int minute = Mathf.FloorToInt(_timeCount / 60.0f);
+            //timeText.text = string.Format("{0:00}.", minute) + string.Format("{0:00.000}", second);
+
+            _rapTimeCount += Time.deltaTime;
+            rapTimeText.text = ChangeTimeNotationAndTimeText(_rapTimeCount);
+            // Debug.Log(timeText.text);
         }
+    }
+
+    private string ChangeTimeNotationAndTimeText(float time)
+    {
+        float second = time % 60.0f;
+        int minute = Mathf.FloorToInt(time / 60.0f);
+        return string.Format("{0:00}.", minute) + string.Format("{0:00.000}", second);
     }
     
     // カウントを開始する
@@ -43,13 +57,15 @@ public class TimeCount : MonoBehaviour
         Debug.Log("カウントスタート");
         _endFlag = false;
         _timeCount = 0.0f;
+        _rapTimeCount = 0.0f;
     }
 
-    // ラップタイムを保存する
-    public void RapCount(int playerID)
+// ラップタイムを保存する
+public void RapCount(int playerID)
     {
         Debug.Log("ラップタイム" + _timeCount);
         timeRanking.SetRapTime(_timeCount, playerID);
+        _rapTimeCount = 0.0f;
     }
 
     // カウントを停止する

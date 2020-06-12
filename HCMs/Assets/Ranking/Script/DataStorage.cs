@@ -17,12 +17,25 @@ public class DataStorage : MonoBehaviour
         }
         else
         {
-            Debug.LogError("セーブするデータが空です:DataStorage.SaveData");
+            Debug.LogError("保存不可:データが空です:DataStorage.SaveData");
+        }
+    }
+
+    public void SaveData(string KEY, string[] saveData)
+    {
+        if (saveData.Length > 0)
+        {
+            string data_string = string.Join(",", saveData);
+            PlayerPrefs.SetString(KEY, data_string);
+        }
+        else
+        {
+            Debug.LogError("保存不可:データが空です:DataStorage.SaveData");
         }
     }
 
     // PlayerPrefsに保存したデータをretData配列に格納し返り値として返す
-    // float型配列
+    // float型配列限定
     // @KEY string型：データ読み出しのキー
     // @DATA_MAX int型：データを保存する配列の最大サイズ
     // @defData float型：デフォルトで(初期値として)入れておく値

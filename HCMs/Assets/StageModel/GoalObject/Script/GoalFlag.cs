@@ -74,7 +74,7 @@ public class GoalFlag : MonoBehaviour
                 if (rapCount.CheckRapCount(playerID))
                 {
                     Debug.Log("ゴール");
-                    goalText.text = "ＧＯＡＬ！！！";
+                    goalText.text = "ＦＩＮＩＳＨ！";
                     goalText.gameObject.SetActive(true);
                     timeCounter.FinishCount(playerID);
                     FinishCall[playerID] = true;
