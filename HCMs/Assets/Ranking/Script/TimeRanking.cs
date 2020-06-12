@@ -6,7 +6,7 @@ using UnityEngine.UI;
 // ランキング集計・保存
 public class TimeRanking : MonoBehaviour
 {
-    public DataStorage storage = null;                      // ランキング保管スクリプト
+    public DataStorage storage = null;  // ランキング保管スクリプト
 
     private string _rankingKey;     // ゴールタイムのランキング呼び出しキー
     private string _rapRankKey;     // ラップタイムのランキング呼び出しキー
@@ -19,28 +19,33 @@ public class TimeRanking : MonoBehaviour
         storage = storage.GetComponent<DataStorage>();
     }
     
-    public void SetUpTimeRanking(string gameMode, int playerNum, int rapMax)
+    // @gameMode string型：ゲームモード
+    // @indicateRanks int型：表示するランキング数
+    // @rapMax int型：最大周回数
+    public void SetUpTimeRanking(string gameMode, int indicateRanks, int rapMax)
     {
         Debug.Log("TimeRankingセットアップ");
 
         _rankingKey = gameMode;
         _rapMax = rapMax;
-        _rankingMax = playerNum;
-        _rapRankMax = playerNum * rapMax;
+        _rankingMax = indicateRanks;
+        _rapRankMax = indicateRanks * rapMax;
 
         if (gameMode == "Battle")
         {
             _rapRankKey = "BTRap";
             storage.DeleteData(_rankingKey);    // バトルモードのラップタイムランキングは持ち越さないので削除
-            for (int playerID = 0; playerID < playerNum; playerID++)
+            for (int playerID = 0; playerID < indicateRanks; playerID++)
             {
+                // 前回のラップタイムが保存されたままにならないように削除しておく
                 storage.DeleteData(playerID.ToString());
             }
         }
         else
         {
             _rapRankKey = "TARap";
-            storage.DeleteData("P1");
+            // 前回のラップタイムが保存されたままにならないように削除しておく
+            storage.DeleteData("0");
         }
     }
 
@@ -79,9 +84,7 @@ public class TimeRanking : MonoBehaviour
             }
         }
 
-        // 配列を文字列に変換して PlayerPrefs に格納
-        string raptime_string = string.Join(",", rapTime);
-        PlayerPrefs.SetString(KEY, raptime_string);
+        storage.SaveData(KEY, rapTime);
     }
 
     // ラップタイムとゴールタイムを集計しランキングに保存する
@@ -130,9 +133,7 @@ public class TimeRanking : MonoBehaviour
             ranking[0] = newTime;
         }
 
-        // 配列を文字列に変換して PlayerPrefs に格納
-        string ranking_string = string.Join(",", ranking);
-        PlayerPrefs.SetString(KEY, ranking_string);
+        storage.SaveData(KEY, ranking);
     }
 
     // 周回数分のラップタイムを保存しランキングに反映する関数
@@ -178,8 +179,6 @@ public class TimeRanking : MonoBehaviour
             }
         }
 
-        // 配列を文字列に変換して PlayerPrefs に格納
-        string rapRanking_string = string.Join(",", ranking);
-        PlayerPrefs.SetString(KEY, rapRanking_string);
+        storage.SaveData(KEY, ranking);
     }
 }

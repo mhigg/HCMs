@@ -5,6 +5,22 @@ using UnityEngine;
 // 保存データの取得
 public class DataStorage : MonoBehaviour
 {
+    // PlayerPrefsにデータを格納する(floatデータ限定)
+    // @KEY string型：データ格納のキー
+    // @saveData float型配列：格納するデータ配列
+    public void SaveData(string KEY, float[] saveData)
+    {
+        if(saveData.Length > 0)
+        {
+            string data_string = string.Join(",", saveData);
+            PlayerPrefs.SetString(KEY, data_string);
+        }
+        else
+        {
+            Debug.LogError("セーブするデータが空です:DataStorage.SaveData");
+        }
+    }
+
     // PlayerPrefsに保存したデータをretData配列に格納し返り値として返す
     // float型配列
     // @KEY string型：データ読み出しのキー
@@ -26,7 +42,7 @@ public class DataStorage : MonoBehaviour
         }
         else
         {
-            Debug.Log("データなし");
+            Debug.Log("データなし:デフォルト値にて初期化します");
 
             // DeleteData呼び出し後など、
             // 何も値を入れないと返り値として渡す配列の中がすべて0になってしまうので、
@@ -55,7 +71,7 @@ public class DataStorage : MonoBehaviour
         }
         else
         {
-            Debug.Log("キーが存在しません");
+            Debug.Log("削除不可:キーが存在しません");
         }
     }
 
