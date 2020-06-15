@@ -10,7 +10,7 @@ public class GoalFlag : MonoBehaviour
     public RapCount rapCount = null;
     public CheckPointCount checkPointCount = null;
     
-    private bool[] FinishCall;    // FinishCountテスト用
+    private bool[] _finishCall;    // FinishCountテスト用
     private int _playerNum;
 
     // Start is called before the first frame update
@@ -28,10 +28,10 @@ public class GoalFlag : MonoBehaviour
     public void SetUpGoalFlag(int playerNum, int rapMax)
     {
         _playerNum = playerNum;
-        FinishCall = new bool[_playerNum];
+        _finishCall = new bool[_playerNum];
         for (int playerID = 0; playerID < _playerNum; playerID++)
         {
-            FinishCall[playerID] = false;
+            _finishCall[playerID] = false;
         }
 
         rapCount.SetUpRapCount(_playerNum, rapMax);
@@ -41,7 +41,7 @@ public class GoalFlag : MonoBehaviour
     // ゴール可能かどうかの判定を返す
     public bool CheckGoal(int playerID)
     {
-        return FinishCall[playerID];
+        return _finishCall[playerID];
     }
 
     private void OnTriggerEnter(Collider other)
@@ -61,7 +61,7 @@ public class GoalFlag : MonoBehaviour
          */
         int playerID = 0;
 
-        if (!FinishCall[playerID])
+        if (!_finishCall[playerID])
         {
             if (other.gameObject.tag == "RacingCar")
             {
@@ -77,7 +77,7 @@ public class GoalFlag : MonoBehaviour
                     goalText.text = "ＦＩＮＩＳＨ！";
                     goalText.gameObject.SetActive(true);
                     timeCounter.FinishCount(playerID);
-                    FinishCall[playerID] = true;
+                    _finishCall[playerID] = true;
                 }
             }
         }

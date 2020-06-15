@@ -12,8 +12,8 @@ public class DispRanking : MonoBehaviour
     public Canvas dispCanvas = null;        // 表示するキャンバス
     public Canvas hiddenCanvas = null;      // 非表示にするキャンバス
 
-    private float[] dispRanking;    // ランキング保存用
-    private float[] dispRapTime;    // ラップタイム保存用
+    private float[] _dispRanking;    // ランキング保存用
+    private float[] _dispRapTime;    // ラップタイム保存用
 
     public DataStorage rankingStorage = null;       // 表示用ランキングの取得用
 
@@ -53,11 +53,11 @@ public class DispRanking : MonoBehaviour
 
         // あとで利用するかも
         // しなかったら消します
-        dispRanking = new float[_rankingMax];
-        dispRanking = rankingStorage.GetData(_rankingKey, _rankingMax, _defaultTime);
+        _dispRanking = new float[_rankingMax];
+        _dispRanking = rankingStorage.GetData(_rankingKey, _rankingMax, _defaultTime);
 
-        dispRapTime = new float[_rapRankMax];
-        dispRapTime = rankingStorage.GetData(_rapRankKey, _rapRankMax, _defaultTime);
+        _dispRapTime = new float[_rapRankMax];
+        _dispRapTime = rankingStorage.GetData(_rapRankKey, _rapRankMax, _defaultTime);
     }
 
     void Update()
@@ -66,13 +66,13 @@ public class DispRanking : MonoBehaviour
         string rankOut_string = "";  // ランキング外表示用
 
         // ランキング表示
-        string time;
         for (int idx = 0; idx < _rankingMax; idx++)
         {
-            if(dispRanking[idx] < _defaultTime)
+            string time;
+            if (_dispRanking[idx] < _defaultTime)
             {
-                float second = dispRanking[idx] % 60.0f;
-                int minute = Mathf.FloorToInt(dispRanking[idx] / 60.0f);
+                float second = _dispRanking[idx] % 60.0f;
+                int minute = Mathf.FloorToInt(_dispRanking[idx] / 60.0f);
                 time = string.Format("{0:00}.", minute) + string.Format("{0:00.000}", second) + "\n";
             }
             else
@@ -98,23 +98,31 @@ public class DispRanking : MonoBehaviour
         // １位：〇〇秒　〇〇秒　〇〇秒　　みたいに表示する
         // タイムが無い場合は
         // １位：－－秒　－－秒　－－秒　　といった感じで表示する
-        //string rap = "";
         //for (int idx = 0; idx < _rapRankMax; idx++)
         //{
-        //    // とりあえず仮に縦にずらーっと表示
-        //    // ラップタイム保存確認のため
-        //    rap = (dispRapTime[idx] < _defaultTime ? dispRapTime[idx].ToString("f3") + "秒\n" : "―――\n");
-        //    ranking_string = ranking_string + (idx + 1) + "位 " + rap;
+        //    string rap;
+        //    if (_dispRapTime[idx] < _defaultTime)
+        //    {
+        //        float second = _dispRapTime[idx] % 60.0f;
+        //        int minute = Mathf.FloorToInt(_dispRapTime[idx] / 60.0f);
+        //        rap = string.Format("{0:00}.", minute) + string.Format("{0:00.000}", second) + "\n";
+        //    }
+        //    else
+        //    {
+        //        // デフォルト(1000.0f)ならタイム表記を表示しない
+        //        rap = "--.--.---\n";
+        //    }
 
-        //    //rap += (dispRapTime[idx] > 0.0f ? dispRapTime[idx].ToString("f3") + "秒　" : "――秒　");
-        //    ////if(dispRapTime[idx] > 0.0f)
-        //    ////{
-        //    ////    rap += dispRapTime[idx].ToString("f3") + "秒　";
-        //    ////}
-        //    //if (idx > 0 && (idx + 1) % 3 == 0)
-        //    //{
-        //    //    ranking_string += ranking_string + (idx / 3) + "位 " + rap + "\n";
-        //    //}
+        //    if (idx == (_rankingMax - 1) && _rankOutActive)
+        //    {
+        //        // ランキング外のタイムを表示する場合、一番下の記録をランキング外として表示する
+        //        rankOut_string += rap;
+
+        //        // ランキング内には表示しないのでbreakする
+        //        break;
+        //    }
+
+        //    ranking_string += rap;
         //}
 
         // テキストの表示を入れ替える
