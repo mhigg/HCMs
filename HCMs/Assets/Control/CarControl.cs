@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [System.Serializable]
 public class AxleInfo
@@ -44,10 +45,14 @@ public class CarControl : MonoBehaviour
     private float m_OldRotation;
     private float m_CurrentTorque;
     private Rigidbody m_Rigidbody;
+    private CarControl carController;
+    [SerializeField] private WheelCollider[] m_WheelColliders = new WheelCollider[4];
     [SerializeField] private static int NoOfGears = 5;  // ギア無し
     [SerializeField] private float m_RevRangeBoundary = 1f; // 回転範囲
     [SerializeField] private SpeedType m_SpeedType;
     [SerializeField] private float m_Topspeed = 500;    // 速度管理
+    [SerializeField] private float m_SlipLimit;
+    [SerializeField] private Text speedText = null;
 
     public float MaxSpeed { get { return m_Topspeed; } }
     public float CurrentSpeed { get { return m_Rigidbody.velocity.magnitude * 2.23693629f; } }
@@ -59,6 +64,7 @@ public class CarControl : MonoBehaviour
     void Start()
     {
         m_Rigidbody = GetComponent<Rigidbody>();
+        carController = GetComponent<CarControl>();
     }
 
     // Update is called once per frame
@@ -76,6 +82,7 @@ public class CarControl : MonoBehaviour
         wheelBLTrans.localEulerAngles = new Vector3(wheelBLTrans.localEulerAngles.x, wheelBL.steerAngle - wheelBLTrans.localEulerAngles.z, wheelBLTrans.localEulerAngles.z);
         wheelBRTrans.localEulerAngles = new Vector3(wheelBRTrans.localEulerAngles.x, wheelBR.steerAngle - wheelBRTrans.localEulerAngles.z, wheelBRTrans.localEulerAngles.z);
 
+       // speedText.text = Mathf.Abs(carController.CurrentSpeed).ToString("000") + "km/h";
     }
 
     // 車を移動させる
@@ -141,6 +148,34 @@ public class CarControl : MonoBehaviour
         AccelInput = accel = Mathf.Clamp(accel, 0, 1);
     }
 
+    private void CheckForWheelSpin()
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            WheelHit wheelHit;
+            m_WheelColliders[i].GetGroundHit(out wheelHit);
+
+            // is the tire slipping above the given threshhold
+            if (Mathf.Abs(wheelHit.forwardSlip) >= m_SlipLimit || Mathf.Abs(wheelHit.sidewaysSlip) >= m_SlipLimit)
+            {
+                //m_WheelEffects[i].EmitTyreSmoke();
+               
+                if (!AnySkidSoundPlaying())
+                {
+                    //m_WheelEffects[i].PlayAudio();
+                }
+                continue;
+            }
+            
+            //if (m_WheelEffects[i].PlayingAudio)
+            //{
+            //    m_WheelEffects[i].StopAudio();
+            //}
+            // end the trail generation
+            //m_WheelEffects[i].EndSkidTrail();
+        }
+    }
+
     private void CapSpeed()
     {
         float speed = m_Rigidbody.velocity.magnitude;
@@ -159,6 +194,17 @@ public class CarControl : MonoBehaviour
                     m_Rigidbody.velocity = (m_Topspeed / 3.6f) * m_Rigidbody.velocity.normalized;
                 break;
         }
+    }
+    private bool AnySkidSoundPlaying()
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            //if (m_WheelEffects[i].PlayingAudio)
+            //{
+            //    return true;
+            //}
+        }
+        return false;
     }
 
 }
