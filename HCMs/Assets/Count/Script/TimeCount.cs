@@ -29,18 +29,11 @@ public class TimeCount : MonoBehaviour
     {
         if (!_endFlag)
         {
-            // 毎フレームごとにタイム加算
-            // 現在 確認用にTime.timeを使用中
-            // 後からtimeCountを使用したタイム計算に変更
             _timeCount += Time.deltaTime;
             timeText.text = ChangeTimeNotationAndTimeText(_timeCount);
-            //float second = _timeCount % 60.0f;
-            //int minute = Mathf.FloorToInt(_timeCount / 60.0f);
-            //timeText.text = string.Format("{0:00}.", minute) + string.Format("{0:00.000}", second);
 
             _rapTimeCount += Time.deltaTime;
             rapTimeText.text = ChangeTimeNotationAndTimeText(_rapTimeCount);
-            // Debug.Log(timeText.text);
         }
     }
 
@@ -65,6 +58,8 @@ public void RapCount(int playerID)
     {
         Debug.Log("ラップタイム" + _timeCount);
         timeRanking.SetRapTime(_timeCount, playerID);
+        Instantiate(rapTimeText, rapTimeText.transform.position, rapTimeText.transform.rotation);
+        rapTimeText.transform.position.Set(rapTimeText.transform.position.x, 80.0f, rapTimeText.transform.position.z);
         _rapTimeCount = 0.0f;
     }
 
