@@ -47,13 +47,13 @@ namespace UnityStandardAssets.Vehicles.Car
         private AudioSource m_HighAccel; // Source for the high acceleration sounds
         private AudioSource m_HighDecel; // Source for the high deceleration sounds
         private bool m_StartedSound; // flag for knowing if we have started sounds
-        private CarControl m_CarControl; // Reference to car we are controlling
+        private CarController m_CarControl; // Reference to car we are controlling
 
 
         private void StartSound()
         {
             // get the carcontroller ( this will not be null as we have require component)
-            m_CarControl = GetComponent<CarControl>();
+            m_CarControl = GetComponent<CarController>();
 
             // setup the simple audio source
             m_HighAccel = SetUpEngineAudioSource(highAccelClip);
