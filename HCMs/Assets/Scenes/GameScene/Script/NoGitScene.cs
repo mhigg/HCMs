@@ -22,6 +22,8 @@ public class NoGitScene : MonoBehaviour
 
     public TimeRanking timeRanking = null;
 
+    public StartStopController startCounter = null;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -32,6 +34,8 @@ public class NoGitScene : MonoBehaviour
         goalFlag.SetUpGoalFlag(_rapMax);
 
         timeCounter = timeCounter.GetComponent<TimeCount>();
+
+        startCounter = startCounter.GetComponent<StartStopController>();
 
         for (int idx = 0; idx < playerNum; idx++)
         {
@@ -73,7 +77,7 @@ public class NoGitScene : MonoBehaviour
         // 特定のタイミングでStartCountを呼ぶ
         if (!StartCall)
         {
-            if (Input.GetKeyDown(KeyCode.LeftShift))
+            if (!(startCounter.startWait))
             {
                 Debug.Log("レーススタート");
                 StartCall = true;
