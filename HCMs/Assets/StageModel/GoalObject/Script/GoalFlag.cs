@@ -9,7 +9,7 @@ public class GoalFlag : MonoBehaviour
     public TimeCount timeCounter = null;
     public RapCount rapCount = null;
     public CheckPointCount checkPointCount = null;
-    
+
     private bool[] _finishCall;    // FinishCountテスト用
     private int _playerNum;
 
@@ -25,17 +25,16 @@ public class GoalFlag : MonoBehaviour
         checkPointCount = checkPointCount.GetComponent<CheckPointCount>();
     }
 
-    public void SetUpGoalFlag(int playerNum, int rapMax)
+    public void SetUpGoalFlag(int rapMax)
     {
-        _playerNum = playerNum;
+        _playerNum = GameObject.FindGameObjectsWithTag("RacingCar").Length;
         _finishCall = new bool[_playerNum];
         for (int playerID = 0; playerID < _playerNum; playerID++)
         {
             _finishCall[playerID] = false;
         }
 
-        rapCount.SetUpRapCount(_playerNum, rapMax);
-        checkPointCount.SetUpCheckPointCount(_playerNum);
+        rapCount.SetUpRapCount(rapMax);
     }
 
     // ゴール可能かどうかの判定を返す
@@ -65,7 +64,7 @@ public class GoalFlag : MonoBehaviour
         {
             if (other.gameObject.tag == "RacingCar")
             {
-                if(checkPointCount.JudgThroughGoalSpace(playerID))
+                if (checkPointCount.JudgThroughGoalSpace(playerID))
                 {
                     rapCount.CountRap(playerID);
                     timeCounter.RapCount(playerID);

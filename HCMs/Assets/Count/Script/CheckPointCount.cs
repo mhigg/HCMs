@@ -8,9 +8,9 @@ public class CheckPointCount : MonoBehaviour
     private int checkPointCntMax;       // チェックポイントの数
     private int _playerNum;             // プレイヤー数
 
-    public void SetUpCheckPointCount(int playerNum)
+    void Start()
     {
-        _playerNum = playerNum;
+        _playerNum = GameObject.FindGameObjectsWithTag("RacingCar").Length;
 
         checkPointCnt = new int[_playerNum];
         for (int playerID = 0; playerID < _playerNum; playerID++)

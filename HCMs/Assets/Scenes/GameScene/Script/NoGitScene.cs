@@ -12,7 +12,8 @@ public class NoGitScene : MonoBehaviour
 
     public GoalFlag goalFlag = null;
 
-    private const int playerNum = 4;            // プレイヤー人数
+    private const int playerNum = 2;            // プレイヤー人数
+    private int _rapMax = 3;
     private int[] rapCnt = new int[playerNum];  // 人数分のラップカウント
     private KeyCode[] playerKeyCode = new KeyCode[playerNum];
 
@@ -25,10 +26,10 @@ public class NoGitScene : MonoBehaviour
     void Start()
     {
         timeRanking = timeRanking.GetComponent<TimeRanking>();
-        timeRanking.SetUpTimeRanking("Battle", playerNum, 3);
+        timeRanking.SetUpTimeRanking("Battle", playerNum, _rapMax);
 
         goalFlag = goalFlag.GetComponent<GoalFlag>();
-        goalFlag.SetUpGoalFlag(playerNum, 3);
+        goalFlag.SetUpGoalFlag(_rapMax);
 
         timeCounter = timeCounter.GetComponent<TimeCount>();
 
