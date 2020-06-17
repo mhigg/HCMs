@@ -15,17 +15,46 @@ public class TimeAttack : MonoBehaviour
 
     public StartStopController startCounter = null;
 
-    private int _rapMax = 3;
+    private string[] _stageNameTbl;
+    private int[] _rapMaxTbl;
+
+    void Awake()
+    {
+        _stageNameTbl = new string[]{
+            "TimeAttack01",
+            "TimeAttack02",
+            "TimeAttack03"
+        };
+
+        _rapMaxTbl = new int[] { 3, 3, 3 };
+    }
 
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log("タイムアタック初期化");
+        string stageName = SceneManager.GetActiveScene().name;
+        int rapMax = 0;
+
+        for (int idx = 0; idx < _stageNameTbl.Length; idx++)
+        {
+            if (_stageNameTbl[idx] == stageName)
+            {
+                rapMax = _rapMaxTbl[idx];
+            }
+        }
+
+        if (rapMax <= 0)
+        {
+            Debug.LogError("最大周回数が0以下です。コース情報の照合に失敗した可能性があります。_stageNameTblと_rapMaxを確認してください。");
+        }
+
         timeRanking = timeRanking.GetComponent<TimeRanking>();
         // 第一引数をコース名にする
-        timeRanking.SetUpTimeRanking("Course2", 11, _rapMax);
+        timeRanking.SetUpTimeRanking(stageName, 11, rapMax);
 
         goalFlag = goalFlag.GetComponent<GoalFlag>();
-        goalFlag.SetUpGoalFlag(_rapMax);
+        goalFlag.SetUpGoalFlag(rapMax);
 
         timeCounter = timeCounter.GetComponent<TimeCount>();
 

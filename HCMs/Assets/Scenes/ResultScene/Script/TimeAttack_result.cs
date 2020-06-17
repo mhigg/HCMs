@@ -11,7 +11,7 @@ public class TimeAttack_result : MonoBehaviour
     {
         dispRanking = dispRanking.GetComponent<DispRanking>();
         // 第一引数をコース名にする
-        dispRanking.SetUpDispRanking("Course2", 11, 3, true, 1000.0f);
+        dispRanking.SetUpDispRanking("TimeAttack02", 11, 3, true, 1000.0f);
     }
 
     private bool isCalledOnce = false;

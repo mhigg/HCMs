@@ -58,7 +58,10 @@ public class GoalFlag : MonoBehaviour
          つまり0～3となる
          現状は0(1プレイヤー目)とする
          */
-        int playerID = 0;
+
+        // 仮に車のbodyの名前を0と1にして直接playerIDとして扱う
+        int playerID = int.Parse(other.gameObject.name);
+        Debug.Log("プレイヤー" + playerID + "ゴール通過");
 
         if (!_finishCall[playerID])
         {
@@ -72,7 +75,7 @@ public class GoalFlag : MonoBehaviour
 
                 if (rapCount.CheckRapCount(playerID))
                 {
-                    Debug.Log("ゴール");
+                    Debug.Log("プレイヤー" + playerID + "ゴール");
                     goalText.text = "ＦＩＮＩＳＨ！";
                     goalText.gameObject.SetActive(true);
                     timeCounter.FinishCount(playerID);

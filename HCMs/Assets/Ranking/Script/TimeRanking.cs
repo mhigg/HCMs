@@ -30,6 +30,10 @@ public class TimeRanking : MonoBehaviour
         _rankingMax = indicateRanks;
         _rapRankMax = indicateRanks * rapMax;
 
+        Debug.Log("コース名:" + _rankingKey);
+        Debug.Log("最大周回数:" + _rapMax);
+        Debug.Log("ランキング表示数:" + _rankingMax);
+
         if (course == "Battle")
         {
             _rapRankKey = "BTRap";

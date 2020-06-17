@@ -53,13 +53,13 @@ public class TimeCount : MonoBehaviour
         _rapTimeCount = 0.0f;
     }
 
-// ラップタイムを保存する
-public void RapCount(int playerID)
+    // ラップタイムを保存する
+    public void RapCount(int playerID)
     {
         Debug.Log("ラップタイム" + _timeCount);
         timeRanking.SetRapTime(_timeCount, playerID);
-        Instantiate(rapTimeText, rapTimeText.transform.position, rapTimeText.transform.rotation);
-        rapTimeText.transform.position.Set(rapTimeText.transform.position.x, 80.0f, rapTimeText.transform.position.z);
+        //Instantiate(rapTimeText, rapTimeText.transform.position, rapTimeText.transform.rotation);
+        //rapTimeText.transform.position.Set(rapTimeText.transform.position.x, 80.0f, rapTimeText.transform.position.z);
         _rapTimeCount = 0.0f;
     }
 

@@ -1,62 +1,70 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class NoGitScene : MonoBehaviour
 {
-    public TimeCount timeCounter = null;
-//    public Text goalText = null;
+    public StartStopController startCounter;
+    public TimeCount timeCounter;
 
-    public GoalFlag goalFlag = null;
+    public TimeRanking timeRanking;
+    public GoalFlag goalFlag;
 
-    private const int playerNum = 2;            // プレイヤー人数
-    private int _rapMax = 3;
-    private int[] rapCnt = new int[playerNum];  // 人数分のラップカウント
-    private KeyCode[] playerKeyCode = new KeyCode[playerNum];
+    private int _playerNum;            // プレイヤー人数
 
-    private bool StartCall = false;                     // StartCountテスト用
-    private bool[] isFinished = new bool[playerNum];    // FinishCountテスト用
+    private string[] _stageNameTbl;
+    private int[] _rapMaxTbl;
 
-    public TimeRanking timeRanking = null;
+    void Awake()
+    {
+        _stageNameTbl = new string[]{
+            "NoGitScene",
+        };
 
-    public StartStopController startCounter = null;
+        _rapMaxTbl = new int[] { 3 };
+    }
 
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log("NoGitScene初期化");
+        _playerNum = GameObject.FindGameObjectsWithTag("RacingCar").Length;
+
+        string stageName = SceneManager.GetActiveScene().name;
+        int rapMax = 0;
+
+        for (int idx = 0; idx < _stageNameTbl.Length; idx++)
+        {
+            if (_stageNameTbl[idx] == stageName)
+            {
+                rapMax = _rapMaxTbl[idx];
+            }
+        }
+
+        if (rapMax <= 0)
+        {
+            Debug.LogError("最大周回数が0以下です。コース情報の照合に失敗した可能性があります。_stageNameTblと_rapMaxを確認してください。");
+        }
+
         timeRanking = timeRanking.GetComponent<TimeRanking>();
-        timeRanking.SetUpTimeRanking("Battle", playerNum, _rapMax);
+        timeRanking.SetUpTimeRanking(stageName, _playerNum, rapMax);
 
         goalFlag = goalFlag.GetComponent<GoalFlag>();
-        goalFlag.SetUpGoalFlag(_rapMax);
+        goalFlag.SetUpGoalFlag(rapMax);
 
         timeCounter = timeCounter.GetComponent<TimeCount>();
 
         startCounter = startCounter.GetComponent<StartStopController>();
-
-        for (int idx = 0; idx < playerNum; idx++)
-        {
-            rapCnt[idx] = 1;
-            isFinished[idx] = false;
-        }
-
-        // プレイヤーに応じたキー
-        // Debug用
-        playerKeyCode[0] = KeyCode.Z;
-        playerKeyCode[1] = KeyCode.X;
-        playerKeyCode[2] = KeyCode.C;
-        playerKeyCode[3] = KeyCode.V;
     }
 
+    private bool StartCall = false;   // StartCountテスト用
     bool isCalledOnce = false;
 
     // Update is called once per frame
     void Update()
     {
-        for (int playerID = 0; playerID < playerNum; playerID++)
+        for (int playerID = 0; playerID < _playerNum; playerID++)
         {
             if (goalFlag.CheckGoal(playerID))
             {
@@ -84,31 +92,5 @@ public class NoGitScene : MonoBehaviour
                 timeCounter.StartCount();
             }
         }
-
-        // 順位付け
-        /*
-         
-         
-         */
-
-        // ゴールしたタイミングでFinishCountを呼ぶ
-        //for (int idx = 0; idx < playerNum; idx++)
-        //{
-        //    if (!isFinished[idx])
-        //    {
-        //        if (Input.GetKeyDown(playerKeyCode[idx]))
-        //        {
-        //            Debug.Log("ラップタイム");
-        //            rapCnt[idx]++;    // プレイヤーごとにラップカウントをとる
-        //            timeCounter.RapCount(idx);
-        //            if (!(rapCnt[idx] <= 3))
-        //            {
-        //                Debug.Log("ゴール");
-        //                isFinished[idx] = true;
-        //                timeCounter.FinishCount(idx);
-        //            }
-        //        }
-        //    }
-        //}
     }
 }
