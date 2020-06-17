@@ -6,16 +6,16 @@ using UnityEngine.UI;
 // ランキング表示データ作成・表示
 public class DispRanking : MonoBehaviour
 {
-    public Text rankingTimeText = null;     // ランキングのタイム表示テキスト
-    public Text rankingOutText = null;      // タイムがランキング外だった際に使用
+    public Text rankingTimeText = null;         // ランキングのタイム表示テキスト
+    public Text rankingOutText = null;          // タイムがランキング外だった際に使用
 
-    public Canvas dispCanvas = null;        // 表示するキャンバス
-    public Canvas hiddenCanvas = null;      // 非表示にするキャンバス
+    public Canvas dispCanvas = null;            // 表示するキャンバス
+    public Canvas hiddenCanvas = null;          // 非表示にするキャンバス
 
-    private float[] _dispRanking;    // ランキング保存用
-    private float[] _dispRapTime;    // ラップタイム保存用
+    public DataStorage rankingStorage = null;   // 表示用ランキングの取得用
 
-    public DataStorage rankingStorage = null;       // 表示用ランキングの取得用
+    private float[] _dispRanking;   // ランキング保存用
+    private float[] _dispRapTime;   // ラップタイム保存用
 
     private string _rankingKey;     // ゴールタイムのランキング呼び出しキー
     private string _rapRankKey;     // ラップタイムのランキング呼び出しキー
@@ -37,13 +37,18 @@ public class DispRanking : MonoBehaviour
         rankingStorage = rankingStorage.GetComponent<DataStorage>();
     }
 
-    public void SetUpDispRanking(string gameMode, int playerNum, int rapMax, bool rankOutActive, float defaultTime)
+    // @course string型：走行コース名 バトルモードはBattleでいい
+    // @indicateRanks int型：表示するランキング数
+    // @rapMax int型：最大周回数
+    // @rankOutActive bool型：ランク外を表示するならtrue しないならfalse
+    // @defaultTime float型：記録が無い場合に設定するデフォルト値
+    public void SetUpDispRanking(string gameMode, int indicationRanks, int rapMax, bool rankOutActive, float defaultTime)
     {
         Debug.Log("DispRankingセットアップ");
 
         _rankingKey = gameMode;
-        _rankingMax = playerNum;
-        _rapRankMax = playerNum * rapMax;
+        _rankingMax = indicationRanks;
+        _rapRankMax = indicationRanks * rapMax;
         _rapRankKey = (gameMode == "Battle" ? "BTRap" : "TARap");
         _rankOutActive = rankOutActive;
         _defaultTime = defaultTime;

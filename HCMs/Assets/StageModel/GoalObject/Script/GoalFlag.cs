@@ -10,8 +10,8 @@ public class GoalFlag : MonoBehaviour
     public RapCount rapCount = null;
     public CheckPointCount checkPointCount = null;
 
-    private bool[] _finishCall;    // FinishCountテスト用
-    private int _playerNum;
+    private bool[] _finishCall;     // FinishCountテスト用
+    private int _playerNum;         // プレイヤー人数
 
     // Start is called before the first frame update
     void Start()
@@ -38,9 +38,15 @@ public class GoalFlag : MonoBehaviour
     }
 
     // ゴール可能かどうかの判定を返す
-    public bool CheckGoal(int playerID)
+    public bool CheckFinish()
     {
-        return _finishCall[playerID];
+        bool retFinish = true;
+        for(int playerID = 0; playerID < _playerNum; playerID++)
+        {
+            // 一つでもfalseがあるとfalseになり、まだゴールしていないプレイヤーがいると判断
+            retFinish &= _finishCall[playerID];
+        }
+        return retFinish;
     }
 
     private void OnTriggerEnter(Collider other)

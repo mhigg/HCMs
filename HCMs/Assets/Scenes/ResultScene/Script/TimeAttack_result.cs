@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TimeAttack_result : MonoBehaviour
 {
-    public DispRanking dispRanking = null;
+    public DispRanking dispRanking = null;  // 表示用ランキング用
 
     // Start is called before the first frame update
     void Start()

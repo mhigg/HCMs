@@ -4,16 +4,15 @@ using UnityEngine;
 
 public class CheckPointCount : MonoBehaviour
 {
-    private int[] _checkPointCnt;        // チェックポイント通過カウント
-    private int _checkPointCntMax;       // チェックポイントの数
-    private int _playerNum;             // プレイヤー数
+    private int[] _checkPointCnt;       // チェックポイント通過カウント
+    private int _checkPointCntMax;      // チェックポイントの数
 
     void Start()
     {
-        _playerNum = GameObject.FindGameObjectsWithTag("RacingCar").Length;
+        int playerNum = GameObject.FindGameObjectsWithTag("RacingCar").Length;
 
-        _checkPointCnt = new int[_playerNum];
-        for (int playerID = 0; playerID < _playerNum; playerID++)
+        _checkPointCnt = new int[playerNum];
+        for (int playerID = 0; playerID < playerNum; playerID++)
         {
             _checkPointCnt[playerID] = 0;
         }

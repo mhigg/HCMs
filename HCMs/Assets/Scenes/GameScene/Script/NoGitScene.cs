@@ -5,16 +5,14 @@ using UnityEngine.SceneManagement;
 
 public class NoGitScene : MonoBehaviour
 {
-    public StartStopController startCounter;
-    public TimeCount timeCounter;
+    public StartStopController startCounter;    // スタートカウント用
+    public TimeCount timeCounter;               // タイムカウント用
 
-    public TimeRanking timeRanking;
-    public GoalFlag goalFlag;
+    public TimeRanking timeRanking;             // ランキング記録用
+    public GoalFlag goalFlag;                   // ゴール判定取得用
 
-    private int _playerNum;            // プレイヤー人数
-
-    private string[] _stageNameTbl;
-    private int[] _rapMaxTbl;
+    private string[] _stageNameTbl;     // ステージ名テーブル
+    private int[] _rapMaxTbl;           // 最大周回数テーブル
 
     void Awake()
     {
@@ -29,7 +27,7 @@ public class NoGitScene : MonoBehaviour
     void Start()
     {
         Debug.Log("NoGitScene初期化");
-        _playerNum = GameObject.FindGameObjectsWithTag("RacingCar").Length;
+        int playerNum = GameObject.FindGameObjectsWithTag("RacingCar").Length;
 
         string stageName = SceneManager.GetActiveScene().name;
         int rapMax = 0;
@@ -48,7 +46,7 @@ public class NoGitScene : MonoBehaviour
         }
 
         timeRanking = timeRanking.GetComponent<TimeRanking>();
-        timeRanking.SetUpTimeRanking(stageName, _playerNum, rapMax);
+        timeRanking.SetUpTimeRanking(stageName, playerNum, rapMax);
 
         goalFlag = goalFlag.GetComponent<GoalFlag>();
         goalFlag.SetUpGoalFlag(rapMax);
@@ -58,37 +56,34 @@ public class NoGitScene : MonoBehaviour
         startCounter = startCounter.GetComponent<StartStopController>();
     }
 
-    private bool StartCall = false;   // StartCountテスト用
-    bool isCalledOnce = false;
+    private bool _isCalledOnce = false;  // リザルトシーン遷移フラグ
+    private bool _startCall = false;     // カウントスタートのフラグ
 
     // Update is called once per frame
     void Update()
     {
-        for (int playerID = 0; playerID < _playerNum; playerID++)
+        if (goalFlag.CheckFinish())
         {
-            if (goalFlag.CheckGoal(playerID))
+            Debug.Log("Spaceキーを押してリザルトへ");
+            if (!_isCalledOnce)
             {
-                Debug.Log("Spaceキーを押してリザルトへ");
-                if (!isCalledOnce)
+                ///ここを任意のボタンにしましょう。
+                if (Input.GetKeyDown(KeyCode.Space))
                 {
-                    ///ここを任意のボタンにしましょう。
-                    if (Input.GetKeyDown(KeyCode.Space))
-                    {
-                        isCalledOnce = true;
-                        FadeManager.Instance.LoadScene("NoGitResult", 2.0f);
-                        Debug.Log("Resultへ");
-                    }
+                    _isCalledOnce = true;
+                    FadeManager.Instance.LoadScene("NoGitResult", 2.0f);
+                    Debug.Log("Resultへ");
                 }
             }
         }
 
         // 特定のタイミングでStartCountを呼ぶ
-        if (!StartCall)
+        if (!_startCall)
         {
             if (!(startCounter.startWait))
             {
                 Debug.Log("レーススタート");
-                StartCall = true;
+                _startCall = true;
                 timeCounter.StartCount();
             }
         }

@@ -6,9 +6,9 @@ public class CheckPointFlag : MonoBehaviour
 {
     public CheckPointCount checkPointCount = null;
 
-    private int _checkPointCnt;
-    private int _playerNum;
-    private bool[] _isThrough;
+    private int _checkPointCnt;     // チェックポイント通過数カウント(プレイヤー分必要？)
+    private int _playerNum;         // プレイヤー人数
+    private bool[] _isThrough;      // このチェックポイントを通過したかのフラグを保存
 
     // Start is called before the first frame update
     void Start()
