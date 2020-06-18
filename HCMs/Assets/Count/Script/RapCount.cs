@@ -6,27 +6,23 @@ using TMPro;
 // 周回数をプレイヤーごとにカウントする
 public class RapCount : MonoBehaviour
 {
-    public TextMeshProUGUI rapText;
+    public TextMeshProUGUI rapText;     // 周回数表示
 
     private int _rapCnt;        // ラップカウント
-    private int _rapMax;        // 規定ラップ数 最終的にはコースごとに持たせたい
+    private int _rapMax;        // 最大周回数　コースごとに取得できるようにする
 
     void Start()
     {
-        _rapCnt = 1;
-        _rapMax = 3;
+        _rapCnt = 1;    // 初期値は１
+        _rapMax = 3;    // 現状すべて3周なので3を入れておく
 
         rapText = rapText.GetComponent<TextMeshProUGUI>();
-        // 現状、全プレイヤーの画面にプレイヤー１の周回数が反映されている
-        // これを各プレイヤーごとにそれぞれの周回数表示に変更する必要がある
-        // 画面分割、プレイヤーごとのカメラの設定などの作業中に関わってくると思われるため、
-        // それまでは全プレイヤーにプレイヤー１の周回数を表示しておく
         rapText.text = _rapCnt + " / " + _rapMax;
     }
 
     public void CountRap()
     {
-        _rapCnt++;    // プレイヤーごとにラップカウントをとる
+        _rapCnt++;
         if (_rapCnt <= _rapMax)
         {
             rapText.text = (_rapCnt) + " / " + _rapMax;

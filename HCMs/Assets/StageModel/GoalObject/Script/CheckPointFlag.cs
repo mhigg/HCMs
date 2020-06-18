@@ -19,7 +19,7 @@ public class CheckPointFlag : MonoBehaviour
         _isThrough = new bool[_playerNum];
         for (int idx = 0; idx < _playerNum; idx++)
         {
-            Debug.Log("_isThrough " + idx + "番目初期化");
+            Debug.Log("_isThrough " + idx + "プレイヤー初期化");
             _isThrough[idx] = false;
         }
     }
@@ -47,7 +47,7 @@ public class CheckPointFlag : MonoBehaviour
          現状は0(1プレイヤー目)とする
          */
 
-        // 仮に車のbodyの名前を0と1にして直接playerIDとして扱う
+        // 現状プレイヤー名の登録は実装していないため、車のbodyの名前を0と1にして直接playerIDとして扱う
         int playerID = int.Parse(other.gameObject.name);
         Debug.Log("プレイヤー" + playerID + "チェックポイント通過");
 

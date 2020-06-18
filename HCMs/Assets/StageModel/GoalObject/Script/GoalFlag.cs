@@ -5,9 +5,9 @@ using UnityEngine.UI;
 
 public class GoalFlag : MonoBehaviour
 {
-    public Text goalText = null;
-    public TimeCount timeCounter = null;
-    public CheckPointCount checkPointCount = null;
+    public Text goalText;                       // ゴール時に表示するテキスト
+    public TimeCount timeCounter;               // タイムをカウントする
+    public CheckPointCount checkPointCount;     // チェックポイント通過数をカウント
 
     private bool[] _finishCall;     // FinishCountテスト用
     private int _playerNum;         // プレイヤー人数
@@ -60,7 +60,7 @@ public class GoalFlag : MonoBehaviour
 
         GameObject throughObject = other.gameObject;
 
-        // 仮に車のbodyの名前を0と1にして直接playerIDとして扱う
+        // 現状プレイヤー名の登録は実装していないため、車のbodyの名前を0と1にして直接playerIDとして扱う
         int playerID = int.Parse(throughObject.name);
         Debug.Log("プレイヤー" + playerID + "ゴール通過");
 

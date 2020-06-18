@@ -12,9 +12,9 @@ public class TimeCount : MonoBehaviour
     // タイムを保存するためのコンポーネント
     public TimeRanking timeRanking = null;
 
-    private float _timeCount = 0.0f;    // タイムカウント用変数
-    private float _rapTimeCount = 0.0f;
-    private bool _endFlag = true;       // カウント停止中true カウント中false
+    private float _timeCount;       // タイムカウント用変数
+    private float _rapTimeCount;    // ラップタイムカウント用変数
+    private bool _endFlag;          // カウント停止中true カウント中false
 
     // Start is called before the first frame update
     void Start()
@@ -22,6 +22,10 @@ public class TimeCount : MonoBehaviour
         timeText = timeText.GetComponent<Text>();
         rapTimeText = rapTimeText.GetComponent<Text>();
         timeRanking = timeRanking.GetComponent<TimeRanking>();
+
+        _timeCount = 0.0f;
+        _rapTimeCount = 0.0f;
+        _endFlag = true;
     }
 
     // Update is called once per frame
@@ -37,6 +41,7 @@ public class TimeCount : MonoBehaviour
         }
     }
 
+    // 秒数でカウントしているタイムを分・秒・コンマ以下の表示に変換する
     private string ChangeTimeNotationAndTimeText(float time)
     {
         float second = time % 60.0f;

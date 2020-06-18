@@ -32,8 +32,6 @@ public class DispRanking : MonoBehaviour
         dispCanvas = dispCanvas.GetComponent<Canvas>();
         hiddenCanvas = hiddenCanvas.GetComponent<Canvas>();
 
-        // ランキングデータを取得し、表示用データに反映する
-        // バトルとタイムアタックで違うデ―タを取得する
         rankingStorage = rankingStorage.GetComponent<DataStorage>();
     }
 
@@ -41,7 +39,7 @@ public class DispRanking : MonoBehaviour
     // @indicateRanks int型：表示するランキング数
     // @rapMax int型：最大周回数
     // @rankOutActive bool型：ランク外を表示するならtrue しないならfalse
-    // @defaultTime float型：記録が無い場合に設定するデフォルト値
+    // @defaultTime float型：記録が無かった場合に設定するデフォルト値
     public void SetUpDispRanking(string gameMode, int indicateRanks, int rapMax, bool rankOutActive, float defaultTime)
     {
         Debug.Log("DispRankingセットアップ");
@@ -56,8 +54,8 @@ public class DispRanking : MonoBehaviour
         dispCanvas.gameObject.SetActive(true);
         hiddenCanvas.gameObject.SetActive(false);
 
-        // あとで利用するかも
-        // しなかったら消します
+        // ランキングデータを取得し、表示用データに反映する
+        // バトルとタイムアタックで違うデ―タを取得する
         _dispRanking = new float[_rankingMax];
         _dispRanking = rankingStorage.GetData(_rankingKey, _rankingMax, _defaultTime);
 
@@ -99,7 +97,7 @@ public class DispRanking : MonoBehaviour
         }
 
         // ラップタイム表示
-        // 保存されているラップタイムの確認のために使用
+        // 保存されているラップタイムの確認のために使用（ラップタイムデバッグ用）
         // １位：〇〇秒　〇〇秒　〇〇秒　　みたいに表示する
         // タイムが無い場合は
         // １位：－－秒　－－秒　－－秒　　といった感じで表示する
