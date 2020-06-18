@@ -38,4 +38,9 @@ public class RapCount : MonoBehaviour
     {
         return !(_rapCnt <= _rapMax);
     }
+
+    public int GetRapCount()
+    {
+        return _rapCnt;
+    }
 }

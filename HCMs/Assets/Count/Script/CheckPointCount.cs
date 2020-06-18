@@ -63,13 +63,16 @@ public class CheckPointCount : MonoBehaviour
         {
             for (int comparison = 0; comparison < _playerNum; comparison++)
             {
-                if (playerID != comparison && _checkPointCnt[comparison] < _checkPointCnt[playerID])
+                if (playerID != comparison && _checkPointCnt[playerID] < _checkPointCnt[comparison])
                 {
-                    // playerIDがcomparisonよりも遅かったら順位を下げる
+                    // playerIDがcomparisonよりも通過数が少なかったら順位を下げる
                     retRanking[playerID]++;
                 }
             }
         }
+
+        Debug.Log("1P" + retRanking[0]);
+        Debug.Log("2P" + retRanking[1]);
         return retRanking;
     }
 }

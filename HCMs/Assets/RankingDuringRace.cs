@@ -21,8 +21,22 @@ public class RankingDuringRace : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        CompareRapCount();
+
         int[] cpRanking = checkPointCount.CompareCountAndGetRankOfCheckPointCount();
         rankText01.text = cpRanking[0].ToString();
         rankText02.text = cpRanking[1].ToString();
+    }
+
+    private void CompareRapCount()
+    {
+        GameObject[] racingCars = GameObject.FindGameObjectsWithTag("RacingCar");
+        int[] rapCounts = new int[racingCars.Length];
+        foreach (GameObject player in racingCars)
+        {
+            int id = int.Parse(player.name);
+            rapCounts[id] = player.GetComponentInChildren<RapCount>().GetRapCount();
+            Debug.Log("プレイヤー:" + id + " 周回数:" + rapCounts[id]);
+        }
     }
 }
