@@ -6,34 +6,35 @@ public class CheckPointFlag : MonoBehaviour
 {
     public CheckPointCount checkPointCount = null;
 
-    private int checkPointCnt;
-    private int playerNum;
-    private bool[] isThrough;
+    private int _checkPointCnt;     // チェックポイント通過数カウント(プレイヤー分必要？)
+    private int _playerNum;         // プレイヤー人数
+    private bool[] _isThrough;      // このチェックポイントを通過したかのフラグを保存
 
     // Start is called before the first frame update
     void Start()
     {
         checkPointCount = checkPointCount.GetComponent<CheckPointCount>();
 
-        playerNum = 1;  // ここをTimeAttack,Battleで切り替える方法を考える
-        isThrough = new bool[playerNum];
-        for (int idx = 0; idx < playerNum; idx++)
+        _playerNum = GameObject.FindGameObjectsWithTag("RacingCar").Length;
+        _isThrough = new bool[_playerNum];
+        for (int idx = 0; idx < _playerNum; idx++)
         {
-            isThrough[idx] = false;
+            Debug.Log("_isThrough " + idx + "番目初期化");
+            _isThrough[idx] = false;
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        for (int playerID = 0; playerID < playerNum; playerID++)
+        for (int playerID = 0; playerID < _playerNum; playerID++)
         {
-            checkPointCnt = checkPointCount.GetNowThroughCheckPointNum(playerID);
-            if (isThrough[playerID] && (checkPointCnt <= 0))
+            _checkPointCnt = checkPointCount.GetNowThroughCheckPointNum(playerID);
+            if (_isThrough[playerID] && (_checkPointCnt <= 0))
             {
                 Debug.Log("全チェックポイント通過");
                 Debug.Log("全チェックポイントを未通過状態にする");
-                isThrough[playerID] = false;
+                _isThrough[playerID] = false;
             }
         }
     }
@@ -45,16 +46,19 @@ public class CheckPointFlag : MonoBehaviour
          つまり0～3となる
          現状は0(1プレイヤー目)とする
          */
-        int playerID = 0;
 
-        if (!isThrough[playerID])
+        // 仮に車のbodyの名前を0と1にして直接playerIDとして扱う
+        int playerID = int.Parse(other.gameObject.name);
+        Debug.Log("プレイヤー" + playerID + "チェックポイント通過");
+
+        if (!_isThrough[playerID])
         {
             if (other.gameObject.tag == "RacingCar")
             {
-                Debug.Log("第" + (checkPointCnt + 1) + "チェックポイント通過");
+                Debug.Log("第" + (_checkPointCnt + 1) + "チェックポイント通過");
                 Debug.Log(this.gameObject.name);
                 checkPointCount.CountCheckPoint(playerID);
-                isThrough[playerID] = true;
+                _isThrough[playerID] = true;
             }
         }
     }

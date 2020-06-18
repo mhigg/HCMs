@@ -9,9 +9,9 @@ public class GoalFlag : MonoBehaviour
     public TimeCount timeCounter = null;
     public RapCount rapCount = null;
     public CheckPointCount checkPointCount = null;
-    
-    private bool[] _finishCall;    // FinishCountテスト用
-    private int _playerNum;
+
+    private bool[] _finishCall;     // FinishCountテスト用
+    private int _playerNum;         // プレイヤー人数
 
     // Start is called before the first frame update
     void Start()
@@ -25,23 +25,28 @@ public class GoalFlag : MonoBehaviour
         checkPointCount = checkPointCount.GetComponent<CheckPointCount>();
     }
 
-    public void SetUpGoalFlag(int playerNum, int rapMax)
+    public void SetUpGoalFlag(int rapMax)
     {
-        _playerNum = playerNum;
+        _playerNum = GameObject.FindGameObjectsWithTag("RacingCar").Length;
         _finishCall = new bool[_playerNum];
         for (int playerID = 0; playerID < _playerNum; playerID++)
         {
             _finishCall[playerID] = false;
         }
 
-        rapCount.SetUpRapCount(_playerNum, rapMax);
-        checkPointCount.SetUpCheckPointCount(_playerNum);
+        rapCount.SetUpRapCount(rapMax);
     }
 
     // ゴール可能かどうかの判定を返す
-    public bool CheckGoal(int playerID)
+    public bool CheckFinish()
     {
-        return _finishCall[playerID];
+        bool retFinish = true;
+        for(int playerID = 0; playerID < _playerNum; playerID++)
+        {
+            // 一つでもfalseがあるとfalseになり、まだゴールしていないプレイヤーがいると判断
+            retFinish &= _finishCall[playerID];
+        }
+        return retFinish;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -59,13 +64,16 @@ public class GoalFlag : MonoBehaviour
          つまり0～3となる
          現状は0(1プレイヤー目)とする
          */
-        int playerID = 0;
+
+        // 仮に車のbodyの名前を0と1にして直接playerIDとして扱う
+        int playerID = int.Parse(other.gameObject.name);
+        Debug.Log("プレイヤー" + playerID + "ゴール通過");
 
         if (!_finishCall[playerID])
         {
             if (other.gameObject.tag == "RacingCar")
             {
-                if(checkPointCount.JudgThroughGoalSpace(playerID))
+                if (checkPointCount.JudgThroughGoalSpace(playerID))
                 {
                     rapCount.CountRap(playerID);
                     timeCounter.RapCount(playerID);
@@ -73,7 +81,7 @@ public class GoalFlag : MonoBehaviour
 
                 if (rapCount.CheckRapCount(playerID))
                 {
-                    Debug.Log("ゴール");
+                    Debug.Log("プレイヤー" + playerID + "ゴール");
                     goalText.text = "ＦＩＮＩＳＨ！";
                     goalText.gameObject.SetActive(true);
                     timeCounter.FinishCount(playerID);

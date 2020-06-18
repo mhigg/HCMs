@@ -11,9 +11,9 @@ public class RapCount : MonoBehaviour
     private int _rapMax;     // 規定ラップ数 最終的にはコースごとに持たせたい
     private int _playerNum;  // プレイヤー数
 
-    public void SetUpRapCount(int playerNum, int rapMax)
+    public void SetUpRapCount(int rapMax)
     {
-        _playerNum = playerNum;
+        _playerNum = GameObject.FindGameObjectsWithTag("RacingCar").Length;
         _rapCnt = new int[_playerNum];
         for (int idx = 0; idx < _playerNum; idx++)
         {
@@ -33,7 +33,7 @@ public class RapCount : MonoBehaviour
     public void CountRap(int playerID)
     {
         _rapCnt[playerID]++;    // プレイヤーごとにラップカウントをとる
-        if(_rapCnt[playerID] <= _rapMax)
+        if (_rapCnt[playerID] <= _rapMax)
         {
             rapText.text = (_rapCnt[playerID]) + " / " + _rapMax;
         }
