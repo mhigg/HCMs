@@ -6,13 +6,14 @@ public class CheckPointCount : MonoBehaviour
 {
     private int[] _checkPointCnt;       // チェックポイント通過カウント
     private int _checkPointCntMax;      // チェックポイントの数
+    private int _playerNum;             // プレイヤー人数
 
     void Start()
     {
-        int playerNum = GameObject.FindGameObjectsWithTag("RacingCar").Length;
+        _playerNum = GameObject.FindGameObjectsWithTag("RacingCar").Length;
 
-        _checkPointCnt = new int[playerNum];
-        for (int playerID = 0; playerID < playerNum; playerID++)
+        _checkPointCnt = new int[_playerNum];
+        for (int playerID = 0; playerID < _playerNum; playerID++)
         {
             _checkPointCnt[playerID] = 0;
         }
@@ -45,5 +46,30 @@ public class CheckPointCount : MonoBehaviour
         }
 
         return retFlag;
+    }
+
+    // この関数を読んだ時点での全プレイヤーのチェックポイント通過数を比較し、
+    // チェックポイント通過数の一時的なランキングを返す
+    // ランキング配列はプレイヤーID順に保存
+    public int[] CompareCountAndGetRankOfCheckPointCount()
+    {
+        int[] retRanking = new int[_playerNum];
+        for (int rank = 0; rank < _playerNum; rank++)
+        {
+            retRanking[rank] = 1;
+        }
+
+        for (int playerID = 0; playerID < _playerNum; playerID++)
+        {
+            for (int comparison = 0; comparison < _playerNum; comparison++)
+            {
+                if (playerID != comparison && _checkPointCnt[comparison] < _checkPointCnt[playerID])
+                {
+                    // playerIDがcomparisonよりも遅かったら順位を下げる
+                    retRanking[playerID]++;
+                }
+            }
+        }
+        return retRanking;
     }
 }
