@@ -10,7 +10,9 @@ public class NoGitResult : MonoBehaviour
     void Start()
     {
         dispRanking = dispRanking.GetComponent<DispRanking>();
-        dispRanking.SetUpDispRanking("Battle", 4, 3, false, 1000.0f);
+
+        // ランキング表示数はレースに参加した人数(CPU込)、最大周回数はコースごとに異なる
+        dispRanking.SetUpDispRanking("Battle", 2, 3, false, 1000.0f);
     }
 
     private bool isCalledOnce = false;
