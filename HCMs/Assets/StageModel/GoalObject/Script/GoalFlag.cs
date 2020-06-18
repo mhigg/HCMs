@@ -7,7 +7,6 @@ public class GoalFlag : MonoBehaviour
 {
     public Text goalText = null;
     public TimeCount timeCounter = null;
-    public RapCount rapCount = null;
     public CheckPointCount checkPointCount = null;
 
     private bool[] _finishCall;     // FinishCountテスト用
@@ -20,21 +19,15 @@ public class GoalFlag : MonoBehaviour
         goalText.gameObject.SetActive(false);
 
         timeCounter = timeCounter.GetComponent<TimeCount>();
-        rapCount = rapCount.GetComponent<RapCount>();
 
         checkPointCount = checkPointCount.GetComponent<CheckPointCount>();
-    }
 
-    public void SetUpGoalFlag(int rapMax)
-    {
         _playerNum = GameObject.FindGameObjectsWithTag("RacingCar").Length;
         _finishCall = new bool[_playerNum];
         for (int playerID = 0; playerID < _playerNum; playerID++)
         {
             _finishCall[playerID] = false;
         }
-
-        rapCount.SetUpRapCount(rapMax);
     }
 
     // ゴール可能かどうかの判定を返す
@@ -65,21 +58,23 @@ public class GoalFlag : MonoBehaviour
          現状は0(1プレイヤー目)とする
          */
 
+        GameObject throughObject = other.gameObject;
+
         // 仮に車のbodyの名前を0と1にして直接playerIDとして扱う
-        int playerID = int.Parse(other.gameObject.name);
+        int playerID = int.Parse(throughObject.name);
         Debug.Log("プレイヤー" + playerID + "ゴール通過");
 
         if (!_finishCall[playerID])
         {
-            if (other.gameObject.tag == "RacingCar")
+            if (throughObject.tag == "RacingCar")
             {
                 if (checkPointCount.JudgThroughGoalSpace(playerID))
                 {
-                    rapCount.CountRap(playerID);
+                    throughObject.GetComponent<RapCount>().CountRap();
                     timeCounter.RapCount(playerID);
                 }
 
-                if (rapCount.CheckRapCount(playerID))
+                if (throughObject.GetComponent<RapCount>().CheckRapCount())
                 {
                     Debug.Log("プレイヤー" + playerID + "ゴール");
                     goalText.text = "ＦＩＮＩＳＨ！";

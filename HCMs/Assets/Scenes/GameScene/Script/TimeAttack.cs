@@ -18,6 +18,8 @@ public class TimeAttack : MonoBehaviour
     private string[] _stageNameTbl;     // ステージ名テーブル
     private int[] _rapMaxTbl;           // 最大周回数テーブル
 
+    private string _activeStageName;    // 現在のステージ名
+
     void Awake()
     {
         _stageNameTbl = new string[]{
@@ -33,12 +35,12 @@ public class TimeAttack : MonoBehaviour
     void Start()
     {
         Debug.Log("タイムアタック初期化");
-        string stageName = SceneManager.GetActiveScene().name;
+        _activeStageName = SceneManager.GetActiveScene().name;
         int rapMax = 0;
 
         for (int idx = 0; idx < _stageNameTbl.Length; idx++)
         {
-            if (_stageNameTbl[idx] == stageName)
+            if (_stageNameTbl[idx] == _activeStageName)
             {
                 rapMax = _rapMaxTbl[idx];
             }
@@ -51,10 +53,9 @@ public class TimeAttack : MonoBehaviour
 
         timeRanking = timeRanking.GetComponent<TimeRanking>();
         // 第一引数をコース名にする
-        timeRanking.SetUpTimeRanking(stageName, 11, rapMax);
+        timeRanking.SetUpTimeRanking(_activeStageName, 11, rapMax);
 
         goalFlag = goalFlag.GetComponent<GoalFlag>();
-        goalFlag.SetUpGoalFlag(rapMax);
 
         timeCounter = timeCounter.GetComponent<TimeCount>();
 
@@ -89,7 +90,7 @@ public class TimeAttack : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Return))
             {
                 _isCalledOnce = true;
-                FadeManager.Instance.LoadScene("TimeAttack02", 2.0f);
+                FadeManager.Instance.LoadScene(_activeStageName, 2.0f);
                 Debug.Log("再スタート");
             }
         }

@@ -14,6 +14,8 @@ public class Battle : MonoBehaviour
     private string[] _stageNameTbl;     // ステージ名テーブル
     private int[] _rapMaxTbl;           // 最大周回数テーブル
 
+    private string _activeStageName;    // 現在のステージ名
+
     void Awake()
     {
         _stageNameTbl = new string[]{
@@ -31,12 +33,12 @@ public class Battle : MonoBehaviour
         Debug.Log("バトルシーン初期化");
         int playerNum = GameObject.FindGameObjectsWithTag("RacingCar").Length;
 
-        string stageName = SceneManager.GetActiveScene().name;
+        _activeStageName = SceneManager.GetActiveScene().name;
         int rapMax = 0;
 
         for (int idx = 0; idx < _stageNameTbl.Length; idx++)
         {
-            if (_stageNameTbl[idx] == stageName)
+            if (_stageNameTbl[idx] == _activeStageName)
             {
                 rapMax = _rapMaxTbl[idx];
             }
@@ -51,7 +53,6 @@ public class Battle : MonoBehaviour
         timeRanking.SetUpTimeRanking("Battle", playerNum, rapMax);
 
         goalFlag = goalFlag.GetComponent<GoalFlag>();
-        goalFlag.SetUpGoalFlag(rapMax);
 
         timeCounter = timeCounter.GetComponent<TimeCount>();
         startCounter = startCounter.GetComponent<StartStopController>();
@@ -75,6 +76,18 @@ public class Battle : MonoBehaviour
                     FadeManager.Instance.LoadScene("BattleResult", 2.0f);
                     Debug.Log("Resultへ");
                 }
+            }
+        }
+
+        // Debug用　横転等で動けなくなったとき用
+        if (!_isCalledOnce)
+        {
+            ///ここを任意のボタンにしましょう。
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                _isCalledOnce = true;
+                FadeManager.Instance.LoadScene(_activeStageName, 2.0f);
+                Debug.Log("再スタート");
             }
         }
 

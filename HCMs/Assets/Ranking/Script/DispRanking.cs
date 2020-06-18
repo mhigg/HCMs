@@ -42,13 +42,13 @@ public class DispRanking : MonoBehaviour
     // @rapMax int型：最大周回数
     // @rankOutActive bool型：ランク外を表示するならtrue しないならfalse
     // @defaultTime float型：記録が無い場合に設定するデフォルト値
-    public void SetUpDispRanking(string gameMode, int indicationRanks, int rapMax, bool rankOutActive, float defaultTime)
+    public void SetUpDispRanking(string gameMode, int indicateRanks, int rapMax, bool rankOutActive, float defaultTime)
     {
         Debug.Log("DispRankingセットアップ");
 
         _rankingKey = gameMode;
-        _rankingMax = indicationRanks;
-        _rapRankMax = indicationRanks * rapMax;
+        _rankingMax = indicateRanks;
+        _rapRankMax = indicateRanks * rapMax;
         _rapRankKey = (gameMode == "Battle" ? "BTRap" : "TARap");
         _rankOutActive = rankOutActive;
         _defaultTime = defaultTime;
