@@ -46,7 +46,7 @@ public class NoGitScene : MonoBehaviour
         }
 
         timeRanking = timeRanking.GetComponent<TimeRanking>();
-        timeRanking.SetUpTimeRanking(stageName, playerNum, rapMax);
+        timeRanking.SetUpTimeRanking("Battle", playerNum, rapMax);
 
         goalFlag = goalFlag.GetComponent<GoalFlag>();
         goalFlag.SetUpGoalFlag(rapMax);

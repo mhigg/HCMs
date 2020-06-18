@@ -6,9 +6,28 @@ public class TitleScene : MonoBehaviour
 {
     public DataStorage rankingStorage = null;
 
-    void Start()
+    void Awake()
     {
         rankingStorage = rankingStorage.GetComponent<DataStorage>();
+
+        rankingStorage.DeleteData("TimeAttack01");
+        rankingStorage.DeleteData("TimeAttack02");
+        rankingStorage.DeleteData("TimeAttack03");
+        rankingStorage.DeleteData("BattleScene_01");
+        rankingStorage.DeleteData("BattleScene_02");
+        rankingStorage.DeleteData("BattleScene_03");
+        rankingStorage.DeleteData("TARap");
+        rankingStorage.DeleteData("BTRap");
+        rankingStorage.DeleteData("TimeAttack");
+        rankingStorage.DeleteData("Battle");
+        rankingStorage.DeleteData("timeAttack");
+        rankingStorage.DeleteData("ranking");
+        rankingStorage.DeleteData("raprank");
+        rankingStorage.DeleteData("P1");
+    }
+
+    void Start()
+    {
     }
 
     bool isCalledOnce = false;
@@ -45,8 +64,12 @@ public class TitleScene : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.F1))
             {
                 isDeleteOnce = true;
-                rankingStorage.DeleteData("TimeAttack");
-                rankingStorage.DeleteData("Battle");
+                rankingStorage.DeleteData("TimeAttack01");
+                rankingStorage.DeleteData("TimeAttack02");
+                rankingStorage.DeleteData("TimeAttack03");
+                rankingStorage.DeleteData("BattleScene_01");
+                rankingStorage.DeleteData("BattleScene_02");
+                rankingStorage.DeleteData("BattleScene_03");
                 Debug.Log("全ランキングデリート");
             }
         }
