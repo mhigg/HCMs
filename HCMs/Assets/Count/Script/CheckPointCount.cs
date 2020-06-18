@@ -29,6 +29,11 @@ public class CheckPointCount : MonoBehaviour
         _checkPointCnt[playerID]++;
     }
 
+    public int[] GetNowThroughCheckPointNum()
+    {
+        return _checkPointCnt;
+    }
+
     // プレイヤーごとに現在通過したチェックポイント数を返す
     public int GetNowThroughCheckPointNum(int playerID)
     {
@@ -46,33 +51,5 @@ public class CheckPointCount : MonoBehaviour
         }
 
         return retFlag;
-    }
-
-    // この関数を読んだ時点での全プレイヤーのチェックポイント通過数を比較し、
-    // チェックポイント通過数の一時的なランキングを返す
-    // ランキング配列はプレイヤーID順に保存
-    public int[] CompareCountAndGetRankOfCheckPointCount()
-    {
-        int[] retRanking = new int[_playerNum];
-        for (int rank = 0; rank < _playerNum; rank++)
-        {
-            retRanking[rank] = 1;
-        }
-
-        for (int playerID = 0; playerID < _playerNum; playerID++)
-        {
-            for (int comparison = 0; comparison < _playerNum; comparison++)
-            {
-                if (playerID != comparison && _checkPointCnt[playerID] < _checkPointCnt[comparison])
-                {
-                    // playerIDがcomparisonよりも通過数が少なかったら順位を下げる
-                    retRanking[playerID]++;
-                }
-            }
-        }
-
-        Debug.Log("1P" + retRanking[0]);
-        Debug.Log("2P" + retRanking[1]);
-        return retRanking;
     }
 }
