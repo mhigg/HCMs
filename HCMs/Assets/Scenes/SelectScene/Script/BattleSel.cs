@@ -12,6 +12,8 @@ public class BattleSel : MonoBehaviour
     GameObject _selectObj;
     int _nowSelected = 0;
     List<string> _imageName;
+    public List<bool> _num;
+    public Image _disableImg;
 
     void Start()
     {
@@ -49,15 +51,23 @@ public class BattleSel : MonoBehaviour
                 }
             }
         }
-        if (!isCalledOnce)
+        if (_num[_nowSelected])
         {
-            ///ここを任意のボタンにしましょう。
-            if (Input.GetKeyDown("space"))
+            _disableImg.gameObject.SetActive(false);
+            if (!isCalledOnce)
             {
-                isCalledOnce = true;
-                FadeManager.Instance.LoadScene("BattleScene_0" + $"{_nowSelected + 1}", 2.0f);
-                Debug.Log("BattleSceneへ");
+                ///ここを任意のボタンにしましょう。
+                if (Input.GetButtonDown("Decision"))
+                {
+                    isCalledOnce = true;
+                    FadeManager.Instance.LoadScene("BattleScene_0" + $"{_nowSelected + 1}", 2.0f);
+                    Debug.Log("BattleSceneへ");
+                }
             }
+        }
+        else
+        {
+            _disableImg.gameObject.SetActive(true);
         }
     }
 }

@@ -27,7 +27,7 @@ public class MenuScene : MonoBehaviour
         {
             ///ここを任意のボタンにしましょう。
             ///タイムアタック
-            if (Input.GetKeyDown("space"))
+            if (Input.GetButtonDown("Decision"))
             {
                 _selectObj = eventSystem.currentSelectedGameObject.gameObject;
                 if (_selectObj.name == _timeAtt.name)

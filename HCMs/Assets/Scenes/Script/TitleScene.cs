@@ -20,7 +20,7 @@ public class TitleScene : MonoBehaviour
         if (!isCalledOnce)
         {
             ///ここを任意のボタンにしましょう。
-            if (Input.GetKeyDown("space"))
+            if (Input.GetButtonDown("Decision"))
             {
                 isCalledOnce = true;
                 FadeManager.Instance.LoadScene("MenuScene", 2.0f);

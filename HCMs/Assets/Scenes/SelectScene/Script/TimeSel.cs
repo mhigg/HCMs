@@ -8,14 +8,16 @@ public class TimeSel : MonoBehaviour
 {
     enum Stage { TimeAttackScene };
     int _nowSelected;
-    public List<Image> stages;
+    public List<Image> _stages;
+    public List<bool> _num;
     [SerializeField] EventSystem eventSystem;
     GameObject _selectObj;
     List<string> _imageName;
+    public Image _disableImg;
 
     void Start()
     {
-        var tmp = stages.Count;
+        var tmp = _stages.Count;
         _imageName = new List<string>(tmp);
         for (int i = 0; i < tmp; i++)
         {
@@ -34,30 +36,40 @@ public class TimeSel : MonoBehaviour
         else
         {
             _selectObj = eventSystem.currentSelectedGameObject.gameObject;
-            for (int i = 0; i < stages.Count; i++)
+            for (int i = 0; i < _stages.Count; i++)
             {
                 if (_selectObj.name == _imageName[i])
                 {
-                    Vector3 pos = stages[i].transform.localPosition;
+                    Vector3 pos = _stages[i].transform.localPosition;
                     pos.x = 0;
-                    stages[i].transform.localPosition = pos;
+                    _stages[i].transform.localPosition = pos;
                     pos.x = 1200;
-                    stages[(i + 1) % stages.Count].transform.localPosition = pos;
+                    _stages[(i + 1) % _stages.Count].transform.localPosition = pos;
                     pos.x = -1200;
-                    stages[(i + stages.Count - 1) % stages.Count].transform.localPosition = pos;
+                    _stages[(i + _stages.Count - 1) % _stages.Count].transform.localPosition = pos;
                     _nowSelected = i;
                 }
             }
         }
-        if (!isCalledOnce)
+        if (_num[_nowSelected])
         {
-            ///ここを任意のボタンにしましょう。
-            if (Input.GetKeyDown("space"))
+            _disableImg.gameObject.SetActive(false);
+            if (!isCalledOnce)
             {
-                isCalledOnce = true;
-                FadeManager.Instance.LoadScene("TimeAttack0" + $"{_nowSelected + 1}", 2.0f);
-                Debug.Log("01へ");
+                ///ここを任意のボタンにしましょう。
+                if (Input.GetButtonDown("Decision"))
+                {
+                    isCalledOnce = true;
+                    FadeManager.Instance.LoadScene("TimeAttack0" + $"{_nowSelected + 1}", 2.0f);
+                    Debug.Log("01へ");
+
+                }
             }
+        }
+
+        else
+        {
+            _disableImg.gameObject.SetActive(true);
         }
     }
 }
