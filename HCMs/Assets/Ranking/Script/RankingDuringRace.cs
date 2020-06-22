@@ -33,8 +33,30 @@ public class RankingDuringRace : MonoBehaviour
         
         int[] ranking = Ranking();  // 総合した順位
 
-        rankText01.text = ranking[0].ToString();
-        rankText02.text = ranking[1].ToString();
+        rankText01.text = RankingToString(ranking[0]);
+        rankText02.text = RankingToString(ranking[1]);
+    }
+
+    private string RankingToString(int ranking)
+    {
+        string retString;
+        switch(ranking)
+        {
+            case 1:
+                retString = ranking.ToString() + "st";
+                break;
+            case 2:
+                retString = ranking.ToString() + "nd";
+                break;
+            case 3:
+                retString = ranking.ToString() + "rd";
+                break;
+            default:
+                retString = ranking.ToString() + "th";
+                break;
+        }
+
+        return retString;
     }
 
     // 周回数の順位付け
