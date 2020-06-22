@@ -28,9 +28,9 @@ public class RankingDuringRace : MonoBehaviour
     {
         // 周回数→チェックポイント通過数→次チェックポイントまでの距離の順にランク付けする
         CompareRapCountAndGetRanking();
-        Ranking(checkPointCount.GetNowThroughCheckPointNum());
-        /*次チェックポイントまでの距離*/
-        
+        Ranking(checkPointCount.GetNowThroughCheckPointNum(), false);
+        CompareDistanceToNextPoint();
+
         int[] ranking = Ranking();  // 総合した順位
 
         rankText01.text = RankingToString(ranking[0]);
@@ -71,11 +71,44 @@ public class RankingDuringRace : MonoBehaviour
             Debug.Log("プレイヤー:" + id + " 周回数:" + rapCounts[id]);
         }
 
-        Ranking(rapCounts);
+        Ranking(rapCounts, false);
+    }
+
+    //次チェックポイントまでの距離で順位付け
+    private void CompareDistanceToNextPoint()
+    {
+        GameObject[] racingCars = GameObject.FindGameObjectsWithTag("RacingCar");
+        int[] throughCpNums = checkPointCount.GetNowThroughCheckPointNum();
+        GameObject[] checkPoints = GameObject.FindGameObjectsWithTag("CheckPoint");
+
+        int[] distanceBlock = new int[throughCpNums.Length];
+        for(int playerID = 0; playerID < throughCpNums.Length; playerID++)
+        {
+            for (int idx = 0; idx < (checkPoints.Length - 1); idx++)
+            {
+                // 通過数に１足した値を次のチェックポイントとする
+                if (checkPoints[idx].name == ("cp" + (throughCpNums[playerID] + 1).ToString()))
+                {
+                    // 次のチェックポイントまでの距離
+                    float distance =
+                        Mathf.Sqrt(
+                            Mathf.Pow(checkPoints[idx].transform.position.x - racingCars[playerID].transform.position.x, 2) +
+                            Mathf.Pow(checkPoints[idx].transform.position.z - racingCars[playerID].transform.position.z, 2)
+                          );
+
+                    distanceBlock[playerID] = Mathf.FloorToInt(distance * 1000);
+                    Debug.Log(playerID + "P distance:" + distance);
+                }
+            }
+        }
+
+        Ranking(distanceBlock, true);
     }
 
     // 渡された要素で順位付けを行い、_rankingListに追加する
-    private void Ranking(int[] counts)
+    // @conts int型配列：順位付けを行う要素
+    // @isAsc bool型：昇順ならtrue、降順ならfalse
+    private void Ranking(int[] counts, bool isAsc)
     {
         int[] retRanking = new int[_playerNum];
 
@@ -88,12 +121,23 @@ public class RankingDuringRace : MonoBehaviour
         {
             for (int comparison = 0; comparison < _playerNum; comparison++)
             {
-                if (playerID != comparison && counts[playerID] < counts[comparison])
+                if (isAsc)
                 {
-                    retRanking[playerID]++;
+                    if (playerID != comparison && counts[comparison] < counts[playerID])
+                    {
+                        retRanking[playerID]++;
+                    }
+                }
+                else
+                {
+                    if (playerID != comparison && counts[playerID] < counts[comparison])
+                    {
+                        retRanking[playerID]++;
+                    }
                 }
             }
         }
+
         _rankingList.Add(retRanking);
     }
 
