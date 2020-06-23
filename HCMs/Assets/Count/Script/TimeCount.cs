@@ -8,6 +8,7 @@ public class TimeCount : MonoBehaviour
     // タイム表示用テキストコンポーネント
     public Text timeText = null;
     public Text rapTimeText = null;
+    public Canvas counterCanvas = null;
 
     // タイムを保存するためのコンポーネント
     public TimeRanking timeRanking = null;
@@ -16,16 +17,22 @@ public class TimeCount : MonoBehaviour
     private float _rapTimeCount;    // ラップタイムカウント用変数
     private bool _endFlag;          // カウント停止中true カウント中false
 
+    private Vector3 _drawOffset;    // ラップタイム表示用のオフセット
+
     // Start is called before the first frame update
     void Start()
     {
         timeText = timeText.GetComponent<Text>();
         rapTimeText = rapTimeText.GetComponent<Text>();
+        counterCanvas = counterCanvas.GetComponent<Canvas>();
         timeRanking = timeRanking.GetComponent<TimeRanking>();
 
         _timeCount = 0.0f;
         _rapTimeCount = 0.0f;
         _endFlag = true;
+
+        _drawOffset = new Vector3(Screen.width / 2.0f, Screen.height / 2.0f, 0.0f);
+        Debug.Log("オフセット：" + _drawOffset);
     }
 
     // Update is called once per frame
@@ -37,7 +44,6 @@ public class TimeCount : MonoBehaviour
             timeText.text = ChangeTimeNotationAndTimeText(_timeCount);
 
             _rapTimeCount += Time.deltaTime;
-            rapTimeText.text = ChangeTimeNotationAndTimeText(_rapTimeCount);
         }
     }
 
@@ -48,7 +54,19 @@ public class TimeCount : MonoBehaviour
         int minute = Mathf.FloorToInt(time / 60.0f);
         return string.Format("{0:00}.", minute) + string.Format("{0:00.000}", second);
     }
-    
+
+
+    private void InstantiateRapTimeText()
+    {
+        int rapCnt = GameObject.FindWithTag("RacingCar").GetComponent<RapCount>().GetRapCount();
+        Vector3 position = new Vector3(645 + _drawOffset.x, (400 - 80 * rapCnt) + _drawOffset.y, _drawOffset.z);
+        Debug.Log("position:" + position);
+
+        Text _rapTimeText = Instantiate(rapTimeText, position, Quaternion.identity);
+        _rapTimeText.text = "RAP" + (rapCnt - 1) + "   " + ChangeTimeNotationAndTimeText(_rapTimeCount);
+        _rapTimeText.transform.SetParent(counterCanvas.transform);
+    }
+
     // カウントを開始する
     public void StartCount()
     {
@@ -63,8 +81,7 @@ public class TimeCount : MonoBehaviour
     {
         Debug.Log("ラップタイム" + _timeCount);
         timeRanking.SetRapTime(_timeCount, playerID);
-        //Instantiate(rapTimeText, rapTimeText.transform.position, rapTimeText.transform.rotation);
-        //rapTimeText.transform.position.Set(rapTimeText.transform.position.x, 80.0f, rapTimeText.transform.position.z);
+        InstantiateRapTimeText();
         _rapTimeCount = 0.0f;
     }
 
