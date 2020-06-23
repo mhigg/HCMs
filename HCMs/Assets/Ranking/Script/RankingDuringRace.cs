@@ -90,14 +90,10 @@ public class RankingDuringRace : MonoBehaviour
                 if (checkPoints[idx].name == ("cp" + (throughCpNums[playerID] + 1).ToString()))
                 {
                     // 次のチェックポイントまでの距離
-                    float distance =
-                        Mathf.Sqrt(
-                            Mathf.Pow(checkPoints[idx].transform.position.x - racingCars[playerID].transform.position.x, 2) +
-                            Mathf.Pow(checkPoints[idx].transform.position.z - racingCars[playerID].transform.position.z, 2)
-                          );
-
-                    distanceBlock[playerID] = Mathf.FloorToInt(distance * 1000);
+                    float distance = Vector3.Distance(checkPoints[idx].transform.position, racingCars[playerID].transform.position);
                     Debug.Log(playerID + "P distance:" + distance);
+                    // 小数点以下を整数値に上げる
+                    distanceBlock[playerID] = Mathf.FloorToInt(distance * 1000);
                 }
             }
         }

@@ -32,6 +32,8 @@ public class CheckPointFlag : MonoBehaviour
             _checkPointCnt = checkPointCount.GetNowThroughCheckPointNum(playerID);
             if (_isThrough[playerID] && (_checkPointCnt <= 0))
             {
+                // このチェックポイントが通過済みかつチェックポイント通過数がゼロクリアされていたら
+                // (※チェックポイント通過数はゴールを通過したらゼロクリアされる)
                 Debug.Log("全チェックポイント通過");
                 Debug.Log("全チェックポイントを未通過状態にする");
                 _isThrough[playerID] = false;
