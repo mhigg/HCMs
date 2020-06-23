@@ -8,7 +8,6 @@ public class TimeCount : MonoBehaviour
     // タイム表示用テキストコンポーネント
     public Text timeText = null;
     public Text rapTimeText = null;
-    public Canvas counterCanvas = null;
 
     // タイムを保存するためのコンポーネント
     public TimeRanking timeRanking = null;
@@ -16,6 +15,7 @@ public class TimeCount : MonoBehaviour
     private float _timeCount;       // タイムカウント用変数
     private float _rapTimeCount;    // ラップタイムカウント用変数
     private bool _endFlag;          // カウント停止中true カウント中false
+    private bool _isTimeAttack;     // タイムアタックならtrue バトルならfalse
 
     private Vector3 _drawOffset;    // ラップタイム表示用のオフセット
 
@@ -24,12 +24,12 @@ public class TimeCount : MonoBehaviour
     {
         timeText = timeText.GetComponent<Text>();
         rapTimeText = rapTimeText.GetComponent<Text>();
-        counterCanvas = counterCanvas.GetComponent<Canvas>();
         timeRanking = timeRanking.GetComponent<TimeRanking>();
 
         _timeCount = 0.0f;
         _rapTimeCount = 0.0f;
         _endFlag = true;
+        _isTimeAttack = (GameObject.FindGameObjectsWithTag("RacingCar").Length == 1 ? true : false);
 
         _drawOffset = new Vector3(Screen.width / 2.0f, Screen.height / 2.0f, 0.0f);
         Debug.Log("オフセット：" + _drawOffset);
@@ -64,7 +64,7 @@ public class TimeCount : MonoBehaviour
 
         Text _rapTimeText = Instantiate(rapTimeText, position, Quaternion.identity);
         _rapTimeText.text = "RAP" + (rapCnt - 1) + "   " + ChangeTimeNotationAndTimeText(_rapTimeCount);
-        _rapTimeText.transform.SetParent(counterCanvas.transform);
+        _rapTimeText.transform.SetParent(GameObject.Find("CounterCanvas").transform);
     }
 
     // カウントを開始する
@@ -81,7 +81,10 @@ public class TimeCount : MonoBehaviour
     {
         Debug.Log("ラップタイム" + _timeCount);
         timeRanking.SetRapTime(_timeCount, playerID);
-        InstantiateRapTimeText();
+        if(_isTimeAttack)
+        {
+            InstantiateRapTimeText();
+        }
         _rapTimeCount = 0.0f;
     }
 
