@@ -7,7 +7,6 @@ public class GoalFlag : MonoBehaviour
 {
     public Text goalText;                       // ゴール時に表示するテキスト
     public TimeCount timeCounter;               // タイムをカウントする
-    public CheckPointCount checkPointCount;     // チェックポイント通過数をカウント
 
     private bool[] _finishCall;     // FinishCountテスト用
     private int _playerNum;         // プレイヤー人数
@@ -19,8 +18,6 @@ public class GoalFlag : MonoBehaviour
         goalText.gameObject.SetActive(false);
 
         timeCounter = timeCounter.GetComponent<TimeCount>();
-
-        checkPointCount = checkPointCount.GetComponent<CheckPointCount>();
 
         _playerNum = GameObject.FindGameObjectsWithTag("RacingCar").Length;
         _finishCall = new bool[_playerNum];
@@ -68,7 +65,7 @@ public class GoalFlag : MonoBehaviour
         {
             if (throughObject.tag == "RacingCar")
             {
-                if (checkPointCount.JudgThroughGoalSpace(playerID))
+                if (throughObject.GetComponent<CheckPointCount>().JudgThroughGoalSpace())
                 {
                     throughObject.GetComponent<RapCount>().CountRap();
                     timeCounter.RapCount(playerID);

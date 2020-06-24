@@ -3556,8 +3556,8 @@ Transform:
   m_LocalPosition: {x: 782.45233, y: 9.501902, z: 753.56525}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 2003480833}
   - {fileID: 1369572822}
+  - {fileID: 2003480833}
   - {fileID: 36669946}
   - {fileID: 171838136}
   m_Father: {fileID: 0}
@@ -5282,6 +5282,18 @@ MonoBehaviour:
   maxRolloffDistance: 500
   dopplerLevel: 1
   useDoppler: 1
+--- !u!114 &1369572844
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1369572835}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7595e8d89a8a6de46a9e4ed5020c5e12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1400382845
 GameObject:
   m_ObjectHideFlags: 0
@@ -8339,6 +8351,18 @@ MonoBehaviour:
   speedImage: {fileID: 1082072449}
   speedText: {fileID: 146544426}
   percentage: 22
+--- !u!114 &2003480855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2003480846}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7595e8d89a8a6de46a9e4ed5020c5e12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2028065114
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8623,6 +8647,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5203972356697068385, guid: b4861f4dc6dcc044e8165c3509f6d6c8,
         type: 3}
+      propertyPath: rankTextList.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5203972356697068385, guid: b4861f4dc6dcc044e8165c3509f6d6c8,
+        type: 3}
       propertyPath: checkPointCount
       value: 
       objectReference: {fileID: 1619849471}
@@ -8646,5 +8675,15 @@ PrefabInstance:
       propertyPath: text2
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 5203972356697068385, guid: b4861f4dc6dcc044e8165c3509f6d6c8,
+        type: 3}
+      propertyPath: rankTextList.Array.data[0]
+      value: 
+      objectReference: {fileID: 1735021376}
+    - target: {fileID: 5203972356697068385, guid: b4861f4dc6dcc044e8165c3509f6d6c8,
+        type: 3}
+      propertyPath: rankTextList.Array.data[1]
+      value: 
+      objectReference: {fileID: 785722255}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b4861f4dc6dcc044e8165c3509f6d6c8, type: 3}

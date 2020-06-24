@@ -55,7 +55,8 @@ public class TimeCount : MonoBehaviour
         return string.Format("{0:00}.", minute) + string.Format("{0:00.000}", second);
     }
 
-
+    // ラップタイムテキストをインスタンス
+    // 周回時に呼ぶ。タイムアタックのみ
     private void InstantiateRapTimeText()
     {
         int rapCnt = GameObject.FindWithTag("RacingCar").GetComponent<RapCount>().GetRapCount();

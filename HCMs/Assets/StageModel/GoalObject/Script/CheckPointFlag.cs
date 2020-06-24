@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class CheckPointFlag : MonoBehaviour
 {
-    public CheckPointCount checkPointCount = null;
-
     private int _checkPointCnt;     // チェックポイント通過数カウント(プレイヤー分必要？)
     private int _playerNum;         // プレイヤー人数
     private bool[] _isThrough;      // このチェックポイントを通過したかのフラグを保存
@@ -13,8 +11,6 @@ public class CheckPointFlag : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        checkPointCount = checkPointCount.GetComponent<CheckPointCount>();
-
         _playerNum = GameObject.FindGameObjectsWithTag("RacingCar").Length;
         _isThrough = new bool[_playerNum];
         for (int idx = 0; idx < _playerNum; idx++)
@@ -27,9 +23,11 @@ public class CheckPointFlag : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        for (int playerID = 0; playerID < _playerNum; playerID++)
+        GameObject[] racingCars = GameObject.FindGameObjectsWithTag("RacingCar");
+        foreach (GameObject player in racingCars)
         {
-            _checkPointCnt = checkPointCount.GetNowThroughCheckPointNum(playerID);
+            int playerID = int.Parse(player.name);
+            _checkPointCnt = player.GetComponent<CheckPointCount>().GetNowThroughCheckPointNum();
             if (_isThrough[playerID] && (_checkPointCnt <= 0))
             {
                 // このチェックポイントが通過済みかつチェックポイント通過数がゼロクリアされていたら
@@ -49,17 +47,19 @@ public class CheckPointFlag : MonoBehaviour
          現状は0(1プレイヤー目)とする
          */
 
+        GameObject throughObject = other.gameObject;
+
         // 現状プレイヤー名の登録は実装していないため、車のbodyの名前を0と1にして直接playerIDとして扱う
-        int playerID = int.Parse(other.gameObject.name);
+        int playerID = int.Parse(throughObject.name);
         Debug.Log("プレイヤー" + playerID + "チェックポイント通過");
 
         if (!_isThrough[playerID])
         {
-            if (other.gameObject.tag == "RacingCar")
+            if (throughObject.tag == "RacingCar")
             {
                 Debug.Log("第" + (_checkPointCnt + 1) + "チェックポイント通過");
                 Debug.Log(this.gameObject.name);
-                checkPointCount.CountCheckPoint(playerID);
+                throughObject.GetComponent<CheckPointCount>().CountCheckPoint();
                 _isThrough[playerID] = true;
             }
         }

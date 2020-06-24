@@ -6,9 +6,7 @@ using TMPro;
 // 周回数やチェックポイント通過数の比較結果から順位表示を更新する
 public class RankingDuringRace : MonoBehaviour
 {
-    public CheckPointCount checkPointCount;
-    public TextMeshProUGUI rankText01;
-    public TextMeshProUGUI rankText02;
+    public List<TextMeshProUGUI> rankTextList;  // 順位表示のリスト
 
     private int _playerNum;             // プレイヤー人数
     private List<int[]> _rankingList;   // 順位リスト
@@ -16,9 +14,6 @@ public class RankingDuringRace : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        checkPointCount = checkPointCount.GetComponent<CheckPointCount>();
-        rankText01 = rankText01.GetComponent<TextMeshProUGUI>();
-        rankText02 = rankText02.GetComponent<TextMeshProUGUI>();
         _playerNum = GameObject.FindGameObjectsWithTag("RacingCar").Length;
         _rankingList = new List<int[]> (_playerNum);
     }
@@ -28,15 +23,19 @@ public class RankingDuringRace : MonoBehaviour
     {
         // 周回数→チェックポイント通過数→次チェックポイントまでの距離の順にランク付けする
         CompareRapCountAndGetRanking();
-        Ranking(checkPointCount.GetNowThroughCheckPointNum(), false);
+        CompareCheckPointCountAndGetRanking();
         CompareDistanceToNextPoint();
 
         int[] ranking = Ranking();  // 総合した順位
-
-        rankText01.text = RankingToString(ranking[0]);
-        rankText02.text = RankingToString(ranking[1]);
+        int idx = 0;
+        foreach (TextMeshProUGUI rankText in rankTextList)
+        {
+            rankText.text = RankingToString(ranking[idx]);
+            idx++;
+        }
     }
 
+    // 順位ごとに文字付与
     private string RankingToString(int ranking)
     {
         string retString;
@@ -59,6 +58,8 @@ public class RankingDuringRace : MonoBehaviour
         return retString;
     }
 
+    // この↓2つの順位付け関数、中身ほぼ同じなのでなんとかまとめたい
+
     // 周回数の順位付け
     private void CompareRapCountAndGetRanking()
     {
@@ -74,21 +75,39 @@ public class RankingDuringRace : MonoBehaviour
         Ranking(rapCounts, false);
     }
 
+    // チェックポイント通過数の順位付け
+    private void CompareCheckPointCountAndGetRanking()
+    {
+        GameObject[] racingCars = GameObject.FindGameObjectsWithTag("RacingCar");
+        int[] checkPointCounts = new int[racingCars.Length];
+        foreach (GameObject player in racingCars)
+        {
+            int id = int.Parse(player.name);
+            checkPointCounts[id] = player.GetComponentInChildren<CheckPointCount>().GetNowThroughCheckPointNum();
+            Debug.Log("プレイヤー:" + id + " チェックポイント通過数:" + checkPointCounts[id]);
+        }
+
+        Ranking(checkPointCounts, false);
+    }
+
     //次チェックポイントまでの距離で順位付け
     private void CompareDistanceToNextPoint()
     {
         GameObject[] racingCars = GameObject.FindGameObjectsWithTag("RacingCar");
-        int[] throughCpNums = checkPointCount.GetNowThroughCheckPointNum();
         GameObject[] checkPoints = GameObject.FindGameObjectsWithTag("CheckPoint");
 
-        int[] distanceBlock = new int[throughCpNums.Length];
+        // 各プレイヤーのチェックポイントまでの距離(int変換後保存用)
+        int[] distanceBlock = new int[racingCars.Length];
+
         foreach (GameObject player in racingCars)
         {
             int playerID = int.Parse(player.name);
             for (int idx = 0; idx < (checkPoints.Length - 1); idx++)
             {
+                int throughCpNums = player.GetComponent<CheckPointCount>().GetNowThroughCheckPointNum();
+
                 // 通過数に１足した値を次のチェックポイントとする
-                if (checkPoints[idx].name == ("cp" + (throughCpNums[playerID] + 1).ToString()))
+                if (checkPoints[idx].name == ("cp" + (throughCpNums + 1).ToString()))
                 {
                     // 次のチェックポイントまでの距離
                     float distance = Vector3.Distance(checkPoints[idx].transform.position, player.transform.position);
