@@ -16,6 +16,12 @@ public class RankingDuringRace : MonoBehaviour
     {
         _playerNum = GameObject.FindGameObjectsWithTag("RacingCar").Length;
         _rankingList = new List<int[]> (_playerNum);
+
+        for(int playerID = 0; playerID < rankTextList.Count; playerID++)
+        {
+            // 順位表示の初期化
+            rankTextList[playerID].text = RankingToString(playerID + 1);
+        }
     }
 
     // Update is called once per frame
