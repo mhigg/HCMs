@@ -5,9 +5,8 @@ using UnityEngine.UI;
 
 public class GoalFlag : MonoBehaviour
 {
-    public Text goalText;                       // ゴール時に表示するテキスト
+    public List<Text> goalTextList;                       // ゴール時に表示するテキスト
     public TimeCount timeCounter;               // タイムをカウントする
-    public CheckPointCount checkPointCount;     // チェックポイント通過数をカウント
 
     private bool[] _finishCall;     // FinishCountテスト用
     private int _playerNum;         // プレイヤー人数
@@ -15,12 +14,12 @@ public class GoalFlag : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        goalText = goalText.GetComponent<Text>();
-        goalText.gameObject.SetActive(false);
+        foreach(Text goalText in goalTextList)
+        {
+            goalText.gameObject.SetActive(false);
+        }
 
         timeCounter = timeCounter.GetComponent<TimeCount>();
-
-        checkPointCount = checkPointCount.GetComponent<CheckPointCount>();
 
         _playerNum = GameObject.FindGameObjectsWithTag("RacingCar").Length;
         _finishCall = new bool[_playerNum];
@@ -68,7 +67,7 @@ public class GoalFlag : MonoBehaviour
         {
             if (throughObject.tag == "RacingCar")
             {
-                if (checkPointCount.JudgThroughGoalSpace(playerID))
+                if (throughObject.GetComponent<CheckPointCount>().JudgThroughGoalSpace())
                 {
                     throughObject.GetComponent<RapCount>().CountRap();
                     timeCounter.RapCount(playerID);
@@ -77,8 +76,8 @@ public class GoalFlag : MonoBehaviour
                 if (throughObject.GetComponent<RapCount>().CheckRapCount())
                 {
                     Debug.Log("プレイヤー" + playerID + "ゴール");
-                    goalText.text = "ＦＩＮＩＳＨ！";
-                    goalText.gameObject.SetActive(true);
+                    goalTextList[playerID].text = "ＦＩＮＩＳＨ！";
+                    goalTextList[playerID].gameObject.SetActive(true);
                     timeCounter.FinishCount(playerID);
                     _finishCall[playerID] = true;
                 }

@@ -4,19 +4,12 @@ using UnityEngine;
 
 public class CheckPointCount : MonoBehaviour
 {
-    private int[] _checkPointCnt;       // チェックポイント通過カウント
-    private int _checkPointCntMax;      // チェックポイントの数
-    private int _playerNum;             // プレイヤー人数
+    private int _checkPointCnt;     // チェックポイント通過カウント
+    private int _checkPointCntMax;  // チェックポイントの数
 
     void Start()
     {
-        _playerNum = GameObject.FindGameObjectsWithTag("RacingCar").Length;
-
-        _checkPointCnt = new int[_playerNum];
-        for (int playerID = 0; playerID < _playerNum; playerID++)
-        {
-            _checkPointCnt[playerID] = 0;
-        }
+        _checkPointCnt = 0;
 
         // ゴールによってカウントするチェックポイントのタグを変える
         _checkPointCntMax = GameObject.FindGameObjectsWithTag("CheckPoint").Length;
@@ -24,30 +17,25 @@ public class CheckPointCount : MonoBehaviour
     }
 
     // ゴールを通過するために必要なチェックポイント通過数をプレイヤーごとにカウントする
-    public void CountCheckPoint(int playerID)
+    public void CountCheckPoint()
     {
-        _checkPointCnt[playerID]++;
+        _checkPointCnt++;
     }
 
-    public int[] GetNowThroughCheckPointNum()
+    // プレイヤーごとに現在通過したチェックポイント数を返す
+    public int GetNowThroughCheckPointNum()
     {
         return _checkPointCnt;
     }
 
-    // プレイヤーごとに現在通過したチェックポイント数を返す
-    public int GetNowThroughCheckPointNum(int playerID)
-    {
-        return _checkPointCnt[playerID];
-    }
-
     // GoalSpaceを通過可能か判定し結果を返す
-    public bool JudgThroughGoalSpace(int playerID)
+    public bool JudgThroughGoalSpace()
     {
-        bool retFlag = (_checkPointCnt[playerID] == _checkPointCntMax);
+        bool retFlag = (_checkPointCnt == _checkPointCntMax);
         if (retFlag)
         {
             // 通過可能なら通過数を0にする
-            _checkPointCnt[playerID] = 0;
+            _checkPointCnt = 0;
         }
 
         return retFlag;
