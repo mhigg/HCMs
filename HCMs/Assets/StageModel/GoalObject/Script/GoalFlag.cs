@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class GoalFlag : MonoBehaviour
 {
-    public Text goalText;                       // ゴール時に表示するテキスト
+    public List<Text> goalTextList;                       // ゴール時に表示するテキスト
     public TimeCount timeCounter;               // タイムをカウントする
 
     private bool[] _finishCall;     // FinishCountテスト用
@@ -14,8 +14,10 @@ public class GoalFlag : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        goalText = goalText.GetComponent<Text>();
-        goalText.gameObject.SetActive(false);
+        foreach(Text goalText in goalTextList)
+        {
+            goalText.gameObject.SetActive(false);
+        }
 
         timeCounter = timeCounter.GetComponent<TimeCount>();
 
@@ -74,8 +76,8 @@ public class GoalFlag : MonoBehaviour
                 if (throughObject.GetComponent<RapCount>().CheckRapCount())
                 {
                     Debug.Log("プレイヤー" + playerID + "ゴール");
-                    goalText.text = "ＦＩＮＩＳＨ！";
-                    goalText.gameObject.SetActive(true);
+                    goalTextList[playerID].text = "ＦＩＮＩＳＨ！";
+                    goalTextList[playerID].gameObject.SetActive(true);
                     timeCounter.FinishCount(playerID);
                     _finishCall[playerID] = true;
                 }
