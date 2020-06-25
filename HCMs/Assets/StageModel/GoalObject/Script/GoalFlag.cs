@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class GoalFlag : MonoBehaviour
 {
-    public List<Text> goalTextList;                       // ゴール時に表示するテキスト
-    public TimeCount timeCounter;               // タイムをカウントする
+    public Text goalText;           // ゴール時に表示するテキスト
+    public TimeCount timeCounter;   // タイムをカウントする
 
     private bool[] _finishCall;     // FinishCountテスト用
     private int _playerNum;         // プレイヤー人数
@@ -14,11 +14,6 @@ public class GoalFlag : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        foreach(Text goalText in goalTextList)
-        {
-            goalText.gameObject.SetActive(false);
-        }
-
         timeCounter = timeCounter.GetComponent<TimeCount>();
 
         _playerNum = GameObject.FindGameObjectsWithTag("RacingCar").Length;
@@ -60,7 +55,7 @@ public class GoalFlag : MonoBehaviour
         GameObject throughObject = other.gameObject;
 
         // 現状プレイヤー名の登録は実装していないため、車のbodyの名前を0と1にして直接playerIDとして扱う
-        int playerID = int.Parse(throughObject.name);
+        int playerID = int.Parse(throughObject.name);    // ※PLAYERNAME※
         Debug.Log("プレイヤー" + playerID + "ゴール通過");
 
         if (!_finishCall[playerID])
@@ -76,8 +71,10 @@ public class GoalFlag : MonoBehaviour
                 if (throughObject.GetComponent<RapCount>().CheckRapCount())
                 {
                     Debug.Log("プレイヤー" + playerID + "ゴール");
-                    goalTextList[playerID].text = "ＦＩＮＩＳＨ！";
-                    goalTextList[playerID].gameObject.SetActive(true);
+                    Vector3 pos = new Vector3((_playerNum - 1) * 500 * (playerID * 2 - 1) + 960, 540, 0);
+                    Text _goalText = Instantiate(goalText, pos, Quaternion.identity);
+                    _goalText.text = "ＦＩＮＩＳＨ！";
+                    _goalText.transform.SetParent(GameObject.Find("CounterCanvas").transform);
                     timeCounter.FinishCount(playerID);
                     _finishCall[playerID] = true;
                 }

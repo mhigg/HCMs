@@ -73,7 +73,7 @@ public class RankingDuringRace : MonoBehaviour
         int[] rapCounts = new int[racingCars.Length];
         foreach (GameObject player in racingCars)
         {
-            int id = int.Parse(player.name);
+            int id = int.Parse(player.name);    // ※PLAYERNAME※
             rapCounts[id] = player.GetComponentInChildren<RapCount>().GetRapCount();
             Debug.Log("プレイヤー:" + id + " 周回数:" + rapCounts[id]);
         }

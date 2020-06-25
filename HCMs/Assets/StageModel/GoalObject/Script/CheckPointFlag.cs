@@ -26,7 +26,7 @@ public class CheckPointFlag : MonoBehaviour
         GameObject[] racingCars = GameObject.FindGameObjectsWithTag("RacingCar");
         foreach (GameObject player in racingCars)
         {
-            int playerID = int.Parse(player.name);
+            int playerID = int.Parse(player.name);    // ※PLAYERNAME※
             _checkPointCnt = player.GetComponent<CheckPointCount>().GetNowThroughCheckPointNum();
             if (_isThrough[playerID] && (_checkPointCnt <= 0))
             {
@@ -50,7 +50,7 @@ public class CheckPointFlag : MonoBehaviour
         GameObject throughObject = other.gameObject;
 
         // 現状プレイヤー名の登録は実装していないため、車のbodyの名前を0と1にして直接playerIDとして扱う
-        int playerID = int.Parse(throughObject.name);
+        int playerID = int.Parse(throughObject.name);    // ※PLAYERNAME※
         Debug.Log("プレイヤー" + playerID + "チェックポイント通過");
 
         if (!_isThrough[playerID])

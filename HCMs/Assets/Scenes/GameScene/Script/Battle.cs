@@ -22,9 +22,9 @@ public class Battle : MonoBehaviour
             "BattleScene_01",
             "BattleScene_02",
             "BattleScene_03"
-        };
+        };    // ※STAGENAME※
 
-        _rapMaxTbl = new int[] { 3, 3, 3 };
+        _rapMaxTbl = new int[] { 3, 3, 3 };    // ※RAPMAX※
     }
 
     // Start is called before the first frame update

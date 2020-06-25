@@ -1,8 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class TimeAttack : MonoBehaviour
@@ -26,9 +24,9 @@ public class TimeAttack : MonoBehaviour
             "TimeAttack01",
             "TimeAttack02",
             "TimeAttack03"
-        };
+        };    // ※STAGENAME※
 
-        _rapMaxTbl = new int[] { 3, 3, 3 };
+        _rapMaxTbl = new int[] { 3, 3, 3 };    // ※RAPMAX※
     }
 
     // Start is called before the first frame update

@@ -14,7 +14,7 @@ public class RapCount : MonoBehaviour
     void Start()
     {
         _rapCnt = 1;    // 初期値は１
-        _rapMax = 3;    // 現状すべて3周なので3を入れておく
+        _rapMax = 3;    // 現状すべて3周なので3を入れておく    // ※RAPMAX※
 
         rapText = rapText.GetComponent<TextMeshProUGUI>();
         rapText.text = _rapCnt + " / " + _rapMax;
