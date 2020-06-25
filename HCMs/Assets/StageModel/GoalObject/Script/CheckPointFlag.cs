@@ -57,10 +57,14 @@ public class CheckPointFlag : MonoBehaviour
         {
             if (throughObject.tag == "RacingCar")
             {
-                Debug.Log("第" + (_checkPointCnt + 1) + "チェックポイント通過");
-                Debug.Log(this.gameObject.name);
-                throughObject.GetComponent<CheckPointCount>().CountCheckPoint();
-                _isThrough[playerID] = true;
+                if (this.gameObject.name == $"cp{_checkPointCnt + 1}")
+                {
+                    // ゴール通過すると_checkPointCntが0に戻るのでここで特にmax時のif処理を書く必要はない
+                    Debug.Log("第" + (_checkPointCnt + 1) + "チェックポイント通過");
+                    Debug.Log(this.gameObject.name);
+                    throughObject.GetComponent<CheckPointCount>().CountCheckPoint();
+                    _isThrough[playerID] = true;
+                }
             }
         }
     }
