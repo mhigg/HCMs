@@ -108,16 +108,19 @@ public class RankingDuringRace : MonoBehaviour
         foreach (GameObject player in racingCars)
         {
             int playerID = int.Parse(player.name);
-            for (int idx = 0; idx < (checkPoints.Length - 1); idx++)
-            {
-                int throughCpNums = player.GetComponent<CheckPointCount>().GetNowThroughCheckPointNum();
 
+            int throughCpNums = player.GetComponent<CheckPointCount>().GetNowThroughCheckPointNum();
+            // 最後のチェックポイントを通ったら最初に戻る
+            int nextCpNum = (throughCpNums < checkPoints.Length ? throughCpNums + 1 : 1);
+
+            for (int idx = 0; idx < checkPoints.Length; idx++)
+            {
                 // 通過数に１足した値を次のチェックポイントとする
-                if (checkPoints[idx].name == ("cp" + (throughCpNums + 1).ToString()))
+                if (checkPoints[idx].name == ("cp" + nextCpNum.ToString()))
                 {
                     // 次のチェックポイントまでの距離
                     float distance = Vector3.Distance(checkPoints[idx].transform.position, player.transform.position);
-                    Debug.Log(playerID + "P distance:" + distance);
+                    Debug.Log(playerID + "P Next:" + checkPoints[idx].name + " distance:" + distance);
                     // 小数点以下を整数値に上げる
                     distanceBlock[playerID] = Mathf.FloorToInt(distance * 1000);
                 }
