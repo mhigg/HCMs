@@ -7320,7 +7320,12 @@ PrefabInstance:
     - target: {fileID: 7196297147624357941, guid: e254805b94bfa264a83bc9c1f0e022dc,
         type: 3}
       propertyPath: m_Name
-      value: RacingCar2 (1)
+      value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 7196297147624357941, guid: e254805b94bfa264a83bc9c1f0e022dc,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4513789803901882447, guid: e254805b94bfa264a83bc9c1f0e022dc,
         type: 3}
@@ -7555,7 +7560,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2097826580}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cd399ab6d2f6f2a43b4882e5119b9e36, type: 3}
   m_Name: 
@@ -7570,6 +7575,11 @@ PrefabInstance:
     - target: {fileID: 0}
       propertyPath: m_Mass
       value: 1500
+      objectReference: {fileID: 0}
+    - target: {fileID: 7196297147624357941, guid: e254805b94bfa264a83bc9c1f0e022dc,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4513789803901882447, guid: e254805b94bfa264a83bc9c1f0e022dc,
         type: 3}

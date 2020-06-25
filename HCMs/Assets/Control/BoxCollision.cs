@@ -17,7 +17,7 @@ public class BoxCollision : MonoBehaviour
         
     }
 
-    void OnTriggerEnter(Collider col)
+    void OnTriggerEnter()
     {
         Resporn r1 = refObj.GetComponent<Resporn>();
         r1.SetResBox(this.transform);
