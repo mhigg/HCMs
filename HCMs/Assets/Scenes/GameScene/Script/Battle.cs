@@ -64,7 +64,7 @@ public class Battle : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (goalFlag.CheckFinish())
+        if (!goalFlag.CheckFinish())
         {
             Debug.Log("Spaceキーを押してリザルトへ");
             if (!_isCalledOnce)
@@ -72,9 +72,10 @@ public class Battle : MonoBehaviour
                 ///ここを任意のボタンにしましょう。
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
+                    string stageNo = _activeStageName.Substring(_activeStageName.Length - 2);
                     _isCalledOnce = true;
-                    FadeManager.Instance.LoadScene("BattleResult", 2.0f);
-                    Debug.Log("Resultへ");
+                    FadeManager.Instance.LoadScene("BattleResult" + stageNo, 2.0f);
+                    Debug.Log("Result" + stageNo);
                 }
             }
         }

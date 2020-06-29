@@ -1,14 +1,47 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Battle_result : MonoBehaviour
 {
     public DispRanking dispRanking = null;
 
+    private string[] _stageNameTbl;     // ステージ名テーブル
+    private int[] _rapMaxTbl;           // 最大周回数テーブル
+
+    private string _activeStageName;    // 現在のステージ名
+
+    void Awake()
+    {
+        _stageNameTbl = new string[]{
+            "BattleResult01",
+            "BattleResult02",
+            "BattleResult03"
+        };    // ※STAGENAME※
+
+        _rapMaxTbl = new int[] { 3, 3, 3 };    // ※RAPMAX※
+    }
+
     // Start is called before the first frame update
     void Start()
     {
+        _activeStageName = SceneManager.GetActiveScene().name;
+        int rapMax = 0;
+
+        for (int idx = 0; idx < _stageNameTbl.Length; idx++)
+        {
+            if (_stageNameTbl[idx] == _activeStageName)
+            {
+                rapMax = _rapMaxTbl[idx];
+            }
+        }
+
+        if (rapMax <= 0)
+        {
+            Debug.LogError("最大周回数が0以下です。コース情報の照合に失敗した可能性があります。_stageNameTblと_rapMaxを確認してください。");
+        }
+
         dispRanking = dispRanking.GetComponent<DispRanking>();
 
         // 第一引数はバトルモードの場合Battleで統一
