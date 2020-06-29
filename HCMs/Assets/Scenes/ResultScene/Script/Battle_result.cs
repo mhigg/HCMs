@@ -48,7 +48,7 @@ public class Battle_result : MonoBehaviour
         // それかコース名にしてDispRanking側でコース名をカギにして最大周回数を探査させる？
         // ここはまた別途考える
         // ランキング表示数はレースに参加した人数(CPU込)、最大周回数はコースごとに異なる
-        dispRanking.SetUpDispRanking("Battle", 2, 3, false, 1000.0f);
+        dispRanking.SetUpDispRanking("Battle", 2, rapMax, false, 1000.0f);
     }
 
     private bool _isCalledOnce = false;

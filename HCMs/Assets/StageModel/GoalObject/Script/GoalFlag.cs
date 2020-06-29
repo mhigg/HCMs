@@ -8,7 +8,7 @@ public class GoalFlag : MonoBehaviour
     public Text goalText;           // ゴール時に表示するテキスト
     public TimeCount timeCounter;   // タイムをカウントする
 
-    private bool[] _finishCall;     // FinishCountテスト用
+    private bool[] _finishCall;     // 終了フラグ
     private int _playerNum;         // プレイヤー人数
 
     // Start is called before the first frame update
