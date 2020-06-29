@@ -66,7 +66,7 @@ public class TimeAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!goalFlag.CheckFinish())
+        if (goalFlag.CheckFinish())
         {
             Debug.Log("Spaceキーを押してリザルトへ");
             if (!_isCalledOnce)
