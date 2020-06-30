@@ -75,7 +75,7 @@ public class RankingDuringRace : MonoBehaviour
         {
             int id = int.Parse(player.name);    // ※PLAYERNAME※
             rapCounts[id] = player.GetComponentInChildren<RapCount>().GetRapCount();
-            Debug.Log("プレイヤー:" + id + " 周回数:" + rapCounts[id]);
+//            Debug.Log("プレイヤー:" + id + " 周回数:" + rapCounts[id]);
         }
 
         Ranking(rapCounts, false);
@@ -90,7 +90,7 @@ public class RankingDuringRace : MonoBehaviour
         {
             int id = int.Parse(player.name);
             checkPointCounts[id] = player.GetComponentInChildren<CheckPointCount>().GetNowThroughCheckPointNum();
-            Debug.Log("プレイヤー:" + id + " チェックポイント通過数:" + checkPointCounts[id]);
+//            Debug.Log("プレイヤー:" + id + " チェックポイント通過数:" + checkPointCounts[id]);
         }
 
         Ranking(checkPointCounts, false);
@@ -120,7 +120,7 @@ public class RankingDuringRace : MonoBehaviour
                 {
                     // 次のチェックポイントまでの距離
                     float distance = Vector3.Distance(checkPoints[idx].transform.position, player.transform.position);
-                    Debug.Log(playerID + "P Next:" + checkPoints[idx].name + " distance:" + distance);
+//                    Debug.Log(playerID + "P Next:" + checkPoints[idx].name + " distance:" + distance);
                     // 小数点以下を整数値に上げる
                     distanceBlock[playerID] = Mathf.FloorToInt(distance * 1000);
                 }
@@ -185,8 +185,8 @@ public class RankingDuringRace : MonoBehaviour
             }
         }
 
-        Debug.Log("Total.1P" + retRanking[0]);
-        Debug.Log("Total.2P" + retRanking[1]);
+//        Debug.Log("Total.1P" + retRanking[0]);
+//        Debug.Log("Total.2P" + retRanking[1]);
         _rankingList.Clear();   // 次の順位付けのためにクリア
         return retRanking;
     }

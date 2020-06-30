@@ -21,7 +21,7 @@ public class BoxCollision : MonoBehaviour
         {
             Resporn resporn = car.gameObject.GetComponentInParent<Resporn>();
             resporn.SetResBox(this.transform);
-            Debug.Log("すり抜けた！" + car.name);
+//            Debug.Log("すり抜けた！" + car.name);
         }
     }
 }
