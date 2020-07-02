@@ -10,6 +10,7 @@ public class GoalFlag : MonoBehaviour
 
     private bool[] _finishCall;     // 終了フラグ
     private int _playerNum;         // プレイヤー人数
+    private GameManager _gameMg;    // ゲームマネージャー
 
     // Start is called before the first frame update
     void Start()
