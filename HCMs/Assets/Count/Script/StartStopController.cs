@@ -25,12 +25,12 @@ public class StartStopController : MonoBehaviour
     MonoBehaviour[] waitingMonoBehaviour;
 
     public Text countText;
-    int frameCount = 0;
+    private float startCount = 0f;
 
     void Update()
     {
-        startWait = (frameCount < 400);
-        if(prevWaiting != startWait)
+        startWait = (startCount < (400f/60f));
+        if (prevWaiting != startWait)
         {
             if (startWait)
             {
@@ -39,11 +39,10 @@ public class StartStopController : MonoBehaviour
             if (!startWait)
             {
                 EscapingCount();
-                countText.text = "";//スタート後テキストを削除
             }
             prevWaiting = startWait;
         }
-        ++frameCount;
+        startCount += Time.deltaTime;
 
         StartText();
     }
@@ -93,19 +92,19 @@ public class StartStopController : MonoBehaviour
     ///スタートカウント
     void StartText()
     {
-        if(frameCount <= 120)
+        if(startCount <= 3f)
         {
-            if (frameCount % 40 == 0)
-            {
-                countText.text += ".";
-            }
+            if (startCount >= 0.8f) countText.text = "ＷＡＩＴ．";
+            if (startCount >= 1.6f) countText.text = "ＷＡＩＴ．．";
+            if (startCount >= 2.4f) countText.text = "ＷＡＩＴ．．．";
         }
         else
         {
-            if (frameCount == 180) countText.text = "３";
-            if (frameCount == 240) countText.text = "２";
-            if (frameCount == 300) countText.text = "１";
-            if (frameCount == 360) countText.text = "ＳＴＡＲＴ！！！";
+            if (startCount >= 3f) countText.text = "３";
+            if (startCount >= 4f) countText.text = "２";
+            if (startCount >= 5f) countText.text = "１";
+            if (startCount >= 6f) countText.text = "ＳＴＡＲＴ！！！";
+            if (startCount >= 7f) countText.text = "";
         }
     }
 }
