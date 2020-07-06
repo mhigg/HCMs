@@ -1,10 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CheckPointFlag : MonoBehaviour
 {
-    private int _checkPointCnt;     // チェックポイント通過数カウント(プレイヤー分必要？)
     private int _playerNum;         // プレイヤー人数
     private bool[] _isThrough;      // このチェックポイントを通過したかのフラグを保存
 
@@ -27,8 +27,8 @@ public class CheckPointFlag : MonoBehaviour
         foreach (GameObject player in racingCars)
         {
             int playerID = int.Parse(player.name);    // ※PLAYERNAME※
-            _checkPointCnt = player.GetComponent<CheckPointCount>().GetNowThroughCheckPointNum();
-            if (_isThrough[playerID] && (_checkPointCnt <= 0))
+            int checkPointCnt = player.GetComponent<CheckPointCount>().GetNowThroughCheckPointNum();
+            if (_isThrough[playerID] && (checkPointCnt <= 0))
             {
                 // このチェックポイントが通過済みかつチェックポイント通過数がゼロクリアされていたら
                 // (※チェックポイント通過数はゴールを通過したらゼロクリアされる)
@@ -51,16 +51,18 @@ public class CheckPointFlag : MonoBehaviour
 
         // 現状プレイヤー名の登録は実装していないため、車のbodyの名前を0と1にして直接playerIDとして扱う
         int playerID = int.Parse(throughObject.name);    // ※PLAYERNAME※
+        int checkPointCnt = throughObject.GetComponent<CheckPointCount>().GetNowThroughCheckPointNum();
+
         Debug.Log("プレイヤー" + playerID + "チェックポイント通過");
 
         if (!_isThrough[playerID])
         {
             if (throughObject.tag == "RacingCar")
             {
-                if (this.gameObject.name == $"cp{_checkPointCnt + 1}")
+                if (this.gameObject.name == $"cp{checkPointCnt + 1}")
                 {
                     // ゴール通過すると_checkPointCntが0に戻るのでここで特にmax時のif処理を書く必要はない
-                    Debug.Log("第" + (_checkPointCnt + 1) + "チェックポイント通過");
+                    Debug.Log("第" + (checkPointCnt + 1) + "チェックポイント通過");
                     Debug.Log(this.gameObject.name);
                     throughObject.GetComponent<CheckPointCount>().CountCheckPoint();
                     _isThrough[playerID] = true;
