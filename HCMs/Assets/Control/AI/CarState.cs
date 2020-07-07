@@ -11,5 +11,5 @@ public interface CarState
     CarState FrontHider();  // /*前に出て邪魔する 
     CarState SideHider();   // /*横から邪魔する
     CarState BackHider();   // /*後ろから邪魔する
-    CarState 
+   // CarState 
 }
