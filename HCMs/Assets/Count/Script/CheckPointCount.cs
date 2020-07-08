@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// 各プレイヤーごとにチェックポイントの通過数を加算する
 public class CheckPointCount : MonoBehaviour
 {
     private int _checkPointCnt;     // チェックポイント通過カウント

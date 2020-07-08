@@ -1787,21 +1787,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7436333567608988474, guid: bd34e2a4c368365468727bc7e0cc37ab,
-        type: 3}
-      propertyPath: m_Text
-      value: "\uFF26\uFF29\uFF2E\uFF29\uFF33\uFF28 !!!"
-      objectReference: {fileID: 0}
-    - target: {fileID: 7436333567608988475, guid: bd34e2a4c368365468727bc7e0cc37ab,
-        type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 1000
-      objectReference: {fileID: 0}
-    - target: {fileID: 7436333567608988475, guid: bd34e2a4c368365468727bc7e0cc37ab,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -490
-      objectReference: {fileID: 0}
     - target: {fileID: 7436333566873432984, guid: bd34e2a4c368365468727bc7e0cc37ab,
         type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -1836,6 +1821,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: RapText01
+      objectReference: {fileID: 0}
+    - target: {fileID: 7436333567608988474, guid: bd34e2a4c368365468727bc7e0cc37ab,
+        type: 3}
+      propertyPath: m_Text
+      value: "\uFF26\uFF29\uFF2E\uFF29\uFF33\uFF28 !!!"
+      objectReference: {fileID: 0}
+    - target: {fileID: 7436333567608988475, guid: bd34e2a4c368365468727bc7e0cc37ab,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 7436333567608988475, guid: bd34e2a4c368365468727bc7e0cc37ab,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -490
       objectReference: {fileID: 0}
     - target: {fileID: 7436333567608988472, guid: bd34e2a4c368365468727bc7e0cc37ab,
         type: 3}
@@ -2256,6 +2256,11 @@ PrefabInstance:
       propertyPath: checkPointCount
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 4114146913529231595, guid: 3bfd0d6706d189e4482b6e81ab53a21d,
+        type: 3}
+      propertyPath: parentCp
+      value: 
+      objectReference: {fileID: 1422240471}
     - target: {fileID: 4114146913529231597, guid: 3bfd0d6706d189e4482b6e81ab53a21d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3037,22 +3042,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: TimeCounter
       objectReference: {fileID: 0}
-    - target: {fileID: 8959400590505247595, guid: 049331b12b0f71d489338d3003436b6f,
-        type: 3}
-      propertyPath: timeRanking
-      value: 
-      objectReference: {fileID: 26378272}
-    - target: {fileID: 8959400590505247595, guid: 049331b12b0f71d489338d3003436b6f,
-        type: 3}
-      propertyPath: rapTimeText
-      value: 
-      objectReference: {fileID: 2348465677325258096, guid: e406e07cad2ac2442a63d96508a6af8e,
-        type: 3}
-    - target: {fileID: 8959400590505247595, guid: 049331b12b0f71d489338d3003436b6f,
-        type: 3}
-      propertyPath: timeText
-      value: 
-      objectReference: {fileID: 268085216}
     - target: {fileID: 8959400590505247592, guid: 049331b12b0f71d489338d3003436b6f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3108,6 +3097,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8959400590505247595, guid: 049331b12b0f71d489338d3003436b6f,
+        type: 3}
+      propertyPath: timeRanking
+      value: 
+      objectReference: {fileID: 26378272}
+    - target: {fileID: 8959400590505247595, guid: 049331b12b0f71d489338d3003436b6f,
+        type: 3}
+      propertyPath: rapTimeText
+      value: 
+      objectReference: {fileID: 2348465677325258096, guid: e406e07cad2ac2442a63d96508a6af8e,
+        type: 3}
+    - target: {fileID: 8959400590505247595, guid: 049331b12b0f71d489338d3003436b6f,
+        type: 3}
+      propertyPath: timeText
+      value: 
+      objectReference: {fileID: 268085216}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 049331b12b0f71d489338d3003436b6f, type: 3}
 --- !u!4 &498238942 stripped
@@ -8766,6 +8771,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1422240470}
+  - component: {fileID: 1422240471}
   m_Layer: 0
   m_Name: CheckPoint
   m_TagString: Untagged
@@ -8800,6 +8806,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 23
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1422240471
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1422240469}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b865f4400a2261c46b75a4f7e7e8f6a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1438727421
 GameObject:
   m_ObjectHideFlags: 0

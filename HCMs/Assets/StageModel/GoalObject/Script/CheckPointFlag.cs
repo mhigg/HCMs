@@ -39,6 +39,11 @@ public class CheckPointFlag : MonoBehaviour
         }
     }
 
+    public void ResetThroughFlag(int playerID)
+    {
+        _isThrough[playerID] = false;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         /*
