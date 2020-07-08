@@ -5,8 +5,9 @@ using UnityEngine.UI;
 
 public class GoalFlag : MonoBehaviour
 {
-    public Text goalText;           // ゴール時に表示するテキスト
-    public TimeCount timeCounter;   // タイムをカウントする
+    public Text goalText;               // ゴール時に表示するテキスト
+    public TimeCount timeCounter;       // タイムをカウントする
+    public ParentCheckPoint parentCp;   // 全チェックポイントの親
 
     private bool[] _finishCall;     // 終了フラグ
     private int _playerNum;         // プレイヤー人数
@@ -16,6 +17,7 @@ public class GoalFlag : MonoBehaviour
     void Start()
     {
         timeCounter = timeCounter.GetComponent<TimeCount>();
+        parentCp = parentCp.GetComponent<ParentCheckPoint>();
 
         _playerNum = GameObject.FindGameObjectsWithTag("RacingCar").Length;
         _finishCall = new bool[_playerNum];
@@ -65,6 +67,9 @@ public class GoalFlag : MonoBehaviour
             {
                 if (throughObject.GetComponent<CheckPointCount>().JudgThroughGoalSpace())
                 {
+                    // 全チェックポイントを未通過状態にする
+                    parentCp.ResetCheckPointIsThrough(playerID);
+                    // 周回数とラップタイムをカウントする
                     throughObject.GetComponent<RapCount>().CountRap();
                     timeCounter.RapCount(playerID);
                 }

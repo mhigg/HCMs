@@ -20,23 +20,9 @@ public class CheckPointFlag : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void ResetThroughFlag(int playerID)
     {
-        GameObject[] racingCars = GameObject.FindGameObjectsWithTag("RacingCar");
-        foreach (GameObject player in racingCars)
-        {
-            int playerID = int.Parse(player.name);    // ※PLAYERNAME※
-            int checkPointCnt = player.GetComponent<CheckPointCount>().GetNowThroughCheckPointNum();
-            if (_isThrough[playerID] && (checkPointCnt <= 0))
-            {
-                // このチェックポイントが通過済みかつチェックポイント通過数がゼロクリアされていたら
-                // (※チェックポイント通過数はゴールを通過したらゼロクリアされる)
-                Debug.Log("全チェックポイント通過");
-                Debug.Log("全チェックポイントを未通過状態にする");
-                _isThrough[playerID] = false;
-            }
-        }
+        _isThrough[playerID] = false;
     }
 
     private void OnTriggerEnter(Collider other)
