@@ -6,6 +6,7 @@ using UnityEngine.UIElements;
 public class Resporn : MonoBehaviour
 {
     Transform _carTrans;
+    public int _num;
     public GameObject _resporns;
     int _respornNum = 0;
     Transform _resTra;
@@ -53,8 +54,11 @@ public class Resporn : MonoBehaviour
         ret = Mathf.Sqrt((tmp.x * tmp.x) + (tmp.y * tmp.y));
         return ret;
     }
-    public void SetResBox(Transform tra)
+    public void SetResBox(Transform tra,int i)
     {
-        _resTra = tra;
+        if (i == _num)
+        {
+            _resTra = tra;
+        }
     }
 }

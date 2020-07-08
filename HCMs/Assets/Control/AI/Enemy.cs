@@ -1,20 +1,14 @@
-﻿using UnityEngine;
-
-public class Enemy : MonoBehaviour
+﻿public class Enemy
 {
-    void Start()
+    private EnemyBehaviore _enmBeha;
+    public Enemy(EnemyBehaviore behaviore)
     {
-        
+        _enmBeha = behaviore;
     }
-
-    void Update()
+    // 敵の動きを呼び出す
+    // アップデートみたいな感じで運用
+    public void Move()
     {
-        
-    }
-
-    //追従
-    void Following()
-    {
-
+        _enmBeha.Run();
     }
 }
