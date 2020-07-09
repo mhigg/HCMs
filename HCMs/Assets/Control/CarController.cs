@@ -265,7 +265,7 @@ namespace UnityStandardAssets.Vehicles.Car
                     continue;
                 }
               
-                if (m_WheelEffects[i].PlayingAudio)
+
                 {
                     m_WheelEffects[i].StopAudio();
                 }               
