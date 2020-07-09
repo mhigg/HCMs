@@ -130,7 +130,7 @@ namespace UnityStandardAssets.Vehicles.Car
             
             steering = Mathf.Clamp(steering, -1, 1);
             AccelInput = accel = Mathf.Clamp(accel, 0, 1);
-            BrakeInput = footbrake = 1*Mathf.Clamp(footbrake, 1, 0);
+            BrakeInput = footbrake = -1*Mathf.Clamp(footbrake, -1, 0);
             handbrake = Mathf.Clamp(handbrake, 0, 1);
            
             m_SteerAngle = steering*m_MaximumSteerAngle;
