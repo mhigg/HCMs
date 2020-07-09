@@ -9,9 +9,11 @@ public class GoalFlag : MonoBehaviour
     public TimeCount timeCounter;       // タイムをカウントする
     public ParentCheckPoint parentCp;   // 全チェックポイントの親
 
-    private bool[] _finishCall;     // 終了フラグ
-    private int _playerNum;         // プレイヤー人数
-    private GameManager _gameMg;    // ゲームマネージャー
+    private bool[] _finishCall;         // 終了フラグ
+    private int _playerNum;             // プレイヤー人数
+    private GameManager _gameMg;        // ゲームマネージャー
+
+    private List<string> _playerName;   // プレイヤー名を保存
 
     // Start is called before the first frame update
     void Start()
@@ -19,11 +21,20 @@ public class GoalFlag : MonoBehaviour
         timeCounter = timeCounter.GetComponent<TimeCount>();
         parentCp = parentCp.GetComponent<ParentCheckPoint>();
 
-        _playerNum = GameObject.FindGameObjectsWithTag("RacingCar").Length;
+        GameObject[] racingCars = GameObject.FindGameObjectsWithTag("RacingCar");
+        _playerNum = racingCars.Length;
         _finishCall = new bool[_playerNum];
         for (int playerID = 0; playerID < _playerNum; playerID++)
         {
             _finishCall[playerID] = false;
+        }
+
+        _playerName = new List<string>();
+        for(int idx = 0; idx < racingCars.Length; idx++)
+        {
+            // 全プレイヤー分のプレイヤー名を保存
+            _playerName.Add(racingCars[idx].transform.parent.name);
+            Debug.Log(_playerName[idx]);
         }
     }
 
@@ -41,25 +52,22 @@ public class GoalFlag : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        /*
-         other.gameObjectのプレイヤー名を照会してその添字をplayerIDとする
-         ex)
-         for(int idx = 0; idx < playerName.Length; idx++)
-         {
-            if(other.gameObject.name == playerName[idx])
-            {
-                playerID = idx;
-            }
-         }
-         つまり0～3となる
-         現状は0(1プレイヤー目)とする
-         */
-
         GameObject throughObject = other.gameObject;
 
-        // 現状プレイヤー名の登録は実装していないため、車のbodyの名前を0と1にして直接playerIDとして扱う
-        int playerID = int.Parse(throughObject.name);    // ※PLAYERNAME※
-        Debug.Log("プレイヤー" + playerID + "ゴール通過");
+        int playerID = 0;
+        for (int idx = 0; idx < _playerNum; idx++)
+        {
+            if (throughObject.transform.parent.name == _playerName[idx])
+            {
+                // プレイヤー名を照合して、playerIDに変換
+                playerID = idx;
+                Debug.Log("プレイヤー" + playerID + "ゴール通過");
+            }
+            else
+            {
+                Debug.LogError("プレイヤー名が未登録です");
+            }
+        }
 
         if (!_finishCall[playerID])
         {
