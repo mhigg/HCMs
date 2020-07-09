@@ -48,7 +48,7 @@ public class TimeAttack : MonoBehaviour
         {
             Debug.LogError("最大周回数が0以下です。コース情報の照合に失敗した可能性があります。_stageNameTblと_rapMaxを確認してください。");
         }
-
+        
         timeRanking = timeRanking.GetComponent<TimeRanking>();
         // 第一引数をコース名にする
         timeRanking.SetUpTimeRanking(_activeStageName, 11, rapMax);

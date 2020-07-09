@@ -46,7 +46,7 @@ public class TimeAttack_result : MonoBehaviour
 
         // 第一引数をコース名にする
         // ランキング表示数は10+ランク外で11、最大周回数はコースごとに異なる
-        dispRanking.SetUpDispRanking(_activeStageName, 11, rapMax, true, 1000.0f);
+        dispRanking.SetUpDispRanking(_activeStageName.Replace("Result", ""), 11, rapMax, true, 1000.0f);
     }
 
     private bool isCalledOnce = false;
