@@ -60,8 +60,9 @@ public class TimeAttack : MonoBehaviour
         startCounter = startCounter.GetComponent<StartStopController>();
     }
 
-    private bool _isCalledOnce = false;  // リザルトシーン遷移フラグ
-    private bool _startCall = false;     // カウントスタートのフラグ
+    private bool _isCalledOnce = false; // リザルトシーン遷移フラグ
+    private bool _startCall = false;    // カウントスタートのフラグ
+    private float _afterTime = 0.0f;    // ゴール後タイムカウント
 
     // Update is called once per frame
     void Update()
@@ -79,6 +80,16 @@ public class TimeAttack : MonoBehaviour
                     FadeManager.Instance.LoadScene("TimeAttackResult" + stageNo, 2.0f);
                     Debug.Log("Result" + stageNo);
                 }
+
+                if (_afterTime > 300.0f)
+                {
+                    string stageNo = _activeStageName.Substring(_activeStageName.Length - 2);
+                    _isCalledOnce = true;
+                    FadeManager.Instance.LoadScene("TimeAttackResult" + stageNo, 2.0f);
+                    Debug.Log("Result" + stageNo);
+                }
+
+                _afterTime += Time.deltaTime;
             }
         }
 

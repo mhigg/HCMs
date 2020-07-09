@@ -41,6 +41,7 @@ public class DataStorage : MonoBehaviour
     // @defData float型：デフォルトで(初期値として)入れておく値
     public float[] GetData(string KEY, int DATA_MAX, float defData)
     {
+        Debug.Log("データ取得キー:" + KEY);
         string data = PlayerPrefs.GetString(KEY);
         float[] retData = new float[DATA_MAX];
         if (data.Length > 0)
