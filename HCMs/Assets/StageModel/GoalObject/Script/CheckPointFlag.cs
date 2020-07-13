@@ -17,7 +17,6 @@ public class CheckPointFlag : MonoBehaviour
         _isThrough = new bool[_playerNum];
         for (int idx = 0; idx < _playerNum; idx++)
         {
-            Debug.Log("_isThrough " + idx + "プレイヤー初期化");
             _isThrough[idx] = false;
         }
 
@@ -26,7 +25,6 @@ public class CheckPointFlag : MonoBehaviour
         {
             // 全プレイヤー分のプレイヤー名を保存
             _playerName.Add(racingCars[idx].transform.parent.name);
-            Debug.Log(_playerName[idx]);
         }
     }
 

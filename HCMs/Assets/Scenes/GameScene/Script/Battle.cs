@@ -11,21 +11,7 @@ public class Battle : MonoBehaviour
     public TimeRanking timeRanking;             // ランキング記録用
     public GoalFlag goalFlag;                   // ゴール判定取得用
 
-    private string[] _stageNameTbl;     // ステージ名テーブル
-    private int[] _rapMaxTbl;           // 最大周回数テーブル
-
     private string _activeStageName;    // 現在のステージ名
-
-    void Awake()
-    {
-        _stageNameTbl = new string[]{
-            "BattleScene_01",
-            "BattleScene_02",
-            "BattleScene_03"
-        };    // ※STAGENAME※
-
-        _rapMaxTbl = new int[] { 3, 3, 3 };    // ※RAPMAX※
-    }
 
     // Start is called before the first frame update
     void Start()
@@ -34,20 +20,9 @@ public class Battle : MonoBehaviour
         int playerNum = GameObject.FindGameObjectsWithTag("RacingCar").Length;
 
         _activeStageName = SceneManager.GetActiveScene().name;
-        int rapMax = 0;
 
-        for (int idx = 0; idx < _stageNameTbl.Length; idx++)
-        {
-            if (_stageNameTbl[idx] == _activeStageName)
-            {
-                rapMax = _rapMaxTbl[idx];
-            }
-        }
-
-        if (rapMax <= 0)
-        {
-            Debug.LogError("最大周回数が0以下です。コース情報の照合に失敗した可能性があります。_stageNameTblと_rapMaxを確認してください。");
-        }
+        int rapMax = FindInfoByScene.Instance.GetRapMax(_activeStageName);
+        Debug.Log("rapMax:" + rapMax);
 
         timeRanking = timeRanking.GetComponent<TimeRanking>();
         timeRanking.SetUpTimeRanking("Battle", playerNum, rapMax);

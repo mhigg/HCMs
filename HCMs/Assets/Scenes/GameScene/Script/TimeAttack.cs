@@ -13,42 +13,17 @@ public class TimeAttack : MonoBehaviour
 
     public StartStopController startCounter = null;
 
-    private string[] _stageNameTbl;     // ステージ名テーブル
-    private int[] _rapMaxTbl;           // 最大周回数テーブル
-
     private string _activeStageName;    // 現在のステージ名
-
-    void Awake()
-    {
-        _stageNameTbl = new string[]{
-            "TimeAttack01",
-            "TimeAttack02",
-            "TimeAttack03"
-        };    // ※STAGENAME※
-
-        _rapMaxTbl = new int[] { 3, 3, 3 };    // ※RAPMAX※
-    }
 
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("タイムアタック初期化");
+        Debug.Log("TimeAttackStart");
         _activeStageName = SceneManager.GetActiveScene().name;
-        int rapMax = 0;
 
-        for (int idx = 0; idx < _stageNameTbl.Length; idx++)
-        {
-            if (_stageNameTbl[idx] == _activeStageName)
-            {
-                rapMax = _rapMaxTbl[idx];
-            }
-        }
+        int rapMax = FindInfoByScene.Instance.GetRapMax(_activeStageName);
+        Debug.Log("rapMax:" + rapMax);
 
-        if (rapMax <= 0)
-        {
-            Debug.LogError("最大周回数が0以下です。コース情報の照合に失敗した可能性があります。_stageNameTblと_rapMaxを確認してください。");
-        }
-        
         timeRanking = timeRanking.GetComponent<TimeRanking>();
         // 第一引数をコース名にする
         timeRanking.SetUpTimeRanking(_activeStageName, 11, rapMax);
@@ -81,7 +56,7 @@ public class TimeAttack : MonoBehaviour
                     Debug.Log("Result" + stageNo);
                 }
 
-                if (_afterTime > 300.0f)
+                if (_afterTime > 10.0f)
                 {
                     string stageNo = _activeStageName.Substring(_activeStageName.Length - 2);
                     _isCalledOnce = true;
