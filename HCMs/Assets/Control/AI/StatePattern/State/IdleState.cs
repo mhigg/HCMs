@@ -2,7 +2,10 @@
 {
     public CarState HitRaycastCenter()
     {
-
+        return this;
+    }
+    public CarState HitRaycastWay()
+    {
         return this;
     }
 

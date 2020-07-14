@@ -4,7 +4,10 @@
     {
         return this;
     }
-
+    public CarState HitRaycastWay()
+    {
+        return this;
+    }
     public CarState ExitRaycast()
     {
         return this;
