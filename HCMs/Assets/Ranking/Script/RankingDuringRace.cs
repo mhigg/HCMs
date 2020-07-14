@@ -73,7 +73,7 @@ public class RankingDuringRace : MonoBehaviour
         int[] rapCounts = new int[racingCars.Length];
         foreach (GameObject player in racingCars)
         {
-            int id = int.Parse(player.name);    // ※PLAYERNAME※
+            int id = FindInfoByScene.Instance.GetPlayerID(player.transform.parent.name);
             rapCounts[id] = player.GetComponentInChildren<RapCount>().GetRapCount();
 //            Debug.Log("プレイヤー:" + id + " 周回数:" + rapCounts[id]);
         }
@@ -88,7 +88,7 @@ public class RankingDuringRace : MonoBehaviour
         int[] checkPointCounts = new int[racingCars.Length];
         foreach (GameObject player in racingCars)
         {
-            int id = int.Parse(player.name);
+            int id = FindInfoByScene.Instance.GetPlayerID(player.transform.parent.name);
             checkPointCounts[id] = player.GetComponentInChildren<CheckPointCount>().GetNowThroughCheckPointNum();
 //            Debug.Log("プレイヤー:" + id + " チェックポイント通過数:" + checkPointCounts[id]);
         }
@@ -107,7 +107,7 @@ public class RankingDuringRace : MonoBehaviour
 
         foreach (GameObject player in racingCars)
         {
-            int playerID = int.Parse(player.name);
+            int playerID = FindInfoByScene.Instance.GetPlayerID(player.transform.parent.name);
 
             int throughCpNums = player.GetComponent<CheckPointCount>().GetNowThroughCheckPointNum();
             // 最後のチェックポイントを通ったら最初に戻る
