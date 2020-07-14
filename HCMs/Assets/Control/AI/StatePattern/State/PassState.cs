@@ -1,6 +1,6 @@
 ﻿public class PassState : CarState
 {
-    public CarState HitRaycast()
+    public CarState HitRaycastCenter()
     {
         return this;
     }

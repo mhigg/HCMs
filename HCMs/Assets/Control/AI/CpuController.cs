@@ -21,7 +21,7 @@ namespace UnityStandardAssets.Vehicles.Car
         {
             //Physics.Raycast(this.transform.position,);
             float h = CrossPlatformInputManager.GetAxis("Horizontal");
-            float v = 0;
+            float v = -0.5f;
 #if !MOBILE_INPUT
             float handbrake = CrossPlatformInputManager.GetAxis("Jump");
             _carCtl.Move(h, v, v, handbrake);

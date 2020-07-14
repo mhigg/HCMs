@@ -1,7 +1,8 @@
 ﻿public class IdleState : CarState
 {
-    public CarState HitRaycast()
+    public CarState HitRaycastCenter()
     {
+
         return this;
     }
 

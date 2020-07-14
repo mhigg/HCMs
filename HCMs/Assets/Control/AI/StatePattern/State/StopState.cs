@@ -1,6 +1,6 @@
 ﻿public class StopState : CarState
 {
-    public CarState HitRaycast()
+    public CarState HitRaycastCenter()
     {
         return this;
     }
