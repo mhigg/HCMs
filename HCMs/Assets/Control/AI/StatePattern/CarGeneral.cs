@@ -11,6 +11,8 @@ namespace UnityStandardAssets.Vehicles.Car
         private CarController _carCtl;  // 車の操作
 
 
+
+
         private void Awake()
         {
             _carCtl = GetComponent<CarController>();
@@ -27,6 +29,10 @@ namespace UnityStandardAssets.Vehicles.Car
 
         public void Update()
         {
+            // レイキャスト
+
+            // 判定あればHitRayCast
+
             float h = CrossPlatformInputManager.GetAxis("Horizontal");
             float v = -0.5f;
             float handbrake = CrossPlatformInputManager.GetAxis("Jump");
@@ -40,7 +46,7 @@ namespace UnityStandardAssets.Vehicles.Car
 
         public CarState HitRaycastEvent()
         {
-            return _state.HitRaycast();
+            return _state.HitRaycastCenter();
         }
         public CarState ExitRaycast()
         {
