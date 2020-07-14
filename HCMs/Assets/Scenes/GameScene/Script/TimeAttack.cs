@@ -52,16 +52,16 @@ public class TimeAttack : MonoBehaviour
                 {
                     string stageNo = _activeStageName.Substring(_activeStageName.Length - 2);
                     _isCalledOnce = true;
-                    FadeManager.Instance.LoadScene("TimeAttackResult" + stageNo, 2.0f);
                     Debug.Log("Result" + stageNo);
+                    FadeManager.Instance.LoadScene("TimeAttackResult" + stageNo, 2.0f);
                 }
 
                 if (_afterTime > 10.0f)
                 {
                     string stageNo = _activeStageName.Substring(_activeStageName.Length - 2);
                     _isCalledOnce = true;
-                    FadeManager.Instance.LoadScene("TimeAttackResult" + stageNo, 2.0f);
                     Debug.Log("Result" + stageNo);
+                    FadeManager.Instance.LoadScene("TimeAttackResult" + stageNo, 2.0f);
                 }
 
                 _afterTime += Time.deltaTime;

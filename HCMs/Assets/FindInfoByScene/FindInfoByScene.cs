@@ -10,6 +10,9 @@ public class FindInfoByScene : MonoBehaviour
     // 最大周回数テーブル
     private Dictionary<string, int> _stageRapMax;
 
+    // プレイヤー名を保存
+    private List<string> _playerName;
+
     #region Singleton
 
     private static FindInfoByScene instance;
@@ -63,6 +66,14 @@ public class FindInfoByScene : MonoBehaviour
     void Start()
     {
         Debug.Log("FindInfoBySceneStart");
+        GameObject[] racingCars = GameObject.FindGameObjectsWithTag("RacingCar");
+        _playerName = new List<string>();
+        for (int idx = 0; idx < racingCars.Length; idx++)
+        {
+            // 全プレイヤー分のプレイヤー名を保存
+            Debug.Log("登録：" + racingCars[idx].transform.parent.name);
+            _playerName.Add(racingCars[idx].transform.parent.name);
+        }
     }
 
     // Update is called once per frame
@@ -76,5 +87,27 @@ public class FindInfoByScene : MonoBehaviour
         }
 
         return retRapMax;
+    }
+
+    public int GetPlayerID(string throughPlayerName)
+    {
+        Debug.Log("通過名：" + throughPlayerName);
+        int retID = -1;
+        for (int idx = 0; idx < _playerName.Count; idx++)
+        {
+            if (throughPlayerName == _playerName[idx])
+            {
+                // プレイヤー名を照合して、playerIDに変換
+                retID = idx;
+                Debug.Log("ID:" + retID);
+            }
+        }
+
+        if(retID == -1)
+        {
+            Debug.LogError("プレイヤー名が未登録です");
+        }
+
+        return retID;
     }
 }

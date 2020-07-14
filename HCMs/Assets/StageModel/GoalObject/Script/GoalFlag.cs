@@ -9,11 +9,9 @@ public class GoalFlag : MonoBehaviour
     public TimeCount timeCounter;       // タイムをカウントする
     public ParentCheckPoint parentCp;   // 全チェックポイントの親
 
-    private bool[] _finishCall;         // 終了フラグ
+    private bool[] _finishCall;
     private int _playerNum;             // プレイヤー人数
     private GameManager _gameMg;        // ゲームマネージャー
-
-    private List<string> _playerName;   // プレイヤー名を保存
 
     // Start is called before the first frame update
     void Start()
@@ -23,19 +21,8 @@ public class GoalFlag : MonoBehaviour
 
         GameObject[] racingCars = GameObject.FindGameObjectsWithTag("RacingCar");
         _playerNum = racingCars.Length;
-        _finishCall = new bool[_playerNum];
-        for (int playerID = 0; playerID < _playerNum; playerID++)
-        {
-            _finishCall[playerID] = false;
-        }
 
-        _playerName = new List<string>();
-        for(int idx = 0; idx < racingCars.Length; idx++)
-        {
-            // 全プレイヤー分のプレイヤー名を保存
-            _playerName.Add(racingCars[idx].transform.parent.name);
-            Debug.Log(_playerName[idx]);
-        }
+        _finishCall = new bool[_playerNum];
     }
 
     // ゴール可能かどうかの判定を返す
@@ -47,6 +34,7 @@ public class GoalFlag : MonoBehaviour
             // 一つでもfalseがあるとfalseになり、まだゴールしていないプレイヤーがいると判断
             retFinish &= _finishCall[playerID];
         }
+
         return retFinish;
     }
 
@@ -54,20 +42,8 @@ public class GoalFlag : MonoBehaviour
     {
         GameObject throughObject = other.gameObject;
 
-        int playerID = 0;
-        for (int idx = 0; idx < _playerNum; idx++)
-        {
-            if (throughObject.transform.parent.name == _playerName[idx])
-            {
-                // プレイヤー名を照合して、playerIDに変換
-                playerID = idx;
-                Debug.Log("プレイヤー" + playerID + "ゴール通過");
-            }
-            else
-            {
-                Debug.LogError("プレイヤー名が未登録です");
-            }
-        }
+        int playerID = FindInfoByScene.Instance.GetPlayerID(throughObject.transform.parent.name);
+        Debug.Log("プレイヤー" + playerID + "ゴール通過");
 
         if (!_finishCall[playerID])
         {
