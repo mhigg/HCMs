@@ -1,17 +1,29 @@
-﻿public class IdleState : CarState
+﻿
+public class IdleState :  CarState
 {
-    public CarState HitRaycastCenter()
+    float _horizon = 0f;            // 横ハンドリング
+    float _vertical = 0f;           // 前後ハンドリング
+
+    void Update()
     {
-        return this;
-    }
-    public CarState HitRaycastWay()
-    {
-        return this;
+        _vertical = -0.3f;
+        _horizon = 0;
+        _vertical = 0;
     }
 
-    public CarState ExitRaycast()
+    public float HandleChangeFromRay()
     {
-        return this;
+        _horizon += 1;
+        return _horizon;
+    }
+    public float BrakeFromRay()
+    {
+        return 0;
+    }
+
+    public float AcceleFromRay()
+    {
+        return 0;
     }
 
     public CarState SerchEnemy()

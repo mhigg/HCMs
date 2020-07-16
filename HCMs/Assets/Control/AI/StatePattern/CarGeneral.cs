@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 
+
 namespace UnityStandardAssets.Vehicles.Car
 {
     [RequireComponent(typeof(CarController))]
@@ -16,8 +17,8 @@ namespace UnityStandardAssets.Vehicles.Car
 
         Vector3[] _dir = new Vector3[]      // レイの方向
         { 
-            new Vector3(-1f,-0.25f,-3f),        // 右
-            new Vector3(1f,-0.25f,-3f)          // 左
+            new Vector3(-2f,-0.25f,-3f),        // 右
+            new Vector3(2f,-0.25f,-3f)          // 左
         };
 
         private void Awake()
@@ -35,25 +36,23 @@ namespace UnityStandardAssets.Vehicles.Car
 
         void FixedUpdate()
         {
+            // 左右レイの判定
             for (int i = 0; i < _dir.Length; i++)
             {
                 var pos = transform.TransformPoint(_offset);
                 var dir = transform.TransformDirection(_dir[i]);
-                // レイキャストで判定
-                // 判定あればHitRayCast
+                // 判定あればHitRaycast
                 if(Physics.Raycast(pos, dir, out _hit[i], _dis))
                 {
-                    this._state.HitRaycastWay();
+                    this._state.HandleChangeFromRay();
                 }
 
-
+                float v = -0.3f;
+                float h = 0;
+                float handbrake = CrossPlatformInputManager.GetAxis("Jump");
+                _carCtl.Move(h, v, v, handbrake);
                 DebugDraw(pos, dir, _dis, _hit[i].collider);
-            }
-
-            float h = CrossPlatformInputManager.GetAxis("Horizontal");
-            float v = CrossPlatformInputManager.GetAxis("Vertical");
-            float handbrake = CrossPlatformInputManager.GetAxis("Jump");
-            _carCtl.Move(h, v, v, handbrake);
+            }           
         }
 
         CarState GetState()
@@ -61,13 +60,13 @@ namespace UnityStandardAssets.Vehicles.Car
             return this._state;
         }
 
-        public CarState HitRaycastEvent()
+        public float HitRaycastEvent()
         {
-            return _state.HitRaycastCenter();
+            return _state.HandleChangeFromRay();
         }
-        public CarState ExitRaycast()
+        public float ExitRaycast()
         {
-            return _state.ExitRaycast();
+            return _state.AcceleFromRay();
         }
         public CarState SerchEnemyEvent()
         {

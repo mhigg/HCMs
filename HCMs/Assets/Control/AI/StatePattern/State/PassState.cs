@@ -1,14 +1,14 @@
 ﻿public class PassState : CarState
 {
-    public CarState HitRaycastCenter()
+    public CarState HandleChangeFromRay(float f)
     {
         return this;
     }
-    public CarState HitRaycastWay()
+    public CarState BrakeFromRay()
     {
         return this;
     }
-    public CarState ExitRaycast()
+    public CarState AcceleFromRay()
     {
         return this;
     }
