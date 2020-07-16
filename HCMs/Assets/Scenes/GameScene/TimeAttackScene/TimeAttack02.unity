@@ -1289,7 +1289,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &339261401
 Transform:
   m_ObjectHideFlags: 0
@@ -14252,6 +14252,16 @@ PrefabInstance:
       propertyPath: speedText
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 7196297147624357940, guid: e254805b94bfa264a83bc9c1f0e022dc,
+        type: 3}
+      propertyPath: m_Topspeed
+      value: 380
+      objectReference: {fileID: 0}
+    - target: {fileID: 7196297147624357940, guid: e254805b94bfa264a83bc9c1f0e022dc,
+        type: 3}
+      propertyPath: m_SlipLimit
+      value: 0.3
+      objectReference: {fileID: 0}
     - target: {fileID: 8947725263921817948, guid: e254805b94bfa264a83bc9c1f0e022dc,
         type: 3}
       propertyPath: m_Constraints
@@ -14297,11 +14307,6 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 4516202158161861233, guid: e254805b94bfa264a83bc9c1f0e022dc,
-        type: 3}
-      propertyPath: m_Name
-      value: "Light_Back_\u30AA\u30EA\u30B8\u30CA\u30EB"
-      objectReference: {fileID: 0}
     - target: {fileID: 3461726054733807184, guid: e254805b94bfa264a83bc9c1f0e022dc,
         type: 3}
       propertyPath: m_LocalPosition.z
@@ -14336,6 +14341,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4516202158161861233, guid: e254805b94bfa264a83bc9c1f0e022dc,
+        type: 3}
+      propertyPath: m_Name
+      value: "Light_Back_\u30AA\u30EA\u30B8\u30CA\u30EB"
       objectReference: {fileID: 0}
     - target: {fileID: 3461726054736658708, guid: e254805b94bfa264a83bc9c1f0e022dc,
         type: 3}
@@ -16744,6 +16754,10 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: baec086904791744185aaa07a6cf55c2, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: baec086904791744185aaa07a6cf55c2, type: 3}
       propertyPath: m_LocalPosition.y
       value: -0.08
@@ -16764,6 +16778,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.x
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: baec086904791744185aaa07a6cf55c2, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 2000000, guid: baec086904791744185aaa07a6cf55c2, type: 3}
       propertyPath: m_NormalizedViewPortRect.height
       value: 1
@@ -16771,14 +16789,6 @@ PrefabInstance:
     - target: {fileID: 2000000, guid: baec086904791744185aaa07a6cf55c2, type: 3}
       propertyPath: m_NormalizedViewPortRect.width
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 100000, guid: baec086904791744185aaa07a6cf55c2, type: 3}
-      propertyPath: m_Layer
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 100002, guid: baec086904791744185aaa07a6cf55c2, type: 3}
-      propertyPath: m_Layer
-      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 8100000, guid: baec086904791744185aaa07a6cf55c2, type: 3}
       propertyPath: m_Enabled
