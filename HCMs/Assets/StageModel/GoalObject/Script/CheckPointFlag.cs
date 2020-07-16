@@ -33,6 +33,8 @@ public class CheckPointFlag : MonoBehaviour
         Debug.Log("プレイヤー" + playerID + "チェックポイント通過");
 
         int checkPointCnt = throughObject.GetComponent<CheckPointCount>().GetNowThroughCheckPointNum();
+        Debug.Log("第" + (checkPointCnt + 1) + "チェックポイント");
+        Debug.Log("通過数：" + checkPointCnt);
 
         if (!_isThrough[playerID])
         {
@@ -41,7 +43,7 @@ public class CheckPointFlag : MonoBehaviour
                 if (this.gameObject.name == $"cp{checkPointCnt + 1}")
                 {
                     // ゴール通過すると_checkPointCntが0に戻るのでここで特にmax時のif処理を書く必要はない
-                    Debug.Log("第" + (checkPointCnt + 1) + "チェックポイント通過");
+                    Debug.Log("次チェックポイント：" + $"cp{(checkPointCnt + 2)}");
                     Debug.Log(this.gameObject.name);
                     throughObject.GetComponent<CheckPointCount>().CountCheckPoint();
                     _isThrough[playerID] = true;

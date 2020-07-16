@@ -49,10 +49,10 @@ public class FindInfoByScene : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
 
         _stageNameTbl = new string[]{
-            "BattleScene_01",       "BattleScene_02",       "BattleScene_03",
-            "BattleResult01",       "BattleResult02",       "BattleResult03",
-            "TimeAttack01",         "TimeAttack02",         "TimeAttack03",
-            "TimeAttackResult01",   "TimeAttackResult02",   "TimeAttackResult03"
+            "BattleScene_01",       "BattleScene_02",       "BattleScene_03",       "BattleScene_04",
+            "BattleResult01",       "BattleResult02",       "BattleResult03",       "BattleResult04",
+            "TimeAttack01",         "TimeAttack02",         "TimeAttack03",         "TimeAttack04",
+            "TimeAttackResult01",   "TimeAttackResult02",   "TimeAttackResult03",   "TimeAttackResult04"
         };
 
         _stageRapMax = new Dictionary<string, int>();
