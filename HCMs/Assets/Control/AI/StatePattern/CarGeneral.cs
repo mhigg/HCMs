@@ -3,7 +3,6 @@ using System.Collections;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 
-
 namespace UnityStandardAssets.Vehicles.Car
 {
     [RequireComponent(typeof(CarController))]
@@ -36,6 +35,8 @@ namespace UnityStandardAssets.Vehicles.Car
 
         void FixedUpdate()
         {
+            float v = -0.3f;
+            float h = 0;
             // 左右レイの判定
             for (int i = 0; i < _dir.Length; i++)
             {
@@ -44,15 +45,12 @@ namespace UnityStandardAssets.Vehicles.Car
                 // 判定あればHitRaycast
                 if(Physics.Raycast(pos, dir, out _hit[i], _dis))
                 {
-                    this._state.HandleChangeFromRay();
+                    h += this._state.HandleChangeFromRay((i * 2 - 1) * -1);
                 }
-
-                float v = -0.3f;
-                float h = 0;
-                float handbrake = CrossPlatformInputManager.GetAxis("Jump");
-                _carCtl.Move(h, v, v, handbrake);
                 DebugDraw(pos, dir, _dis, _hit[i].collider);
-            }           
+            }
+            float handbrake = CrossPlatformInputManager.GetAxis("Jump");
+            _carCtl.Move(h, v, v, handbrake);
         }
 
         CarState GetState()
@@ -62,7 +60,7 @@ namespace UnityStandardAssets.Vehicles.Car
 
         public float HitRaycastEvent()
         {
-            return _state.HandleChangeFromRay();
+            return _state.HandleChangeFromRay(1.0f);
         }
         public float ExitRaycast()
         {

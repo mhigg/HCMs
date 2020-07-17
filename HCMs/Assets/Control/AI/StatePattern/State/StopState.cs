@@ -1,16 +1,16 @@
 ﻿public class StopState : CarState
 {
-    public CarState HandleChangeFromRay(float f)
+    public float HandleChangeFromRay(float f)
     {
-        return this;
+        return 0f;
     }
-    public CarState BrakeFromRay()
+    public float BrakeFromRay()
     {
-        return this;
+        return 0f;
     }
-    public CarState AcceleFromRay()
+    public float AcceleFromRay()
     {
-        return this;
+        return 0f;
     }
 
     public CarState SerchEnemy()

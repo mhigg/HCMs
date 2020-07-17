@@ -4302,18 +4302,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7595e8d89a8a6de46a9e4ed5020c5e12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1369572866
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7196297146846184928}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15ec57767f87b9445b10fb4949f047b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1400382845
 GameObject:
   m_ObjectHideFlags: 0
@@ -4703,11 +4691,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6064482682388654030, guid: d29c2b3efdfdcdf478c5b1cbd03e810e,
-        type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 956898501092643953, guid: d29c2b3efdfdcdf478c5b1cbd03e810e,
         type: 3}
       propertyPath: goalFlag
@@ -4727,6 +4710,11 @@ PrefabInstance:
         type: 3}
       propertyPath: timeCounter
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6064482682388654030, guid: d29c2b3efdfdcdf478c5b1cbd03e810e,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d29c2b3efdfdcdf478c5b1cbd03e810e, type: 3}
@@ -9074,7 +9062,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7196297146846184928}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -664.7, y: -9.304227, z: -761.5}
+  m_LocalPosition: {x: -664.6, y: -9.304227, z: -761.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6747138175480738128}
@@ -9343,7 +9331,6 @@ GameObject:
   - component: {fileID: 8947725263093574789}
   - component: {fileID: 1369572842}
   - component: {fileID: 1369572843}
-  - component: {fileID: 1369572866}
   - component: {fileID: 7196297146846184930}
   m_Layer: 0
   m_Name: CPU
@@ -9402,7 +9389,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7196297146846184928}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4341928849a7c6f44b2456ba1e0a97f7, type: 3}
+  m_Script: {fileID: 11500000, guid: 15ec57767f87b9445b10fb4949f047b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!23 &7281407394828811889
