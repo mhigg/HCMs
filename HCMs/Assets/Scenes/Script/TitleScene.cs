@@ -19,7 +19,6 @@ public class TitleScene : MonoBehaviour
     {
         if (!isCalledOnce)
         {
-            ///ここを任意のボタンにしましょう。
             if (Input.GetButtonDown("Decision"))
             {
                 isCalledOnce = true;
@@ -28,36 +27,27 @@ public class TitleScene : MonoBehaviour
             }
         }
 
-        if (!isCalledOnce)
-        {
-            ///ここを任意のボタンにしましょう。
-            if (Input.GetKeyDown(KeyCode.Return))
-            {
-                isCalledOnce = true;
-                FadeManager.Instance.LoadScene("NoGitScene", 2.0f);
-                Debug.Log("BattleSceneの代替Sceneへ");
-            }
-        }
-
+//------------------------------デバッグ用機能------------------------------------
         if (!isDeleteOnce)
         {
-            ///ここを任意のボタンにしましょう。
             if (Input.GetKeyDown(KeyCode.F1))
             {
                 isDeleteOnce = true;
                 rankingStorage.DeleteData("TimeAttack01");
                 rankingStorage.DeleteData("TimeAttack02");
                 rankingStorage.DeleteData("TimeAttack03");
+                rankingStorage.DeleteData("TimeAttack04");
                 rankingStorage.DeleteData("BattleScene_01");
                 rankingStorage.DeleteData("BattleScene_02");
                 rankingStorage.DeleteData("BattleScene_03");
+                rankingStorage.DeleteData("BattleScene_04");
+                rankingStorage.DeleteData("Battle");
                 Debug.Log("全ランキングデリート");
             }
         }
 
         if (!isDeleteRapOnce)
         {
-            ///ここを任意のボタンにしましょう。
             if (Input.GetKeyDown(KeyCode.F2))
             {
                 isDeleteOnce = true;
@@ -66,5 +56,6 @@ public class TitleScene : MonoBehaviour
                 Debug.Log("全ラップランキングデリート");
             }
         }
+//--------------------------------------------------------------------------------
     }
 }
