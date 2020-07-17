@@ -11,14 +11,16 @@ namespace UnityStandardAssets.Vehicles.Car
         private RaycastHit[] _hit = new RaycastHit[2];
         private CarState _state = null;     // 車の状態
         private CarController _carCtl;      // 車の操作
-        private Vector3 _offset = new Vector3(0,0.2f,-4.5f);
+        private Vector3 _offset = new Vector3(0,1.5f,-4.5f);
         float _dis = 10.0f;
 
         Vector3[] _dir = new Vector3[]      // レイの方向
         { 
-            new Vector3(-2f,-0.25f,-3f),        // 右
-            new Vector3(2f,-0.25f,-3f)          // 左
+            new Vector3(-2f,0,-3f),        // 右
+            new Vector3(2f,0,-3f)          // 左
         };
+
+        Vector3 _hitDir = new Vector3(0, -2f, 0);
 
         private void Awake()
         {
@@ -42,12 +44,17 @@ namespace UnityStandardAssets.Vehicles.Car
             {
                 var pos = transform.TransformPoint(_offset);
                 var dir = transform.TransformDirection(_dir[i]);
-                // 判定あればHitRaycast
-                if(Physics.Raycast(pos, dir, out _hit[i], _dis))
+                // 左右レイ
+                Physics.Raycast(pos, dir, out _hit[i], _dis);
+                DebugDraw(pos, dir, _dis, _hit[i].collider);
+                // そこから下に引くレイ
+                pos = transform.TransformPoint(_offset) + dir.normalized * _dis;
+                dir = transform.TransformDirection(_hitDir);
+                if (Physics.Raycast(pos, dir, out _hit[i], 3))
                 {
                     h += this._state.HandleChangeFromRay((i * 2 - 1) * -1);
                 }
-                DebugDraw(pos, dir, _dis, _hit[i].collider);
+                DebugDraw(pos, dir, 3, _hit[i].collider);
             }
             float handbrake = CrossPlatformInputManager.GetAxis("Jump");
             _carCtl.Move(h, v, v, handbrake);
