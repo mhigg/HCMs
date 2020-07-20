@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class FindInfoByScene : MonoBehaviour
 {
-    // ステージ名テーブル
-    private string[] _stageNameTbl;
-
     // 最大周回数テーブル
     private Dictionary<string, int> _stageRapMax;
 
@@ -48,12 +45,19 @@ public class FindInfoByScene : MonoBehaviour
 
         DontDestroyOnLoad(this.gameObject);
 
-        _stageNameTbl = new string[]{
-            "BattleScene_01",       "BattleScene_02",       "BattleScene_03",       "BattleScene_04",
-            "BattleResult01",       "BattleResult02",       "BattleResult03",       "BattleResult04",
-            "TimeAttack01",         "TimeAttack02",         "TimeAttack03",         "TimeAttack04",
-            "TimeAttackResult01",   "TimeAttackResult02",   "TimeAttackResult03",   "TimeAttackResult04"
-        };
+        // ステージ名テーブル
+        List<string> _stageNameTbl = new List<string>();
+
+        CSVReader csvReader = new CSVReader();
+        var csvFile = csvReader.LoadCSV("stages");
+        foreach(string[] name in csvFile)
+        {
+            for(int idx = 0; idx < name.Length; idx++)
+            {
+                Debug.Log("stageName:" + name[idx]);
+                _stageNameTbl.Add(name[idx]);
+            }
+        }
 
         _stageRapMax = new Dictionary<string, int>();
         foreach (string stageName in _stageNameTbl)
