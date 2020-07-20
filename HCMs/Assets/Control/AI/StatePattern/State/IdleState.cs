@@ -1,26 +1,28 @@
-﻿public class IdleState :  CarState
+﻿using System.Collections;
+using UnityEngine;
+public class IdleState : CarState
 {
-    void Update()
+    public override float IsHitWay(Vector3 vec1, Vector3 vec2, float dis, int num)
     {
+        var pos = vec1;
+        var dir = vec2;
+        float move = 0;
+        if(Physics.Raycast(pos, dir, out _hit[num], dis))
+        {
+            move = num * 2 - 1;
+        }
+        DebugDraw(pos, dir, dis, _hit[num].collider);
+        return move;
     }
 
-    public float HandleChangeFromRay(float f)
+    public override float HitFront(Vector3 vec1, Vector3 vec2, Collider col, float dis)
     {
-        float ret = f;
-        return ret;
-    }
-    public float BrakeFromRay()
-    {
+        
         return 0;
     }
 
-    public float AcceleFromRay()
+    public override float HitEnemy(Vector3 vec1, Vector3 vec2, Collider col, float f)
     {
         return 0;
-    }
-
-    public CarState SerchEnemy()
-    {
-        return this;
     }
 }
