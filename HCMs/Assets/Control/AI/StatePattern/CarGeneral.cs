@@ -1,7 +1,5 @@
 ﻿// CPUの情報を統括するクラス
-using System.Collections;
 using UnityEngine;
-using UnityStandardAssets.CrossPlatformInput;
 
 namespace UnityStandardAssets.Vehicles.Car
 {
@@ -11,19 +9,20 @@ namespace UnityStandardAssets.Vehicles.Car
         private CarState _state = null;     // 車の状態
         private CarController _carCtl;      // 車の操作
 
-        private RaycastHit[] _hit = new RaycastHit[2];
         private Vector3 _offset = new Vector3(0,1.5f,-4.5f);
-        float _wayDis = 15.0f;                      // 左右レイの長さ
-        float froDis = 20f;                         // 直線レイの長さ
-        float _vertDis = 3.0f;                      // 垂直レイの長さ
+        float _froDis = 25f;                        // 直線レイの長さ
         Vector3[] _wayDir = new Vector3[]           // 左右のレイの方向
-        { 
-            new Vector3(-2f,0,-1.5f),        // 右
-            new Vector3(2f,0,-1.5f)          // 左
+        {
+            new Vector3(-3f,0,-1f),          // 右
+            new Vector3(3f,0,-1f),          // 左
+            new Vector3(-1f,0,-1f),       // 斜め右
+            new Vector3(1f,0,-1f),        // 斜め左
+            new Vector3(-1f,0,-7f),         // 直線右
+            new Vector3(1f,0,-7f)           // 直線左
         };
-        Vector3 _froDir = new Vector3(0,0,-10);     // まっすぐのレイ
+        float[] _wayDis = { 10.0f,5f,12f };                      // 左右レイの長さ
+        Vector3 _froDir = new Vector3(0,0,-1);     // まっすぐのレイ
         Vector3 _vertDir = new Vector3(0, -2f, 0);  // 垂直のレイ
-        
 
         private void Awake()
         {
@@ -43,7 +42,7 @@ namespace UnityStandardAssets.Vehicles.Car
         {
             float v = CheckFront();
             float h = CheckWay();
-            float handbrake = CrossPlatformInputManager.GetAxis("Jump");
+            float handbrake = _state.GetBrake();
             _carCtl.Move(h, v, v, handbrake);
         }
         float CheckWay()
@@ -53,27 +52,24 @@ namespace UnityStandardAssets.Vehicles.Car
             for (int i = 0; i < _wayDir.Length; i++)
             {
                 var pos = transform.TransformPoint(_offset);
-                var dir = transform.TransformDirection(_wayDir[i]);
-                // 左右レイ
-                Physics.Raycast(pos, dir, out _hit[i], _wayDis);
-                // そこから下に引くレイ
-                pos += dir.normalized * _wayDis;
-                var ray = transform.TransformDirection(_vertDir);
-                if (Physics.Raycast(pos, ray, out _hit[i], 3))
-                {
-                    f += _state.IsHitWay(pos,dir,_wayDis,i);
-                }
+                var way = transform.TransformDirection(_wayDir[i]);
+                var vert = transform.TransformDirection(_vertDir);
+                f += _state.IsHitWay(pos, way, vert, _wayDis[i / 2], i);
             }
             return f;
         }
         float CheckFront()
         {
-            return -1;
+            float f = 0;
+            var pos = transform.TransformPoint(_offset);
+            var way = transform.TransformDirection(_froDir);
+            var vert = transform.TransformDirection(_vertDir);
+            f += _state.IsHitFront(pos, way, vert, _froDis);
+            return f;
         }
         float CheckEnemy()
         {
             return 0;
-        }
-        
+        }       
     }
 }
