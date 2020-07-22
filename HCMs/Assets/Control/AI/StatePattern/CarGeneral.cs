@@ -10,17 +10,17 @@ namespace UnityStandardAssets.Vehicles.Car
         private CarController _carCtl;      // 車の操作
 
         private Vector3 _offset = new Vector3(0,1.5f,-4.5f);
-        float _froDis = 25f;                        // 直線レイの長さ
+        float _froDis = 50f;                        // 直線レイの長さ
         Vector3[] _wayDir = new Vector3[]           // 左右のレイの方向
         {
-            new Vector3(-3f,0,-1f),          // 右
+            new Vector3(-3f,0,-1f),         // 右
             new Vector3(3f,0,-1f),          // 左
-            new Vector3(-1f,0,-1f),       // 斜め右
-            new Vector3(1f,0,-1f),        // 斜め左
-            new Vector3(-1f,0,-7f),         // 直線右
-            new Vector3(1f,0,-7f)           // 直線左
+            new Vector3(-1f,0,-4f),         // 斜め右
+            new Vector3(1f,0,-4f),          // 斜め左
+            new Vector3(-1f,0,-9f),         // 直線右
+            new Vector3(1f,0,-9f)           // 直線左
         };
-        float[] _wayDis = { 10.0f,5f,12f };                      // 左右レイの長さ
+        float[] _wayDis = { 5.0f,30f,45f };                      // 左右レイの長さ
         Vector3 _froDir = new Vector3(0,0,-1);     // まっすぐのレイ
         Vector3 _vertDir = new Vector3(0, -2f, 0);  // 垂直のレイ
 
@@ -40,6 +40,7 @@ namespace UnityStandardAssets.Vehicles.Car
         // Moveとステートの変数とそれに渡す値の設定
         void FixedUpdate()
         {
+            var rad = new Random();
             float v = CheckFront();
             float h = CheckWay();
             float handbrake = _state.GetBrake();

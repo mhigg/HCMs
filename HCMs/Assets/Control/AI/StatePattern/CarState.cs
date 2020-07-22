@@ -7,6 +7,7 @@ public abstract class CarState
     public RaycastHit _hitF = new RaycastHit();
     public float _speed = 0f;
     public float _brake = 0f;
+    public bool _brakeFlag = false;
     // ハンドルの値を決定するための関数
     public abstract float IsHitWay(Vector3 vec1, Vector3 vec2,Vector3 vec3, float dis,int num);
     // 速度を決定するための関数

@@ -2,7 +2,8 @@
 
 public class IdleState : CarState
 {
-    float[] _turnVol = { 0.1f, 0.2f, 0.5f };
+    float[] _turnVol = { 0.4f, 0.35f, 0.15f };
+    
     public override float IsHitWay(Vector3 vec1, Vector3 vec2, Vector3 vec3, float dis, int num)
     {
         var pos = vec1;
@@ -14,17 +15,20 @@ public class IdleState : CarState
         {
             move = (num % 2 * 2 - 1f) * -1f * _turnVol[num/2];
         }
+        if (_brakeFlag)
+        {
+            move *= 2;
+        }
         DebugDraw(pos, vec3, 3, _hitW[num].collider);
         return move;
     }
 
     public override float IsHitFront(Vector3 vec1, Vector3 vec2, Vector3 vec3, float dis)
     {
+        _brakeFlag = false;
         float f = 0;
         var pos = vec1;
-        if (Physics.Raycast(pos, vec2, out _hitF, dis))
-        {
-        }
+        Physics.Raycast(pos, vec2, out _hitF, dis);
         DebugDraw(pos, vec2, dis, _hitF.collider);
         pos += vec2.normalized * dis;
         if (Physics.Raycast(pos, vec3, out _hitF, 3))
@@ -34,8 +38,9 @@ public class IdleState : CarState
         }
         else
         {
-            _brake = 1;
+            _brake = 1f;
             _speed /= 2;
+            _brakeFlag = true;
         }
         DebugDraw(pos, vec3, 3, _hitF.collider);
         _speed += f;
@@ -44,6 +49,7 @@ public class IdleState : CarState
 
     public override float HitEnemy(Vector3 vec1, Vector3 vec2, Collider col, float f)
     {
+
         return 0;
     }
 }
