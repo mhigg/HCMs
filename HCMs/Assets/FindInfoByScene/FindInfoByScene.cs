@@ -48,7 +48,7 @@ public class FindInfoByScene : MonoBehaviour
         // ステージ名テーブル
         List<string> _stageNameTbl = new List<string>();
 
-        CSVReader csvReader = new CSVReader();
+        CSVReader csvReader = GetComponent<CSVReader>();
         var csvFile = csvReader.LoadCSV("stages");
         foreach(string[] name in csvFile)
         {

@@ -7,6 +7,8 @@ public class TimeRanking : MonoBehaviour
 {
     public DataStorage storage = null;  // ランキング保管スクリプト
 
+    private PlayerBestTime bestTime = null;
+
     private string _rankingKey;     // ゴールタイムのランキング呼び出しキー
     private string _rapRankKey;     // ラップタイムのランキング呼び出しキー
     private int _rankingMax;        // ランキングの表示数(=プレイヤー人数)
@@ -16,8 +18,9 @@ public class TimeRanking : MonoBehaviour
     void Start()
     {
         storage = storage.GetComponent<DataStorage>();
+        bestTime = GetComponent<PlayerBestTime>();
     }
-    
+
     // @course string型：走行コース名 バトルモードはBattleでいい
     // @indicateRanks int型：表示するランキング数
     // @rapMax int型：最大周回数
@@ -104,6 +107,13 @@ public class TimeRanking : MonoBehaviour
 
         AddAndSortRapTimeRanking(_rapRankKey, _rapRankMax, rapTime);
         AddAndSortGoalTimeRanking(_rankingKey, _rankingMax, goalTime);
+
+        // 自己ベストがあるか確認
+        // あるなら比較して自己ベスト更新
+        // ないなら直接自己ベスト更新
+        // ラップタイムも同時に更新
+
+        bestTime.CompareBestTime(playerKey.ToString(), goalTime);
 
         storage.DeleteData(playerKey.ToString());
     }
