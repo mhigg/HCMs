@@ -28,6 +28,11 @@ public class ViewpointChange : MonoBehaviour
         {
             ++_keyCount;
         }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            ++_keyCount;
+        }
+
 
         switch (_keyCount)
         {
