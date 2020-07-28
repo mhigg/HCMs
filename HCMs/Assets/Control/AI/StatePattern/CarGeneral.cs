@@ -20,9 +20,11 @@ namespace UnityStandardAssets.Vehicles.Car
             new Vector3(-1f,0,-9f),         // 直線右
             new Vector3(1f,0,-9f)           // 直線左
         };
-        float[] _wayDis = { 5.0f,30f,45f };                      // 左右レイの長さ
-        Vector3 _froDir = new Vector3(0,0,-1);     // まっすぐのレイ
+        float[] _wayDis = { 5.0f,30f,45f };         // 左右レイの長さ
+        Vector3 _froDir = new Vector3(0,0,-1);      // まっすぐのレイ
         Vector3 _vertDir = new Vector3(0, -2f, 0);  // 垂直のレイ
+        float[] _turnVol = { 0.4f, 0.35f, 0.15f };
+
 
         private void Awake()
         {
@@ -37,25 +39,24 @@ namespace UnityStandardAssets.Vehicles.Car
             }
         }
 
-        // Moveとステートの変数とそれに渡す値の設定
+        // MoveとMoveに渡す値の設定・ステートの遷移など
         void FixedUpdate()
         {
             var rad = new Random();
             float v = CheckFront();
             float h = CheckWay();
-            float handbrake = _state.GetBrake();
-            _carCtl.Move(h, v, v, handbrake);
+            float b = _state.GetBrake();
+            _carCtl.Move(h, v, v, b);
         }
         float CheckWay()
         {
             float f = 0;
-            // 左右レイの判定
             for (int i = 0; i < _wayDir.Length; i++)
             {
                 var pos = transform.TransformPoint(_offset);
                 var way = transform.TransformDirection(_wayDir[i]);
                 var vert = transform.TransformDirection(_vertDir);
-                f += _state.IsHitWay(pos, way, vert, _wayDis[i / 2], i);
+                f += _state.IsHitWay(pos, way, vert, _wayDis[i / 2], i) * _turnVol[i / 2];
             }
             return f;
         }
@@ -68,9 +69,19 @@ namespace UnityStandardAssets.Vehicles.Car
             f += _state.IsHitFront(pos, way, vert, _froDis);
             return f;
         }
-        float CheckEnemy()
+        bool CheckEnemy()
         {
-            return 0;
+            for (int i = 0; i < _wayDir.Length; i++)
+            {
+                var pos = transform.TransformPoint(_offset);
+                var way = transform.TransformDirection(_wayDir[i]);
+                var vert = transform.TransformDirection(_vertDir);
+                if(_state.HitEnemy(pos, way, vert, _wayDis[i / 2], i) * _turnVol[i / 2])
+                {
+                    return true;
+                }
+            }
+            return false;
         }       
     }
 }

@@ -8,18 +8,22 @@ public abstract class CarState
     public float _speed = 0f;
     public float _brake = 0f;
     public bool _brakeFlag = false;
+    public CarState _nextState = null;
     // ハンドルの値を決定するための関数
     public abstract float IsHitWay(Vector3 vec1, Vector3 vec2,Vector3 vec3, float dis,int num);
     // 速度を決定するための関数
     public abstract float IsHitFront(Vector3 vec1, Vector3 vec2, Vector3 vec3,float dis);
-    // 敵発見時の挙動
-    public abstract float HitEnemy(Vector3 vec1, Vector3 vec2, Collider col, float f);
+    // レイの描画
     public void DebugDraw(Vector3 vec1, Vector3 vec2, float f, Collider col)
     {
         Color color = col ? Color.red : Color.green;
         Debug.DrawRay(vec1, vec2.normalized * f, color, 0, false);
     }
-
+    // 敵の検知
+    public bool IsHitEnemy(Vector3 vec1, Vector3 vec2, Collider col, float f)
+    {
+        return false;
+    }
     public float GetBrake()
     {
         return _brake;

@@ -3,8 +3,6 @@ using System.Collections;
 
 public class HiderState : CarState
 {
-    float[] _turnVol = { 0.4f, 0.35f, 0.15f };
-
     public override float IsHitWay(Vector3 vec1, Vector3 vec2, Vector3 vec3, float dis, int num)
     {
         var pos = vec1;
@@ -14,7 +12,7 @@ public class HiderState : CarState
         pos += vec2.normalized * dis;
         if (Physics.Raycast(pos, vec3, out _hitW[num], 3))
         {
-            move = (num % 2 * 2 - 1f) * -1f * _turnVol[num / 2];
+            move = (num % 2 * 2 - 1f) * -1f;
         }
         //意味ない
         if (_brakeFlag)
@@ -47,11 +45,5 @@ public class HiderState : CarState
         DebugDraw(pos, vec3, 3, _hitF.collider);
         _speed += f;
         return _speed;
-    }
-
-    public override float HitEnemy(Vector3 vec1, Vector3 vec2, Collider col, float f)
-    {
-
-        return 0;
     }
 }
