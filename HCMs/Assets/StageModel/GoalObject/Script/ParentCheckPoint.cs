@@ -10,7 +10,7 @@ public class ParentCheckPoint : MonoBehaviour
     {
         Debug.Log("全チェックポイント通過");
         Debug.Log("全チェックポイントを未通過状態にする");
-        Transform parent = this.gameObject.transform;
+        Transform parent = gameObject.transform;
         for(int idx = 0; idx < parent.childCount; idx++)
         {
             parent.GetChild(idx).GetComponent<CheckPointFlag>().ResetThroughFlag(playerID);

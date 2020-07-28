@@ -32,7 +32,9 @@ public class CheckPointFlag : MonoBehaviour
         int playerID = FindInfoByScene.Instance.GetPlayerID(throughObject.transform.parent.name);
         Debug.Log("プレイヤー" + playerID + "チェックポイント通過");
 
-        int checkPointCnt = throughObject.GetComponent<CheckPointCount>().GetNowThroughCheckPointNum();
+        CheckPointCount cpCount = throughObject.GetComponent<CheckPointCount>();
+
+        int checkPointCnt = cpCount.GetNowThroughCheckPointNum();
         Debug.Log("第" + (checkPointCnt + 1) + "チェックポイント");
         Debug.Log("通過数：" + checkPointCnt);
 
@@ -40,12 +42,12 @@ public class CheckPointFlag : MonoBehaviour
         {
             if (throughObject.tag == "RacingCar")
             {
-                if (this.gameObject.name == $"cp{checkPointCnt + 1}")
+                if (gameObject.name == cpCount.GetNextCPName())
                 {
                     // ゴール通過すると_checkPointCntが0に戻るのでここで特にmax時のif処理を書く必要はない
                     Debug.Log("次チェックポイント：" + $"cp{(checkPointCnt + 2)}");
-                    Debug.Log(this.gameObject.name);
-                    throughObject.GetComponent<CheckPointCount>().CountCheckPoint();
+                    Debug.Log(gameObject.name);
+                    cpCount.CountCheckPoint($"cp{(checkPointCnt + 2)}");
                     _isThrough[playerID] = true;
                 }
             }

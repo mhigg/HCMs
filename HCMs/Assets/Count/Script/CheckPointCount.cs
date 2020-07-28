@@ -7,20 +7,29 @@ public class CheckPointCount : MonoBehaviour
 {
     private int _checkPointCnt;     // チェックポイント通過カウント
     private int _checkPointCntMax;  // チェックポイントの数
+    private string _nextCheckPoint;    // 次に通る必要のあるチェックポイント
 
     void Start()
     {
         _checkPointCnt = 0;
+        _nextCheckPoint = "cp1";
 
-        // ゴールによってカウントするチェックポイントのタグを変える
         _checkPointCntMax = GameObject.FindGameObjectsWithTag("CheckPoint").Length;
         Debug.Log("チェックポイント全" + _checkPointCntMax + "個");
+        _checkPointCntMax = int.Parse(GameObject.FindGameObjectsWithTag("CheckPoint")[_checkPointCntMax - 1].name.Substring("cp".Length));
+        Debug.Log("チェックポイント最終値:" + _checkPointCntMax);
     }
 
     // ゴールを通過するために必要なチェックポイント通過数をプレイヤーごとにカウントする
-    public void CountCheckPoint()
+    public void CountCheckPoint(string nextCPName)
     {
         _checkPointCnt++;
+        _nextCheckPoint = nextCPName;
+    }
+
+    public string GetNextCPName()
+    {
+        return _nextCheckPoint;
     }
 
     // プレイヤーごとに現在通過したチェックポイント数を返す
