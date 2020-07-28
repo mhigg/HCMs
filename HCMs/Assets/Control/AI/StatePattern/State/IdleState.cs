@@ -15,6 +15,7 @@ public class IdleState : CarState
         {
             move = (num % 2 * 2 - 1f) * -1f * _turnVol[num/2];
         }
+        //意味ない
         if (_brakeFlag)
         {
             move *= 2;
