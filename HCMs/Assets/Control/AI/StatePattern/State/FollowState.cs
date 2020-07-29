@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+// 追従するステート
 public class FollowState : CarState
 {
     public override float IsHitWay(Vector3 vec1, Vector3 vec2, Vector3 vec3, float dis, int num)
@@ -45,5 +46,14 @@ public class FollowState : CarState
         DebugDraw(pos, vec3, 3, _hitF.collider);
         _speed += f;
         return _speed;
+    }
+    public override CarState IsHitEnemy(Vector3 pos, Vector3 way, float dis, int num)
+    {
+        if (Physics.Raycast(pos, way, out _hitEnemy[num], dis))
+        {
+            _nextState = new FollowState();
+        }
+        DebugDraw(pos, way, dis, _hitEnemy[num].collider);
+        return _nextState;
     }
 }

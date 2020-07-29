@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-
+//普通の挙動をするステート 
 public class IdleState : CarState
 {    
     public override float IsHitWay(Vector3 pos, Vector3 way, Vector3 vert, float dis, int num)
@@ -42,5 +42,14 @@ public class IdleState : CarState
         DebugDraw(pos, vert, 3, _hitF.collider);
         _speed += f;
         return _speed;
+    }
+    public override CarState IsHitEnemy(Vector3 pos, Vector3 way, float dis, int num)
+    {
+        if(Physics.Raycast(pos, way, out _hitEnemy[num], dis))
+        {
+            _nextState = new FollowState();
+        }
+        DebugDraw(pos, way, dis, _hitEnemy[num].collider);
+        return _nextState;
     }
 }

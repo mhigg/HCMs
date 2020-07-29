@@ -25,12 +25,10 @@ namespace UnityStandardAssets.Vehicles.Car
         Vector3 _vertDir = new Vector3(0, -2f, 0);  // 垂直のレイ
         float[] _turnVol = { 0.4f, 0.35f, 0.15f };
 
-
         private void Awake()
         {
             _carCtl = GetComponent<CarController>();
         }
-
         public CarGeneral()
         {
             if (_state == null)
@@ -38,10 +36,9 @@ namespace UnityStandardAssets.Vehicles.Car
                 _state = new IdleState();
             }
         }
-
-        // MoveとMoveに渡す値の設定・ステートの遷移など
         void FixedUpdate()
         {
+            CheckEnemy();
             var rad = new Random();
             float v = CheckFront();
             float h = CheckWay();
@@ -69,19 +66,23 @@ namespace UnityStandardAssets.Vehicles.Car
             f += _state.IsHitFront(pos, way, vert, _froDis);
             return f;
         }
-        bool CheckEnemy()
+        void CheckEnemy()
         {
-            for (int i = 0; i < _wayDir.Length; i++)
+            Vector3[] vec = new Vector3[]
+            {
+                _froDir,
+                _wayDir
+            };
+            for (int i = 0; i < vec.Length; i++)
             {
                 var pos = transform.TransformPoint(_offset);
-                var way = transform.TransformDirection(_wayDir[i]);
-                var vert = transform.TransformDirection(_vertDir);
-                //if(_state.IsHitEnemy(pos, way, vert, _wayDis[i / 2]) * _turnVol[i / 2])
-                //{
-                //    return true;
-                //}
+                var way = transform.TransformDirection(vec[i]);
+                _state.IsHitEnemy(pos, way, _wayDis[i / 2], i);
             }
-            return false;
-        }       
+        }
+        CarState ChangeState()
+        {
+            return _state;
+        }
     }
 }
