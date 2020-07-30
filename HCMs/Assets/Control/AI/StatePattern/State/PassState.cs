@@ -48,13 +48,13 @@ public class PassState : CarState
         _speed += f;
         return _speed;
     }
-    public override CarState IsHitEnemy(Vector3 pos, Vector3 way, float dis, int num)
-    {
-        if (Physics.Raycast(pos, way, out _hitEnemy[num], dis))
-        {
-            _nextState = new FollowState();
-        }
-        DebugDraw(pos, way, dis, _hitEnemy[num].collider);
-        return _nextState;
-    }
+    //public override CarState IsHitEnemy(Vector3 pos, Vector3 way, float dis, int num)
+    //{
+    //    if (Physics.Raycast(pos, way, out _hitEnemy[num], dis))
+    //    {
+    //        _nextState = new FollowState();
+    //    }
+    //    DebugDraw(pos, way, dis, _hitEnemy[num].collider);
+    //    return _nextState;
+    //}
 }
