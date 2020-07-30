@@ -27,6 +27,14 @@ public class CheckPointCount : MonoBehaviour
         _nextCheckPoint = $"cp{_checkPointCnt + 1}";
     }
 
+    // ゴールを通過するために必要なチェックポイント通過数をプレイヤーごとにカウントする
+    // 別ルート用
+    public void CountCheckPoint(string nextCPName)
+    {
+        _checkPointCnt++;
+        _nextCheckPoint = nextCPName;
+    }
+
     public string GetNextCPName()
     {
         return _nextCheckPoint;
