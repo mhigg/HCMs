@@ -70,9 +70,14 @@ namespace UnityStandardAssets.Vehicles.Car
         {
             Vector3[] vec = new Vector3[]
             {
-                _froDir,
-                _wayDir
-            };
+            new Vector3(-3f,0,-1f),         // 右
+            new Vector3(3f,0,-1f),          // 左
+            new Vector3(-1f,0,-4f),         // 斜め右
+            new Vector3(1f,0,-4f),          // 斜め左
+            new Vector3(-1f,0,-9f),         // 直線右
+            new Vector3(1f,0,-9f),          // 直線左
+            new Vector3(0,0,-1)
+        };
             for (int i = 0; i < vec.Length; i++)
             {
                 var pos = transform.TransformPoint(_offset);
