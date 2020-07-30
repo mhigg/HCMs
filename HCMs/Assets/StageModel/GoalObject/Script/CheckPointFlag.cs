@@ -47,7 +47,7 @@ public class CheckPointFlag : MonoBehaviour
                     // ゴール通過すると_checkPointCntが0に戻るのでここで特にmax時のif処理を書く必要はない
                     Debug.Log("次チェックポイント：" + $"cp{(checkPointCnt + 2)}");
                     Debug.Log(gameObject.name);
-                    cpCount.CountCheckPoint($"cp{(checkPointCnt + 2)}");
+                    cpCount.CountCheckPoint();
                     _isThrough[playerID] = true;
                 }
             }
