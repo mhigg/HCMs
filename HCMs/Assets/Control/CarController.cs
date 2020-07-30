@@ -37,6 +37,7 @@ namespace UnityStandardAssets.Vehicles.Car
         [SerializeField] private float m_RevRangeBoundary = 1f;
         [SerializeField] private float m_SlipLimit;
         [SerializeField] private float m_BrakeTorque;
+        [Range(1, 6)] [SerializeField] private int m_Gear = 1;
 
         private Quaternion[] m_WheelMeshLocalRotations;
         private Vector3 m_Prevpos, m_Pos;
@@ -55,6 +56,8 @@ namespace UnityStandardAssets.Vehicles.Car
         public float MaxSpeed{get { return m_Topspeed; }}
         public float Revs { get; private set; }
         public float AccelInput { get; private set; }
+        public bool m_GearUp { get; set; }
+        public bool m_GearDown { get; set; }
 
         private void Start()
         {
@@ -161,14 +164,47 @@ namespace UnityStandardAssets.Vehicles.Car
 
         private void CapSpeed()
         {
+            if (m_GearUp && (m_Gear < 6))
+            {
+                ++m_Gear;
+            }
+            if (m_GearDown && (m_Gear > 1))
+            {
+                --m_Gear;
+            }
+
             float speed = m_Rigidbody.velocity.magnitude;
             switch (m_SpeedType)
             {
-                case SpeedType.MPH:
+                case SpeedType.MPH://‚±‚Á‚¿‚Ì•û‚ðŽg‚¢‚Ü‚·B
+                    switch (m_Gear)
+                    {
+                        case 1:
+                            m_Topspeed = 30f;
+                            break;
+                        case 2:
+                            m_Topspeed = 50f;
+                            break;
+                        case 3:
+                            m_Topspeed = 70f;
+                            break;
+                        case 4:
+                            m_Topspeed = 90f;
+                            break;
+                        case 5:
+                            m_Topspeed = 110f;
+                            break;
+                        case 6:
+                            m_Topspeed = 130f;
+                            break;
+                    }
+                    //maxRize = 2.23693629f;
 
                     speed *= 2.23693629f;
                     if (speed > m_Topspeed)
-                        m_Rigidbody.velocity = (m_Topspeed/2.23693629f) * m_Rigidbody.velocity.normalized;
+                    {
+                        m_Rigidbody.velocity = (m_Topspeed / 2.23693629f) * m_Rigidbody.velocity.normalized;
+                    }
                     break;
 
                 case SpeedType.KPH:
@@ -178,7 +214,6 @@ namespace UnityStandardAssets.Vehicles.Car
                     break;
             }
         }
-
 
         private void ApplyDrive(float accel, float footbrake)
         {
@@ -190,7 +225,7 @@ namespace UnityStandardAssets.Vehicles.Car
                     thrustTorque = accel * (m_CurrentTorque / 4f);
                     for (int i = 0; i < 4; i++)
                     {
-                        m_WheelColliders[i].motorTorque = thrustTorque;
+                        m_WheelColliders[i].motorTorque = thrustTorque * m_Gear * 2;
                     }
                     break;
 
