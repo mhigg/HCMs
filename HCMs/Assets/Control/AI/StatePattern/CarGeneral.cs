@@ -77,7 +77,7 @@ namespace UnityStandardAssets.Vehicles.Car
             {
                 var pos = transform.TransformPoint(_offset);
                 var way = transform.TransformDirection(vec[i]);
-                _state.IsHitEnemy(pos, way, _wayDis[i / 2], i);
+                //_state.IsHitEnemy(pos, way, _wayDis[i / 2], i);
             }
         }
         CarState ChangeState()
