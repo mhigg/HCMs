@@ -116,7 +116,7 @@ public class RankingDuringRace : MonoBehaviour
             for (int idx = 0; idx < checkPoints.Length; idx++)
             {
                 // 通過数に１足した値を次のチェックポイントとする
-                if (checkPoints[idx].name == ("cp" + nextCpNum.ToString()))
+                if (checkPoints[idx].name == player.GetComponent<CheckPointCount>().GetNextCPName())
                 {
                     // 次のチェックポイントまでの距離
                     float distance = Vector3.Distance(checkPoints[idx].transform.position, player.transform.position);
