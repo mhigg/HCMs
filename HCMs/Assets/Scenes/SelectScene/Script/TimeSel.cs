@@ -6,18 +6,18 @@ using UnityEngine.UI;
 
 public class TimeSel : MonoBehaviour
 {
-    enum Stage { TimeAttackScene };
-    int _nowSelected;
-    public List<Image> _stages;
-    public List<bool> _num;
+    GameObject _nowSelect;
+    public List<Image> stages;
     [SerializeField] EventSystem eventSystem;
     GameObject _selectObj;
+    int _nowSelected = 0;
     List<string> _imageName;
+    public List<bool> _stageAble;
     public Image _disableImg;
 
     void Start()
     {
-        var tmp = _stages.Count;
+        var tmp = _stageAble.Count;
         _imageName = new List<string>(tmp);
         for (int i = 0; i < tmp; i++)
         {
@@ -36,22 +36,34 @@ public class TimeSel : MonoBehaviour
         else
         {
             _selectObj = eventSystem.currentSelectedGameObject.gameObject;
-            for (int i = 0; i < _stages.Count; i++)
+            for (int i = 0; i < stages.Count; i++)
+            {
+                Vector3 pos = stages[i].transform.localPosition;
+                pos.x = -5000;
+                stages[i].transform.localPosition = pos;
+            }
+            for (int i = 0; i < stages.Count; i++)
             {
                 if (_selectObj.name == _imageName[i])
                 {
-                    Vector3 pos = _stages[i].transform.localPosition;
+                    Vector3 pos = stages[i].transform.localPosition;
                     pos.x = 0;
-                    _stages[i].transform.localPosition = pos;
+                    stages[i].transform.localPosition = pos;
                     pos.x = 1200;
-                    _stages[(i + 1) % _stages.Count].transform.localPosition = pos;
+                    if (i + 1 < stages.Count)
+                    {
+                        stages[i + 1].transform.localPosition = pos;
+                    }
                     pos.x = -1200;
-                    _stages[(i + _stages.Count - 1) % _stages.Count].transform.localPosition = pos;
+                    if (i - 1 >= 0)
+                    {
+                        stages[i - 1].transform.localPosition = pos;
+                    }
                     _nowSelected = i;
                 }
             }
         }
-        if (_num[_nowSelected])
+        if (_stageAble[_nowSelected])
         {
             _disableImg.gameObject.SetActive(false);
             if (!isCalledOnce)

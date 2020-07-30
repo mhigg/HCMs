@@ -12,12 +12,12 @@ public class BattleSel : MonoBehaviour
     GameObject _selectObj;
     int _nowSelected = 0;
     List<string> _imageName;
-    public List<bool> _num;
+    public List<bool> _stageAble;
     public Image _disableImg;
 
     void Start()
     {
-        var tmp = stages.Count;
+        var tmp = _stageAble.Count;
         _imageName = new List<string>(tmp);
         for (int i = 0; i < tmp; i++)
         {
@@ -38,20 +38,32 @@ public class BattleSel : MonoBehaviour
             _selectObj = eventSystem.currentSelectedGameObject.gameObject;
             for (int i = 0; i < stages.Count; i++)
             {
+                Vector3 pos = stages[i].transform.localPosition;
+                pos.x = -5000;
+                stages[i].transform.localPosition = pos;
+            }
+            for (int i = 0; i < stages.Count; i++)
+            {
                 if (_selectObj.name == _imageName[i])
                 {
                     Vector3 pos = stages[i].transform.localPosition;
                     pos.x = 0;
                     stages[i].transform.localPosition = pos;
                     pos.x = 1200;
-                    stages[(i + 1) % stages.Count].transform.localPosition = pos;
+                    if (i + 1 < stages.Count)
+                    {
+                        stages[i + 1].transform.localPosition = pos;
+                    }
                     pos.x = -1200;
-                    stages[(i + stages.Count - 1) % stages.Count].transform.localPosition = pos;
+                    if (i - 1 >= 0)
+                    {
+                        stages[i - 1].transform.localPosition = pos;
+                    }
                     _nowSelected = i;
                 }
             }
         }
-        if (_num[_nowSelected])
+        if (_stageAble[_nowSelected])
         {
             _disableImg.gameObject.SetActive(false);
             if (!isCalledOnce)
