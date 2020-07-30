@@ -16,7 +16,7 @@ public abstract class CarState
     // 速度を決定するための関数
     public abstract float IsHitFront(Vector3 vec1, Vector3 vec2, Vector3 vec3,float dis);
     // 敵の検知
-    public abstract CarState ChangeState(Vector3 pos, Vector3 way, float dis, int num);
+    // public abstract CarState ChangeState(Vector3 pos, Vector3 way, float dis, int num);
     public void SerchEnemy(Vector3 pos, Vector3 way, float dis, int num)
     {
 
