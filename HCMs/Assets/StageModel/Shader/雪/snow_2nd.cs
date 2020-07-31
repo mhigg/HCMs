@@ -3,15 +3,16 @@ using System.Collections;
 
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
 
-public class snow : MonoBehaviour
+public class snow_2nd : MonoBehaviour
 {
     const int SNOW_NUM = 16000;
     private Vector3[] vertices_;
     private int[] triangles_;
     private Vector2[] uvs_;
-    private float range_;   // 雪の範囲
-    private float rangeR_;  // range_の逆数
+    private float range_;
+    private float rangeR_;
     private Vector3 move_ = Vector3.zero;
+    public Transform snow;
 
     void Start()
     {
@@ -72,16 +73,17 @@ public class snow : MonoBehaviour
 
     void LateUpdate()
     {
-        var target_position = Camera.main.transform.TransformPoint(Vector3.forward * range_);
+        var target_position = snow.transform.TransformPoint(Vector3.forward * range_);
+        //var target_position = Camera.allCameras.Length.TransformPoint(Vector3.forward * range_);
 
         var mr = GetComponent<Renderer>();
 
-        mr.material.SetFloat("_Range", range_);     // 範囲
-        mr.material.SetFloat("_RangeR", rangeR_);   // _Rangeの逆数
-        mr.material.SetFloat("_Size", 0.1f);        // 雪の粒の大きさ
-        mr.material.SetVector("_MoveTotal", move_); // 移動量
-        mr.material.SetVector("_CamUp", Camera.main.transform.up);  // カメラの視線ベクトルに対して90度上のベクトル
-        mr.material.SetVector("_TargetPosition", target_position);  // 雪の範囲の中心
+        mr.material.SetFloat("_Range", range_);
+        mr.material.SetFloat("_RangeR", rangeR_);
+        mr.material.SetFloat("_Size", 0.1f);
+        mr.material.SetVector("_MoveTotal", move_);
+        mr.material.SetVector("_CamUp", snow.transform.up);
+        mr.material.SetVector("_TargetPosition", target_position);
 
         float x = (Mathf.PerlinNoise(0f, Time.time * 0.1f) - 0.5f) * 10f;
         float y = -2f;
