@@ -6,17 +6,22 @@ using UnityEngine.UI;
 
 public class MenuScene : MonoBehaviour
 {
+    struct ButtonInfo
+    {
+        string name;
+        string nextScene;
+    };
     [SerializeField] EventSystem eventSystem;
-    Button _timeAtt;
-    Button _battle;
-    Button _obst;
+    public Button _battle;
+    public Button _timeAtt;
+    public Button _obst;
     GameObject _selectObj;
     // Start is called before the first frame update
     void Start()
     {
-        _timeAtt = GameObject.Find("/Canvas/TimeAttack").GetComponent<Button>();
-        _battle = GameObject.Find("/Canvas/Battle").GetComponent<Button>();
-        _obst = GameObject.Find("/Canvas/Obs").GetComponent<Button>();
+        //_timeAtt = GameObject.Find("/Canvas/TimeAttack").GetComponent<Button>();
+        //_battle = GameObject.Find("/Canvas/Battle").GetComponent<Button>();
+        //_obst = GameObject.Find("/Canvas/Obs").GetComponent<Button>();
     }
     bool isCalledOnce = false;
 
