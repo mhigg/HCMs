@@ -164,40 +164,40 @@ namespace UnityStandardAssets.Vehicles.Car
 
         private void CapSpeed()
         {
-            if (m_GearUp && (m_Gear < 6))
-            {
-                ++m_Gear;
-            }
-            if (m_GearDown && (m_Gear > 1))
-            {
-                --m_Gear;
-            }
+            //if (m_GearUp && (m_Gear < 6))
+            //{
+            //    ++m_Gear;
+            //}
+            //if (m_GearDown && (m_Gear > 1))
+            //{
+            //    --m_Gear;
+            //}
 
             float speed = m_Rigidbody.velocity.magnitude;
             switch (m_SpeedType)
             {
                 case SpeedType.MPH://Ç±Ç¡ÇøÇÃï˚ÇégÇ¢Ç‹Ç∑ÅB
-                    switch (m_Gear)
-                    {
-                        case 1:
-                            m_Topspeed = 30f;
-                            break;
-                        case 2:
-                            m_Topspeed = 50f;
-                            break;
-                        case 3:
-                            m_Topspeed = 70f;
-                            break;
-                        case 4:
-                            m_Topspeed = 90f;
-                            break;
-                        case 5:
-                            m_Topspeed = 110f;
-                            break;
-                        case 6:
-                            m_Topspeed = 130f;
-                            break;
-                    }
+                    //switch (m_Gear)
+                    //{
+                    //    case 1:
+                    //        m_Topspeed = 30f;
+                    //        break;
+                    //    case 2:
+                    //        m_Topspeed = 50f;
+                    //        break;
+                    //    case 3:
+                    //        m_Topspeed = 70f;
+                    //        break;
+                    //    case 4:
+                    //        m_Topspeed = 90f;
+                    //        break;
+                    //    case 5:
+                    //        m_Topspeed = 110f;
+                    //        break;
+                    //    case 6:
+                    //        m_Topspeed = 130f;
+                    //        break;
+                    //}
                     //maxRize = 2.23693629f;
 
                     speed *= 2.23693629f;
@@ -225,7 +225,7 @@ namespace UnityStandardAssets.Vehicles.Car
                     thrustTorque = accel * (m_CurrentTorque / 4f);
                     for (int i = 0; i < 4; i++)
                     {
-                        m_WheelColliders[i].motorTorque = thrustTorque * m_Gear * 2;
+                        m_WheelColliders[i].motorTorque = thrustTorque * m_Gear;
                     }
                     break;
 
