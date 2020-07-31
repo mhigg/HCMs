@@ -15,14 +15,17 @@ namespace UnityStandardAssets.Vehicles.Car
             m_Car = GetComponent<CarController>();
         }
 
+        private void Update()
+        {
+            m_Car.m_GearUp = CrossPlatformInputManager.GetButtonDown("GearUp");
+            m_Car.m_GearDown = CrossPlatformInputManager.GetButtonDown("GearDown");
+        }
+
         private void FixedUpdate()
         {
             // pass the input to the car!
             float h = CrossPlatformInputManager.GetAxis("Horizontal");
             float v = CrossPlatformInputManager.GetAxis("Vertical");
-
-            m_Car.m_GearUp = CrossPlatformInputManager.GetButtonDown("GearUp");
-            m_Car.m_GearDown = CrossPlatformInputManager.GetButtonDown("GearDown");
 
 #if !MOBILE_INPUT
             float handbrake = CrossPlatformInputManager.GetAxis("Jump");

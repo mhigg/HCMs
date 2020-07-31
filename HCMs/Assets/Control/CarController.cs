@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityStandardAssets.CrossPlatformInput;
 
 #pragma warning disable 649
 namespace UnityStandardAssets.Vehicles.Car
@@ -72,6 +73,23 @@ namespace UnityStandardAssets.Vehicles.Car
 
             m_Rigidbody = GetComponent<Rigidbody>();
             m_CurrentTorque = m_FullTorqueOverAllWheels - (m_TractionControl*m_FullTorqueOverAllWheels);
+        }
+
+        private void Update()
+        {
+            GearShift();
+        }
+
+        private void GearShift()
+        {
+            if (m_GearUp && (m_Gear < 6))
+            {
+                ++m_Gear;
+            }
+            if (m_GearDown && (m_Gear > 1))
+            {
+                --m_Gear;
+            }
         }
 
         private void GearChanging()
@@ -164,41 +182,31 @@ namespace UnityStandardAssets.Vehicles.Car
 
         private void CapSpeed()
         {
-            //if (m_GearUp && (m_Gear < 6))
-            //{
-            //    ++m_Gear;
-            //}
-            //if (m_GearDown && (m_Gear > 1))
-            //{
-            //    --m_Gear;
-            //}
-
             float speed = m_Rigidbody.velocity.magnitude;
             switch (m_SpeedType)
             {
                 case SpeedType.MPH://‚±‚Á‚¿‚Ì•û‚ðŽg‚¢‚Ü‚·B
-                    //switch (m_Gear)
-                    //{
-                    //    case 1:
-                    //        m_Topspeed = 30f;
-                    //        break;
-                    //    case 2:
-                    //        m_Topspeed = 50f;
-                    //        break;
-                    //    case 3:
-                    //        m_Topspeed = 70f;
-                    //        break;
-                    //    case 4:
-                    //        m_Topspeed = 90f;
-                    //        break;
-                    //    case 5:
-                    //        m_Topspeed = 110f;
-                    //        break;
-                    //    case 6:
-                    //        m_Topspeed = 130f;
-                    //        break;
-                    //}
-                    //maxRize = 2.23693629f;
+                    switch (m_Gear)
+                    {
+                        case 1:
+                            m_Topspeed = 40f;
+                            break;
+                        case 2:
+                            m_Topspeed = 60f;
+                            break;
+                        case 3:
+                            m_Topspeed = 80f;
+                            break;
+                        case 4:
+                            m_Topspeed = 100f;
+                            break;
+                        case 5:
+                            m_Topspeed = 115f;
+                            break;
+                        case 6:
+                            m_Topspeed = 130f;
+                            break;
+                    }
 
                     speed *= 2.23693629f;
                     if (speed > m_Topspeed)
@@ -222,10 +230,10 @@ namespace UnityStandardAssets.Vehicles.Car
             switch (m_CarDriveType)
             {
                 case CarDriveType.FourWheelDrive:
-                    thrustTorque = accel * (m_CurrentTorque / 4f);
+                    thrustTorque = accel * (m_CurrentTorque / 4f) * (m_Gear * 5.0f);
                     for (int i = 0; i < 4; i++)
                     {
-                        m_WheelColliders[i].motorTorque = thrustTorque * m_Gear;
+                        m_WheelColliders[i].motorTorque = thrustTorque;
                     }
                     break;
 
