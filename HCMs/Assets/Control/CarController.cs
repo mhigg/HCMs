@@ -171,8 +171,8 @@ namespace UnityStandardAssets.Vehicles.Car
             }
 
 
-            CalculateRevs();
-            GearChanging();
+            //CalculateRevs();
+            //GearChanging();
 
             AddDownForce();
             CheckForWheelSpin();
