@@ -11,6 +11,8 @@ public class OtherRootCheckPoint : MonoBehaviour
         EndOtherRoot
     }
 
+    public CheckPointFlag cp = null;
+
     public CPType cpType;
     private int _playerNum;             // プレイヤー人数
     private bool[] _isThrough;          // このチェックポイントを通過したかのフラグを保存
@@ -40,25 +42,42 @@ public class OtherRootCheckPoint : MonoBehaviour
         Debug.Log("プレイヤー" + playerID + "チェックポイント通過");
 
         CheckPointCount cpCount = throughObject.GetComponent<CheckPointCount>();
+        int checkPointCnt = cpCount.GetNowThroughCheckPointNum();
 
         if (!_isThrough[playerID])
         {
             if (throughObject.tag == "RacingCar")
             {
-                if (gameObject.name == cpCount.GetNextCPName())
+                if(cpType == CPType.StartOtherRoot)
                 {
-                    if(cpType != CPType.EndOtherRoot)
+                    Debug.Log("別ルートcp通過");
+                    // orチェックポイントのナンバー+1を次のチェックポイントとする
+                    int thisCPName = int.Parse(gameObject.name.Trim("or".ToCharArray()));
+                    Debug.Log($"次チェックポイント：or{(thisCPName + 1)}");
+                    Debug.Log(gameObject.name);
+                    cpCount.CountCheckPoint($"or{(thisCPName + 1)}");
+                }
+                else if(cpType == CPType.OtherRoot)
+                {
+                    if (gameObject.name == cpCount.GetNextCPName())
                     {
+                        Debug.Log("別ルートcp通過");
                         // orチェックポイントのナンバー+1を次のチェックポイントとする
                         int thisCPName = int.Parse(gameObject.name.Trim("or".ToCharArray()));
-                        cpCount.CountCheckPoint(gameObject.name + (thisCPName + 1));
+                        Debug.Log($"次チェックポイント：or{(thisCPName + 1)}");
+                        Debug.Log(gameObject.name);
+                        cpCount.CountCheckPoint($"or{(thisCPName + 1)}");
                     }
-                    else
-                    {
-                        cpCount.CountCheckPoint();
-                    }
-                    _isThrough[playerID] = true;
                 }
+                else
+                {
+                    Debug.Log("別ルート最終cp通過");
+                    Debug.Log($"次チェックポイント：or{cp.name}");
+                    Debug.Log(gameObject.name);
+                    cpCount.CountCheckPoint(cp.name);
+                }
+                _isThrough[playerID] = true;
+
             }
         }
     }

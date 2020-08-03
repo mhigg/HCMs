@@ -13,7 +13,15 @@ public class ParentCheckPoint : MonoBehaviour
         Transform parent = gameObject.transform;
         for(int idx = 0; idx < parent.childCount; idx++)
         {
-            parent.GetChild(idx).GetComponent<CheckPointFlag>().ResetThroughFlag(playerID);
+            string cpRoot = parent.GetChild(idx).name.Substring(0, 2);
+            if (cpRoot == "cp")
+            {
+                parent.GetChild(idx).GetComponent<CheckPointFlag>().ResetThroughFlag(playerID);
+            }
+            else if(cpRoot == "or")
+            {
+                parent.GetChild(idx).GetComponent<OtherRootCheckPoint>().ResetThroughFlag(playerID);
+            }
         }
     }
 }
