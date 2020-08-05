@@ -49,7 +49,7 @@ namespace UnityStandardAssets.Vehicles.Car
         private float m_CurrentTorque;
         private Rigidbody m_Rigidbody;
         private const float k_ReversingThreshold = 0.01f;
-        private float[] topSpeed = { 40f, 60f, 80f, 100f, 115f, 130f };
+        private float[] topSpeed = { 40f, 60f, 80f, 100f, 120f, 140f };
         private bool m_GearUpFlag = false;
         private bool m_GearDownFlag = false;
 
