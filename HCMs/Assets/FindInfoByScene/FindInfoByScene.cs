@@ -95,7 +95,6 @@ public class FindInfoByScene : MonoBehaviour
 
     public int GetPlayerID(string throughPlayerName)
     {
-        Debug.Log("通過名：" + throughPlayerName);
         int retID = -1;
         for (int idx = 0; idx < _playerName.Count; idx++)
         {
