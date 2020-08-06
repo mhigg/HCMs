@@ -19,9 +19,9 @@ public class TitleScene : MonoBehaviour
     {
         if (!isCalledOnce)
         {
-            if (Input.GetButtonDown("Decision"))
+            if (Input.anyKey)
             {
-                isCalledOnce = true;
+            isCalledOnce = true;
                 FadeManager.Instance.LoadScene("MenuScene", 2.0f);
                 Debug.Log("Menuへ");
             }
