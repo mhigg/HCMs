@@ -28,7 +28,7 @@ public class RankingDuringRace : MonoBehaviour
     void Update()
     {
         // 周回数→チェックポイント通過数→次チェックポイントまでの距離の順にランク付けする
-        CompareRapCountAndGetRanking();
+        CompareLapCountAndGetRanking();
         CompareCheckPointCountAndGetRanking();
         CompareDistanceToNextPoint();
 
@@ -67,18 +67,18 @@ public class RankingDuringRace : MonoBehaviour
     // この↓2つの順位付け関数、中身ほぼ同じなのでなんとかまとめたい
 
     // 周回数の順位付け
-    private void CompareRapCountAndGetRanking()
+    private void CompareLapCountAndGetRanking()
     {
         GameObject[] racingCars = GameObject.FindGameObjectsWithTag("RacingCar");
-        int[] rapCounts = new int[racingCars.Length];
+        int[] lapCounts = new int[racingCars.Length];
         foreach (GameObject player in racingCars)
         {
             int id = FindInfoByScene.Instance.GetPlayerID(player.transform.parent.name);
-            rapCounts[id] = player.GetComponentInChildren<RapCount>().GetRapCount();
-//            Debug.Log("プレイヤー:" + id + " 周回数:" + rapCounts[id]);
+            lapCounts[id] = player.GetComponentInChildren<LapCount>().GetLapCount();
+//            Debug.Log("プレイヤー:" + id + " 周回数:" + lapCounts[id]);
         }
 
-        Ranking(rapCounts, false);
+        Ranking(lapCounts, false);
     }
 
     // チェックポイント通過数の順位付け
@@ -108,10 +108,6 @@ public class RankingDuringRace : MonoBehaviour
         foreach (GameObject player in racingCars)
         {
             int playerID = FindInfoByScene.Instance.GetPlayerID(player.transform.parent.name);
-
-            int throughCpNums = player.GetComponent<CheckPointCount>().GetNowThroughCheckPointNum();
-            // 最後のチェックポイントを通ったら最初に戻る
-            int nextCpNum = (throughCpNums < checkPoints.Length ? throughCpNums + 1 : 1);
 
             for (int idx = 0; idx < checkPoints.Length; idx++)
             {

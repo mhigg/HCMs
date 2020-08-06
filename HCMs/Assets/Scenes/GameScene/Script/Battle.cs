@@ -21,11 +21,11 @@ public class Battle : MonoBehaviour
 
         _activeStageName = SceneManager.GetActiveScene().name;
 
-        int rapMax = FindInfoByScene.Instance.GetRapMax(_activeStageName);
-        Debug.Log("rapMax:" + rapMax);
+        int lapMax = FindInfoByScene.Instance.GetLapMax(_activeStageName);
+        Debug.Log("lapMax:" + lapMax);
 
         timeRanking = timeRanking.GetComponent<TimeRanking>();
-        timeRanking.SetUpTimeRanking("Battle", playerNum, rapMax);
+        timeRanking.SetUpTimeRanking("Battle", playerNum, lapMax);
 
         goalFlag = goalFlag.GetComponent<GoalFlag>();
 

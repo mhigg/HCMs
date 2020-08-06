@@ -10,10 +10,10 @@ public class TimeRanking : MonoBehaviour
     private PlayerBestTime bestTime = null;
 
     private string _rankingKey;     // ゴールタイムのランキング呼び出しキー
-    private string _rapRankKey;     // ラップタイムのランキング呼び出しキー
+    private string _lapRankKey;     // ラップタイムのランキング呼び出しキー
     private int _rankingMax;        // ランキングの表示数(=プレイヤー人数)
-    private int _rapMax;            // ラップタイム数
-    private int _rapRankMax;        // ラップタイムランキングの表示数(=人数*周回数)
+    private int _lapMax;            // ラップタイム数
+    private int _lapRankMax;        // ラップタイムランキングの表示数(=人数*周回数)
 
     void Start()
     {
@@ -23,23 +23,23 @@ public class TimeRanking : MonoBehaviour
 
     // @course string型：走行コース名 バトルモードはBattleでいい
     // @indicateRanks int型：表示するランキング数
-    // @rapMax int型：最大周回数
-    public void SetUpTimeRanking(string course, int indicateRanks, int rapMax)
+    // @lapMax int型：最大周回数
+    public void SetUpTimeRanking(string course, int indicateRanks, int lapMax)
     {
         Debug.Log("TimeRankingセットアップ");
 
         _rankingKey = course;
-        _rapMax = rapMax;
+        _lapMax = lapMax;
         _rankingMax = indicateRanks;
-        _rapRankMax = indicateRanks * rapMax;
+        _lapRankMax = indicateRanks * lapMax;
 
         Debug.Log("コース名:" + _rankingKey);
-        Debug.Log("最大周回数:" + _rapMax);
+        Debug.Log("最大周回数:" + _lapMax);
         Debug.Log("ランキング表示数:" + _rankingMax);
 
         if (course == "Battle")
         {
-            _rapRankKey = "BTRap";
+            _lapRankKey = "BTLap";
             storage.DeleteData(_rankingKey);    // バトルモードのラップタイムランキングは持ち越さないので削除
             for (int playerID = 0; playerID < indicateRanks; playerID++)
             {
@@ -49,7 +49,7 @@ public class TimeRanking : MonoBehaviour
         }
         else
         {
-            _rapRankKey = "TARap";
+            _lapRankKey = "TALap";
             // 前回のラップタイムが保存されたままにならないように削除しておく
             storage.DeleteData("0");
         }
@@ -58,10 +58,10 @@ public class TimeRanking : MonoBehaviour
     // プレイヤーごとにラップタイムを保存
     // @newTime float:周回時のタイム
     // @playerKey string:プレイヤーID
-    public void SetRapTime(float newRapTime, int playerKey)
+    public void SetLapTime(float newLapTime, int playerKey)
     {
-        Debug.Log("SetRapTime");
-        AddRapTime(playerKey.ToString(), _rapMax, newRapTime);
+        Debug.Log("SetLapTime");
+        AddLapTime(playerKey.ToString(), _lapMax, newLapTime);
     }
 
     // ラップタイムを集計していく関数
@@ -69,13 +69,13 @@ public class TimeRanking : MonoBehaviour
     // @KEY string:読み出すデータのキー
     // @DATA_MAX int:読み出すデータ数（配列の最大値）
     // @newTime float:新しく追加するデータ
-    private void AddRapTime(string KEY, int DATA_MAX, float newTime)
+    private void AddLapTime(string KEY, int DATA_MAX, float newTime)
     {
-        float[] rapTime = storage.GetData(KEY, DATA_MAX, 0.0f);
+        float[] lapTime = storage.GetData(KEY, DATA_MAX, 0.0f);
 
-        for (int idx = 0; idx < rapTime.Length; idx++)
+        for (int idx = 0; idx < lapTime.Length; idx++)
         {
-            if (rapTime[idx] == 0.0f)
+            if (lapTime[idx] == 0.0f)
             {
                 // データが無かったらラップタイムを入れ、breakする
                 // newTimeはレース通してのタイムなので、1つ前までのタイムとの差をラップタイムとする
@@ -83,14 +83,14 @@ public class TimeRanking : MonoBehaviour
                 float subTime = 0.0f;
                 for(int subIdx = idx - 1; subIdx >= 0; subIdx--)
                 {
-                    subTime += rapTime[subIdx];
+                    subTime += lapTime[subIdx];
                 }
-                rapTime[idx] = newTime - subTime;
+                lapTime[idx] = newTime - subTime;
                 break;
             }
         }
 
-        storage.SaveData(KEY, rapTime);
+        storage.SaveData(KEY, lapTime);
     }
 
     // ラップタイムとゴールタイムを集計しランキングに保存する
@@ -98,14 +98,14 @@ public class TimeRanking : MonoBehaviour
     public void SetGoalTime(int playerKey)
     {
         Debug.Log("SetGoalTime");
-        float[] rapTime = storage.GetData(playerKey.ToString(), _rapMax, 0.0f);
+        float[] lapTime = storage.GetData(playerKey.ToString(), _lapMax, 0.0f);
         float goalTime = 0.0f;
-        for (int idx = 0; idx < _rapMax; idx++)
+        for (int idx = 0; idx < _lapMax; idx++)
         {
-            goalTime += rapTime[idx];
+            goalTime += lapTime[idx];
         }
 
-        AddAndSortRapTimeRanking(_rapRankKey, _rapRankMax, rapTime);
+        AddAndSortLapTimeRanking(_lapRankKey, _lapRankMax, lapTime);
         AddAndSortGoalTimeRanking(_rankingKey, _rankingMax, goalTime);
 
         // 自己ベストがあるか確認
@@ -153,18 +153,18 @@ public class TimeRanking : MonoBehaviour
     // @KEY string:読み出すランキングのキー
     // @DATA_MAX int:読み出すデータ数（配列の最大値）
     // @newTime float[]:新しく追加するタイム(周回数分の配列)
-    private void AddAndSortRapTimeRanking(string KEY, int DATA_MAX, float[] newTime)
+    private void AddAndSortLapTimeRanking(string KEY, int DATA_MAX, float[] newTime)
     {
         float[] ranking = storage.GetData(KEY, DATA_MAX, 1000.0f);
 
         if (ranking != null)
         {
             float tmp;
-            for (int idx = 0; idx < ranking.Length; idx += _rapMax)
+            for (int idx = 0; idx < ranking.Length; idx += _lapMax)
             {
                 float retTime = 0.0f;
                 float goalTime = 0.0f;
-                for (int sumIdx = 0; sumIdx < _rapMax; sumIdx++)
+                for (int sumIdx = 0; sumIdx < _lapMax; sumIdx++)
                 {
                     retTime += ranking[idx + sumIdx];
                     goalTime += newTime[sumIdx];
@@ -175,7 +175,7 @@ public class TimeRanking : MonoBehaviour
                 {
                     // １つずつ順位をずらしていく
                     // 最大ラップ数ごとに１つとして扱う
-                    for(int sortIdx = 0; sortIdx < _rapMax; sortIdx++)
+                    for(int sortIdx = 0; sortIdx < _lapMax; sortIdx++)
                     {
                         tmp = ranking[idx + sortIdx];
                         ranking[idx + sortIdx] = newTime[sortIdx];
@@ -186,7 +186,7 @@ public class TimeRanking : MonoBehaviour
         }
         else
         {
-            for (int idx = 0; idx < _rapMax; idx++)
+            for (int idx = 0; idx < _lapMax; idx++)
             {
                 ranking[idx] = newTime[idx];
             }

@@ -17,7 +17,7 @@ public class Battle_result : MonoBehaviour
         dispRanking = dispRanking.GetComponent<DispRanking>();
 
         // 第一引数はバトルモードの場合Battleで統一
-        dispRanking.SetUpDispRanking("Battle", 2, FindInfoByScene.Instance.GetRapMax(_activeStageName), false, 1000.0f);
+        dispRanking.SetUpDispRanking("Battle", 2, FindInfoByScene.Instance.GetLapMax(_activeStageName), false, 1000.0f);
     }
 
     private bool _isCalledOnce = false;
