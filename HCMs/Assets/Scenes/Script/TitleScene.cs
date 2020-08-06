@@ -13,7 +13,7 @@ public class TitleScene : MonoBehaviour
 
     bool isCalledOnce = false;
     bool isDeleteOnce = false;
-    bool isDeleteRapOnce = false;
+    bool isDeleteLapOnce = false;
 
     void Update()
     {
@@ -46,13 +46,15 @@ public class TitleScene : MonoBehaviour
             }
         }
 
-        if (!isDeleteRapOnce)
+        if (!isDeleteLapOnce)
         {
             if (Input.GetKeyDown(KeyCode.F2))
             {
                 isDeleteOnce = true;
                 rankingStorage.DeleteData("TARap");
                 rankingStorage.DeleteData("BTRap");
+                rankingStorage.DeleteData("TALap");
+                rankingStorage.DeleteData("BTLap");
                 Debug.Log("全ラップランキングデリート");
             }
         }

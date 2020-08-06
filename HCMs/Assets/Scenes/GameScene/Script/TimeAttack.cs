@@ -21,12 +21,12 @@ public class TimeAttack : MonoBehaviour
         Debug.Log("TimeAttackStart");
         _activeStageName = SceneManager.GetActiveScene().name;
 
-        int rapMax = FindInfoByScene.Instance.GetRapMax(_activeStageName);
-        Debug.Log("rapMax:" + rapMax);
+        int lapMax = FindInfoByScene.Instance.GetLapMax(_activeStageName);
+        Debug.Log("lapMax:" + lapMax);
 
         timeRanking = timeRanking.GetComponent<TimeRanking>();
         // 第一引数をコース名にする
-        timeRanking.SetUpTimeRanking(_activeStageName, 11, rapMax);
+        timeRanking.SetUpTimeRanking(_activeStageName, 11, lapMax);
 
         goalFlag = goalFlag.GetComponent<GoalFlag>();
 

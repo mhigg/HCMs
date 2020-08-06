@@ -54,11 +54,11 @@ public class GoalFlag : MonoBehaviour
                     // 全チェックポイントを未通過状態にする
                     parentCp.ResetCheckPointIsThrough(playerID);
                     // 周回数とラップタイムをカウントする
-                    throughObject.GetComponent<RapCount>().CountRap();
-                    timeCounter.RapCount(playerID);
+                    throughObject.GetComponent<LapCount>().CountLap();
+                    timeCounter.LapCount(playerID);
                 }
 
-                if (throughObject.GetComponent<RapCount>().CheckRapCount())
+                if (throughObject.GetComponent<LapCount>().CheckLapCount())
                 {
                     Debug.Log("プレイヤー" + playerID + "ゴール");
                     Vector3 pos = new Vector3((_playerNum - 1) * 500 * (playerID * 2 - 1) + 960, 540, 0);

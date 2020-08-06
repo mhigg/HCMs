@@ -5,7 +5,7 @@ using UnityEngine;
 public class FindInfoByScene : MonoBehaviour
 {
     // 最大周回数テーブル
-    private Dictionary<string, int> _stageRapMax;
+    private Dictionary<string, int> _stageLapMax;
 
     // プレイヤー名を保存
     private List<string> _playerName;
@@ -59,10 +59,10 @@ public class FindInfoByScene : MonoBehaviour
             }
         }
 
-        _stageRapMax = new Dictionary<string, int>();
+        _stageLapMax = new Dictionary<string, int>();
         foreach (string stageName in _stageNameTbl)
         {
-            _stageRapMax.Add(stageName, 3);
+            _stageLapMax.Add(stageName, 3);
         }
     }
 
@@ -81,16 +81,16 @@ public class FindInfoByScene : MonoBehaviour
     }
 
     // Update is called once per frame
-    public int GetRapMax(string activeStageName)
+    public int GetLapMax(string activeStageName)
     {
-        int retRapMax = _stageRapMax[activeStageName];
+        int retLapMax = _stageLapMax[activeStageName];
 
-        if (retRapMax <= 0)
+        if (retLapMax <= 0)
         {
-            Debug.LogError("最大周回数が0以下です。コース情報の照合に失敗した可能性があります。_stageNameTblと_rapMaxを確認してください。");
+            Debug.LogError("最大周回数が0以下です。コース情報の照合に失敗した可能性があります。_stageNameTblと_lapMaxを確認してください。");
         }
 
-        return retRapMax;
+        return retLapMax;
     }
 
     public int GetPlayerID(string throughPlayerName)

@@ -15,12 +15,12 @@ public class DispRanking : MonoBehaviour
     public DataStorage rankingStorage = null;   // 表示用ランキングの取得用
 
     private float[] _dispRanking;   // ランキング保存用
-    private float[] _dispRapTime;   // ラップタイム保存用
+    private float[] _dispLapTime;   // ラップタイム保存用
 
     private string _rankingKey;     // ゴールタイムのランキング呼び出しキー
-    private string _rapRankKey;     // ラップタイムのランキング呼び出しキー
+    private string _lapRankKey;     // ラップタイムのランキング呼び出しキー
     private int _rankingMax;        // ランキングの表示数(=プレイヤー人数)
-    private int _rapRankMax;        // ラップタイムランキングの表示数(=人数*周回数)
+    private int _lapRankMax;        // ラップタイムランキングの表示数(=人数*周回数)
     private bool _rankOutActive;    // true:ランキング外のタイムを表示する false:表示しない
     private float _defaultTime;     // タイムの初期値もとい限界値
 
@@ -37,17 +37,17 @@ public class DispRanking : MonoBehaviour
 
     // @course string型：走行コース名 バトルモードはBattleでいい
     // @indicateRanks int型：表示するランキング数
-    // @rapMax int型：最大周回数
+    // @lapMax int型：最大周回数
     // @rankOutActive bool型：ランク外を表示するならtrue しないならfalse
     // @defaultTime float型：記録が無かった場合に設定するデフォルト値
-    public void SetUpDispRanking(string gameMode, int indicateRanks, int rapMax, bool rankOutActive, float defaultTime)
+    public void SetUpDispRanking(string gameMode, int indicateRanks, int lapMax, bool rankOutActive, float defaultTime)
     {
         Debug.Log("DispRankingセットアップ");
 
         _rankingKey = gameMode;
         _rankingMax = indicateRanks;
-        _rapRankMax = indicateRanks * rapMax;
-        _rapRankKey = (gameMode == "Battle" ? "BTRap" : "TARap");
+        _lapRankMax = indicateRanks * lapMax;
+        _lapRankKey = (gameMode == "Battle" ? "BTLap" : "TALap");
         _rankOutActive = rankOutActive;
         _defaultTime = defaultTime;
 
@@ -59,8 +59,8 @@ public class DispRanking : MonoBehaviour
         _dispRanking = new float[_rankingMax];
         _dispRanking = rankingStorage.GetData(_rankingKey, _rankingMax, _defaultTime);
 
-        _dispRapTime = new float[_rapRankMax];
-        _dispRapTime = rankingStorage.GetData(_rapRankKey, _rapRankMax, _defaultTime);
+        _dispLapTime = new float[_lapRankMax];
+        _dispLapTime = rankingStorage.GetData(_lapRankKey, _lapRankMax, _defaultTime);
     }
 
     void Update()
@@ -101,31 +101,31 @@ public class DispRanking : MonoBehaviour
         // １位：〇〇秒　〇〇秒　〇〇秒　　みたいに表示する
         // タイムが無い場合は
         // １位：－－秒　－－秒　－－秒　　といった感じで表示する
-        //for (int idx = 0; idx < _rapRankMax; idx++)
+        //for (int idx = 0; idx < _lapRankMax; idx++)
         //{
-        //    string rap;
-        //    if (_dispRapTime[idx] < _defaultTime)
+        //    string lap;
+        //    if (_dispLapTime[idx] < _defaultTime)
         //    {
-        //        float second = _dispRapTime[idx] % 60.0f;
-        //        int minute = Mathf.FloorToInt(_dispRapTime[idx] / 60.0f);
-        //        rap = string.Format("{0:00}.", minute) + string.Format("{0:00.000}", second) + "\n";
+        //        float second = _dispLapTime[idx] % 60.0f;
+        //        int minute = Mathf.FloorToInt(_dispLapTime[idx] / 60.0f);
+        //        lap = string.Format("{0:00}.", minute) + string.Format("{0:00.000}", second) + "\n";
         //    }
         //    else
         //    {
         //        // デフォルト(1000.0f)ならタイム表記を表示しない
-        //        rap = "--.--.---\n";
+        //        lap = "--.--.---\n";
         //    }
 
         //    if (idx == (_rankingMax - 1) && _rankOutActive)
         //    {
         //        // ランキング外のタイムを表示する場合、一番下の記録をランキング外として表示する
-        //        rankOut_string += rap;
+        //        rankOut_string += lap;
 
         //        // ランキング内には表示しないのでbreakする
         //        break;
         //    }
 
-        //    ranking_string += rap;
+        //    ranking_string += lap;
         //}
 
         // テキストの表示を入れ替える
