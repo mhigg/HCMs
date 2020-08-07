@@ -6,8 +6,8 @@ using UnityEngine.UI;
 public class TimeCount : MonoBehaviour
 {
     // タイム表示用テキストコンポーネント
-    public Text timeText = null;
     public Text lapTimeText = null;
+    public List<ImageNo> imageNo = new List<ImageNo>();
 
     // タイムを保存するためのコンポーネント
     public TimeRanking timeRanking = null;
@@ -22,9 +22,12 @@ public class TimeCount : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        timeText = timeText.GetComponent<Text>();
         lapTimeText = lapTimeText.GetComponent<Text>();
         timeRanking = timeRanking.GetComponent<TimeRanking>();
+        for(int idx = 0; idx < imageNo.Count; idx++)
+        {
+            imageNo[idx] = imageNo[idx].GetComponent<ImageNo>();
+        }
 
         _timeCount = 0.0f;
         _lapTimeCount = 0.0f;
@@ -41,19 +44,28 @@ public class TimeCount : MonoBehaviour
         if (!_endFlag)
         {
             _timeCount += Time.deltaTime;
-            timeText.text = ChangeTimeNotationAndTimeText(_timeCount);
-            char[] timeArray = timeText.text.ToCharArray();
+            ChangeTimeNotationAndTimeText(_timeCount, true);
 
             _lapTimeCount += Time.deltaTime;
         }
     }
 
     // 秒数でカウントしているタイムを分・秒・コンマ以下の表示に変換する
-    private string ChangeTimeNotationAndTimeText(float time)
+    private string ChangeTimeNotationAndTimeText(float time, bool total)
     {
-        float second = time % 60.0f;
+        float seconds = time % 60.0f;
+        int comma = Mathf.FloorToInt((seconds - Mathf.Floor(seconds)) * 1000.0f);
+        int second = Mathf.FloorToInt(seconds);
         int minute = Mathf.FloorToInt(time / 60.0f);
-        return string.Format("{0:00}'", minute) + string.Format("{0:00.000}", second);
+
+        if(total)
+        {
+            imageNo[0].SetNo(minute, "00");
+            imageNo[1].SetNo(second, "00");
+            imageNo[2].SetNo(comma, "000");
+        }
+
+        return string.Format("{0:00}'", minute) + string.Format("{0:00.000}", seconds);
     }
 
     // ラップタイムテキストをインスタンス
@@ -65,7 +77,7 @@ public class TimeCount : MonoBehaviour
         Debug.Log("position:" + position);
 
         Text _lapTimeText = Instantiate(lapTimeText, position, Quaternion.identity);
-        _lapTimeText.text = "LAP" + (lapCnt - 1) + "   " + ChangeTimeNotationAndTimeText(_lapTimeCount);
+        _lapTimeText.text = "LAP" + (lapCnt - 1) + "   " + ChangeTimeNotationAndTimeText(_lapTimeCount,false);
         _lapTimeText.transform.SetParent(GameObject.Find("CounterCanvas").transform);
     }
 
