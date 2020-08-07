@@ -8,6 +8,7 @@ public class BattleSel : MonoBehaviour
 {
     GameObject _nowSelect;
     public List<Image> stages;
+    public List<int> _num;
     [SerializeField] EventSystem eventSystem;
     GameObject _selectObj;
     int _nowSelected = 0;
@@ -72,7 +73,7 @@ public class BattleSel : MonoBehaviour
                 if (Input.GetButtonDown("Decision"))
                 {
                     isCalledOnce = true;
-                    FadeManager.Instance.LoadScene("BattleScene_0" + $"{_nowSelected + 1}", 2.0f);
+                    FadeManager.Instance.LoadScene("BattleScene_0" + $"{_num[_nowSelected]}", 2.0f);
                     Debug.Log("BattleSceneへ");
                 }
             }

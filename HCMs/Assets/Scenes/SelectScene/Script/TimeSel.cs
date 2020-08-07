@@ -8,6 +8,7 @@ public class TimeSel : MonoBehaviour
 {
     GameObject _nowSelect;
     public List<Image> stages;
+    public List<int> _num;
     [SerializeField] EventSystem eventSystem;
     GameObject _selectObj;
     int _nowSelected = 0;
@@ -72,9 +73,8 @@ public class TimeSel : MonoBehaviour
                 if (Input.GetButtonDown("Decision"))
                 {
                     isCalledOnce = true;
-                    FadeManager.Instance.LoadScene("TimeAttack0" + $"{_nowSelected + 1}", 2.0f);
+                    FadeManager.Instance.LoadScene("TimeAttack0" + $"{_num[_nowSelected]}", 2.0f);
                     Debug.Log("01へ");
-
                 }
             }
         }
