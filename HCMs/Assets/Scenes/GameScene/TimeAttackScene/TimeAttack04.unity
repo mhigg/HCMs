@@ -7709,14 +7709,6 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 9
       objectReference: {fileID: 0}
-    - target: {fileID: 2000000, guid: baec086904791744185aaa07a6cf55c2, type: 3}
-      propertyPath: m_NormalizedViewPortRect.height
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2000000, guid: baec086904791744185aaa07a6cf55c2, type: 3}
-      propertyPath: m_NormalizedViewPortRect.width
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: baec086904791744185aaa07a6cf55c2, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.040000916
@@ -7763,6 +7755,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: baec086904791744185aaa07a6cf55c2, type: 3}
       propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2000000, guid: baec086904791744185aaa07a6cf55c2, type: 3}
+      propertyPath: m_NormalizedViewPortRect.height
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2000000, guid: baec086904791744185aaa07a6cf55c2, type: 3}
+      propertyPath: m_NormalizedViewPortRect.width
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: baec086904791744185aaa07a6cf55c2, type: 3}
@@ -27689,11 +27689,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: TACounterCanvas
       objectReference: {fileID: 0}
-    - target: {fileID: 7436333566840035268, guid: bd34e2a4c368365468727bc7e0cc37ab,
-        type: 3}
-      propertyPath: m_Name
-      value: LapText
-      objectReference: {fileID: 0}
     - target: {fileID: 7436333566840035270, guid: bd34e2a4c368365468727bc7e0cc37ab,
         type: 3}
       propertyPath: m_textInfo.characterCount
@@ -27718,6 +27713,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_textInfo.pageCount
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7436333566840035268, guid: bd34e2a4c368365468727bc7e0cc37ab,
+        type: 3}
+      propertyPath: m_Name
+      value: LapText
       objectReference: {fileID: 0}
     - target: {fileID: 7436333567275002325, guid: bd34e2a4c368365468727bc7e0cc37ab,
         type: 3}
@@ -28668,7 +28668,7 @@ PrefabInstance:
     - target: {fileID: 66574401679995628, guid: 4adce504dc94c714bad262fadc41087a,
         type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7148029752624657511, guid: 4adce504dc94c714bad262fadc41087a,
         type: 3}
@@ -28738,7 +28738,7 @@ PrefabInstance:
     - target: {fileID: 2242321509849930632, guid: 4adce504dc94c714bad262fadc41087a,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4adce504dc94c714bad262fadc41087a, type: 3}
@@ -34983,7 +34983,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   imageNo: {fileID: 0}
   speedImage: {fileID: 0}
-  speedText: {fileID: 0}
   percentage: 22
 --- !u!114 &1670938995
 MonoBehaviour:
@@ -41652,6 +41651,53 @@ PrefabInstance:
       propertyPath: m_Name
       value: TimeCounter
       objectReference: {fileID: 0}
+    - target: {fileID: 8959400590505247595, guid: 049331b12b0f71d489338d3003436b6f,
+        type: 3}
+      propertyPath: imageNo.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8959400590505247595, guid: 049331b12b0f71d489338d3003436b6f,
+        type: 3}
+      propertyPath: timeText
+      value: 
+      objectReference: {fileID: 1290229492}
+    - target: {fileID: 8959400590505247595, guid: 049331b12b0f71d489338d3003436b6f,
+        type: 3}
+      propertyPath: timeRanking
+      value: 
+      objectReference: {fileID: 906074884}
+    - target: {fileID: 8959400590505247595, guid: 049331b12b0f71d489338d3003436b6f,
+        type: 3}
+      propertyPath: rapTimeText
+      value: 
+      objectReference: {fileID: 2348465677325258096, guid: e406e07cad2ac2442a63d96508a6af8e,
+        type: 3}
+    - target: {fileID: 8959400590505247595, guid: 049331b12b0f71d489338d3003436b6f,
+        type: 3}
+      propertyPath: counterCanvas
+      value: 
+      objectReference: {fileID: 1290229495}
+    - target: {fileID: 8959400590505247595, guid: 049331b12b0f71d489338d3003436b6f,
+        type: 3}
+      propertyPath: lapTimeText
+      value: 
+      objectReference: {fileID: 2348465677325258096, guid: e406e07cad2ac2442a63d96508a6af8e,
+        type: 3}
+    - target: {fileID: 8959400590505247595, guid: 049331b12b0f71d489338d3003436b6f,
+        type: 3}
+      propertyPath: imageNo.Array.data[0]
+      value: 
+      objectReference: {fileID: 1290229494}
+    - target: {fileID: 8959400590505247595, guid: 049331b12b0f71d489338d3003436b6f,
+        type: 3}
+      propertyPath: imageNo.Array.data[1]
+      value: 
+      objectReference: {fileID: 1290229493}
+    - target: {fileID: 8959400590505247595, guid: 049331b12b0f71d489338d3003436b6f,
+        type: 3}
+      propertyPath: imageNo.Array.data[2]
+      value: 
+      objectReference: {fileID: 1290229490}
     - target: {fileID: 8959400590505247592, guid: 049331b12b0f71d489338d3003436b6f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -41707,53 +41753,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8959400590505247595, guid: 049331b12b0f71d489338d3003436b6f,
-        type: 3}
-      propertyPath: imageNo.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8959400590505247595, guid: 049331b12b0f71d489338d3003436b6f,
-        type: 3}
-      propertyPath: timeText
-      value: 
-      objectReference: {fileID: 1290229492}
-    - target: {fileID: 8959400590505247595, guid: 049331b12b0f71d489338d3003436b6f,
-        type: 3}
-      propertyPath: timeRanking
-      value: 
-      objectReference: {fileID: 906074884}
-    - target: {fileID: 8959400590505247595, guid: 049331b12b0f71d489338d3003436b6f,
-        type: 3}
-      propertyPath: rapTimeText
-      value: 
-      objectReference: {fileID: 2348465677325258096, guid: e406e07cad2ac2442a63d96508a6af8e,
-        type: 3}
-    - target: {fileID: 8959400590505247595, guid: 049331b12b0f71d489338d3003436b6f,
-        type: 3}
-      propertyPath: counterCanvas
-      value: 
-      objectReference: {fileID: 1290229495}
-    - target: {fileID: 8959400590505247595, guid: 049331b12b0f71d489338d3003436b6f,
-        type: 3}
-      propertyPath: lapTimeText
-      value: 
-      objectReference: {fileID: 2348465677325258096, guid: e406e07cad2ac2442a63d96508a6af8e,
-        type: 3}
-    - target: {fileID: 8959400590505247595, guid: 049331b12b0f71d489338d3003436b6f,
-        type: 3}
-      propertyPath: imageNo.Array.data[0]
-      value: 
-      objectReference: {fileID: 1290229494}
-    - target: {fileID: 8959400590505247595, guid: 049331b12b0f71d489338d3003436b6f,
-        type: 3}
-      propertyPath: imageNo.Array.data[1]
-      value: 
-      objectReference: {fileID: 1290229493}
-    - target: {fileID: 8959400590505247595, guid: 049331b12b0f71d489338d3003436b6f,
-        type: 3}
-      propertyPath: imageNo.Array.data[2]
-      value: 
-      objectReference: {fileID: 1290229490}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 049331b12b0f71d489338d3003436b6f, type: 3}
 --- !u!4 &2006111416 stripped
