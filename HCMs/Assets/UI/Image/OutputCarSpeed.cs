@@ -13,8 +13,6 @@ public class OutputCarSpeed : MonoBehaviour
     [SerializeField]
     private Image speedImage = null;
     [SerializeField]
-    private Text speedText = null;
-    [SerializeField]
     private float percentage = 0f;
 
     // Start is called before the first frame update
@@ -33,7 +31,6 @@ public class OutputCarSpeed : MonoBehaviour
         //　速度用のImageの最小と最大を補正した値で計算
         speedImage.fillAmount = Mathf.Lerp(percentage / 140f, (140f - percentage) / 140f, ratio);
         //　現在の速度をテキストに表示する
-        //        speedText.text = Mathf.Abs(carController.CurrentSpeed).ToString("0");
         imageNo.SetNo(Mathf.FloorToInt(carController.CurrentSpeed), "0");
     }
 }
