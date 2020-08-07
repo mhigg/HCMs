@@ -6,6 +6,8 @@ using UnityStandardAssets.Vehicles.Car;
 
 public class OutputCarSpeed : MonoBehaviour
 {
+    public ImageNo imageNo = null;
+
     //　スタンダードアセットのCarの速度を保持しているスクリプト
     private CarController carController;
     [SerializeField]
@@ -19,6 +21,8 @@ public class OutputCarSpeed : MonoBehaviour
     void Start()
     {
         carController = GetComponent<CarController>();
+
+        imageNo = imageNo.GetComponent<ImageNo>();
     }
 
     // Update is called once per frame
@@ -29,6 +33,7 @@ public class OutputCarSpeed : MonoBehaviour
         //　速度用のImageの最小と最大を補正した値で計算
         speedImage.fillAmount = Mathf.Lerp(percentage / 140f, (140f - percentage) / 140f, ratio);
         //　現在の速度をテキストに表示する
-        speedText.text = Mathf.Abs(carController.CurrentSpeed).ToString("0") + "km/h";
+        //        speedText.text = Mathf.Abs(carController.CurrentSpeed).ToString("0");
+        imageNo.SetNo(Mathf.FloorToInt(carController.CurrentSpeed), "0");
     }
 }
