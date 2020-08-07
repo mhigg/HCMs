@@ -29,9 +29,14 @@ public class MenuScene : MonoBehaviour
     {
         if (!isCalledOnce)
         {
-            ///ここを任意のボタンにしましょう。
-            ///タイムアタック
-            if (Input.GetButtonDown("Decision"))
+            if (Input.GetButtonDown("Horizontal_2"))
+            {
+                int i = 0;
+                i++;
+            }
+                ///ここを任意のボタンにしましょう。
+                ///タイムアタック
+                if (Input.GetButtonDown("Decision"))
             {
                 _selectObj = eventSystem.currentSelectedGameObject.gameObject;
                 if (_selectObj.name == _timeAtt.name)
