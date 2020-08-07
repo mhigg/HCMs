@@ -25,10 +25,17 @@ public class IdleState : CarState
     {
         _brakeFlag = false;
         float f = 0;
+        var unvert = vert;
+        unvert.y *= -1;
         Physics.Raycast(pos, way, out _hitF, dis);
         DebugDraw(pos, way, dis, _hitF.collider);
         pos += way.normalized * dis;
         if (Physics.Raycast(pos, vert, out _hitF, 3))
+        {
+            f = _speed > -1f ? -0.1f : 0;
+            _brake += _brake > 0 ? -0.1f : 0f;
+        }
+        else if (Physics.Raycast(pos, unvert, out _hitF, 3))
         {
             f = _speed > -1f ? -0.1f : 0;
             _brake += _brake > 0 ? -0.1f : 0f;
@@ -40,6 +47,7 @@ public class IdleState : CarState
             _brakeFlag = true;
         }
         DebugDraw(pos, vert, 3, _hitF.collider);
+        DebugDraw(pos, unvert, 3, _hitF.collider);
         _speed += f;
         return _speed;
     }
