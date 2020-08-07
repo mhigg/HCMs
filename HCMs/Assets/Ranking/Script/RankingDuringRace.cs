@@ -7,6 +7,7 @@ using TMPro;
 public class RankingDuringRace : MonoBehaviour
 {
     public List<TextMeshProUGUI> rankTextList;  // 順位表示のリスト
+    public List<ImageNo> imageNo;
 
     private int _playerNum;             // プレイヤー人数
     private List<int[]> _rankingList;   // 順位リスト
@@ -16,12 +17,15 @@ public class RankingDuringRace : MonoBehaviour
     {
         _playerNum = GameObject.FindGameObjectsWithTag("RacingCar").Length;
         _rankingList = new List<int[]> (_playerNum);
+        imageNo = new List<ImageNo> (_playerNum);
 
-        for(int playerID = 0; playerID < rankTextList.Count; playerID++)
+        for (int playerID = 0; playerID < _playerNum; playerID++)
         {
             // 順位表示の初期化
             rankTextList[playerID].text = RankingToString(playerID + 1);
-        }
+
+            imageNo[playerID] = imageNo[playerID].GetComponent<ImageNo>();
+        }      
     }
 
     // Update is called once per frame
@@ -37,6 +41,7 @@ public class RankingDuringRace : MonoBehaviour
         foreach (TextMeshProUGUI rankText in rankTextList)
         {
             rankText.text = RankingToString(ranking[idx]);
+            imageNo[idx].SetNo(ranking[idx]);
             idx++;
         }
     }
@@ -48,16 +53,16 @@ public class RankingDuringRace : MonoBehaviour
         switch(ranking)
         {
             case 1:
-                retString = ranking.ToString() + "st";
+                retString = /*ranking.ToString() + */"st";
                 break;
             case 2:
-                retString = ranking.ToString() + "nd";
+                retString = /*ranking.ToString() + */"nd";
                 break;
             case 3:
-                retString = ranking.ToString() + "rd";
+                retString = /*ranking.ToString() + */"rd";
                 break;
             default:
-                retString = ranking.ToString() + "th";
+                retString = /*ranking.ToString() + */"th";
                 break;
         }
 
