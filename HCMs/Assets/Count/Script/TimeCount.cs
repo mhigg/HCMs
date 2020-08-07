@@ -78,7 +78,7 @@ public class TimeCount : MonoBehaviour
 
         Text _lapTimeText = Instantiate(lapTimeText, position, Quaternion.identity);
         _lapTimeText.text = "LAP" + (lapCnt - 1) + "   " + ChangeTimeNotationAndTimeText(_lapTimeCount,false);
-        _lapTimeText.transform.SetParent(GameObject.Find("CounterCanvas").transform);
+        _lapTimeText.transform.SetParent(GameObject.Find("TACounterCanvas").transform);
     }
 
     // カウントを開始する
