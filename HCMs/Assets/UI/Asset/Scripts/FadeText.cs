@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 public class FadeText : MonoBehaviour
 {
@@ -14,15 +13,15 @@ public class FadeText : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        red = GetComponent<TextMeshProUGUI>().color.r;
-        green = GetComponent<TextMeshProUGUI>().color.g;
-        blue = GetComponent<TextMeshProUGUI>().color.b;
+        red = GetComponent<Image>().color.r;
+        green = GetComponent<Image>().color.g;
+        blue = GetComponent<Image>().color.b;
     }
 
     // Update is called once per frame
     void Update()
     {
-        GetComponent<TextMeshProUGUI>().color = new Color(red, green, blue, alfa);
+        GetComponent<Image>().color = new Color(red, green, blue, alfa);
         if (alfa >= 1f) fadeflag = true;
         if (alfa <= 0f) fadeflag = false;
 
