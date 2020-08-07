@@ -5,6 +5,7 @@ using UnityEngine;
 public class TitleScene : MonoBehaviour
 {
     public DataStorage rankingStorage = null;
+    [SerializeField] private AudioSource pushSE;
 
     void Start()
     {
@@ -21,7 +22,8 @@ public class TitleScene : MonoBehaviour
         {
             if (Input.anyKey)
             {
-            isCalledOnce = true;
+                pushSE.PlayOneShot(pushSE.clip);
+                isCalledOnce = true;
                 FadeManager.Instance.LoadScene("MenuScene", 2.0f);
                 Debug.Log("Menuへ");
             }
