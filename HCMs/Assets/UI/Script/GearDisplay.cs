@@ -21,6 +21,6 @@ public class GearDisplay : MonoBehaviour
     void Update()
     {
         m_GearNum = m_Car.CurrentGearNum;
-        m_GearTex.text = (m_Car.CurrentGearNum + 1) + " MT";
+        m_GearTex.text = $"{m_Car.CurrentGearNum + 1}";
     }
 }
