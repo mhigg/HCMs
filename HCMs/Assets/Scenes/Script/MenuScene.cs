@@ -14,7 +14,6 @@ public class MenuScene : MonoBehaviour
     [SerializeField] EventSystem eventSystem;
     public Button _battle;
     public Button _timeAtt;
-    public Button _obst;
     GameObject _selectObj;
     // Start is called before the first frame update
     void Start()
@@ -37,20 +36,14 @@ public class MenuScene : MonoBehaviour
                 _selectObj = eventSystem.currentSelectedGameObject.gameObject;
                 if (_selectObj.name == _timeAtt.name)
                 {
-                    FadeManager.Instance.LoadScene("TimeSelectScene", 2.0f);
+                    FadeManager.Instance.LoadScene("TimeSelectScene", 1.5f);
                     Debug.Log("TimeSelectScene");
                     isCalledOnce = true;
                 }
                 if (_selectObj.name == _battle.name)
                 {
-                    FadeManager.Instance.LoadScene("BattleSelectScene", 2.0f);
+                    FadeManager.Instance.LoadScene("BattleSelectScene", 1.5f);
                     Debug.Log("BattleSelectScene");
-                    isCalledOnce = true;
-                }
-                if (_selectObj.name == _obst.name)
-                {
-                    FadeManager.Instance.LoadScene("ObstacleSelectScene", 2.0f);
-                    Debug.Log("ObstacleSelectScene");
                     isCalledOnce = true;
                 }
             }

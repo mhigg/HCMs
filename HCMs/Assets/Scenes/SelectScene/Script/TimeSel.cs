@@ -73,7 +73,7 @@ public class TimeSel : MonoBehaviour
                 if (Input.GetButtonDown("Decision"))
                 {
                     isCalledOnce = true;
-                    FadeManager.Instance.LoadScene("TimeAttack0" + $"{_num[_nowSelected]}", 2.0f);
+                    FadeManager.Instance.LoadScene("TimeAttack0" + $"{_num[_nowSelected]}", 1.5f);
                     Debug.Log("01へ");
                 }
             }

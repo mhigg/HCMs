@@ -10,7 +10,7 @@ namespace UnityStandardAssets.Vehicles.Car
         private CarController _carCtl;      // 車の操作
 
         private Vector3 _offset = new Vector3(0,1.5f,-4.5f);
-        float _froDis = 50f;                        // 直線レイの長さ
+        float _froDis = 45f;                        // 直線レイの長さ
         Vector3[] _wayDir = new Vector3[]           // 左右のレイの方向
         {
             new Vector3(-3f,0,-1f),         // 右

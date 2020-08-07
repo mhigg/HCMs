@@ -73,7 +73,7 @@ public class BattleSel : MonoBehaviour
                 if (Input.GetButtonDown("Decision"))
                 {
                     isCalledOnce = true;
-                    FadeManager.Instance.LoadScene("BattleScene_0" + $"{_num[_nowSelected]}", 2.0f);
+                    FadeManager.Instance.LoadScene("BattleScene_0" + $"{_num[_nowSelected]}", 1.5f);
                     Debug.Log("BattleSceneへ");
                 }
             }
