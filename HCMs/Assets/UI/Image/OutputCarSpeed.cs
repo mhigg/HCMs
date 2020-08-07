@@ -29,6 +29,6 @@ public class OutputCarSpeed : MonoBehaviour
         //　速度用のImageの最小と最大を補正した値で計算
         speedImage.fillAmount = Mathf.Lerp(percentage / 140f, (140f - percentage) / 140f, ratio);
         //　現在の速度をテキストに表示する
-        speedText.text = Mathf.Abs(carController.CurrentSpeed).ToString("000") + "km/h";
+        speedText.text = Mathf.Abs(carController.CurrentSpeed).ToString("0") + "km/h";
     }
 }
