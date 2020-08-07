@@ -14,10 +14,10 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
-  m_Fog: 0
+  m_Fog: 1
   m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_FogMode: 3
-  m_FogDensity: 0.01
+  m_FogDensity: 0.003
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
   m_AmbientSkyColor: {r: 0.9433962, g: 0.8126889, b: 0.4672481, a: 1}
@@ -49706,6 +49706,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97399fdd570f5a04485b30566575412e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  imageNo: {fileID: 0}
   speedImage: {fileID: 581843690}
   speedText: {fileID: 1487928805}
   percentage: 22
@@ -50432,10 +50433,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 100000, guid: baec086904791744185aaa07a6cf55c2, type: 3}
-      propertyPath: m_Layer
-      value: 9
-      objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: baec086904791744185aaa07a6cf55c2, type: 3}
       propertyPath: m_LocalPosition.y
       value: -0.08
@@ -50456,10 +50453,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.x
       value: 10
       objectReference: {fileID: 0}
-    - target: {fileID: 100002, guid: baec086904791744185aaa07a6cf55c2, type: 3}
-      propertyPath: m_Layer
-      value: 9
-      objectReference: {fileID: 0}
     - target: {fileID: 2000000, guid: baec086904791744185aaa07a6cf55c2, type: 3}
       propertyPath: m_NormalizedViewPortRect.height
       value: 1
@@ -50467,6 +50460,14 @@ PrefabInstance:
     - target: {fileID: 2000000, guid: baec086904791744185aaa07a6cf55c2, type: 3}
       propertyPath: m_NormalizedViewPortRect.width
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: baec086904791744185aaa07a6cf55c2, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: baec086904791744185aaa07a6cf55c2, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 8100000, guid: baec086904791744185aaa07a6cf55c2, type: 3}
       propertyPath: m_Enabled

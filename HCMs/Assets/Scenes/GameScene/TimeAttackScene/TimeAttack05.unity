@@ -14,10 +14,10 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
-  m_Fog: 0
+  m_Fog: 1
   m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_FogMode: 3
-  m_FogDensity: 0.01
+  m_FogDensity: 0.003
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
   m_AmbientSkyColor: {r: 0.047058824, g: 0.1254902, b: 0.27450982, a: 1}
@@ -1257,11 +1257,6 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 3461726054732259412, guid: e254805b94bfa264a83bc9c1f0e022dc,
-        type: 3}
-      propertyPath: m_NormalizedViewPortRect.width
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3487816738896782274, guid: e254805b94bfa264a83bc9c1f0e022dc,
         type: 3}
       propertyPath: m_Materials.Array.size
@@ -1282,6 +1277,11 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[1]
       value: 
       objectReference: {fileID: 2100000, guid: 0c7ec795c417a824d8efcead7c68e95d, type: 2}
+    - target: {fileID: 3461726054732259412, guid: e254805b94bfa264a83bc9c1f0e022dc,
+        type: 3}
+      propertyPath: m_NormalizedViewPortRect.width
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e254805b94bfa264a83bc9c1f0e022dc, type: 3}
 --- !u!4 &365075080 stripped
@@ -1835,6 +1835,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97399fdd570f5a04485b30566575412e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  imageNo: {fileID: 0}
   speedImage: {fileID: 596453732}
   speedText: {fileID: 1850810530}
   percentage: 22
