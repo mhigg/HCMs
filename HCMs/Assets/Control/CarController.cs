@@ -116,6 +116,12 @@ namespace UnityStandardAssets.Vehicles.Car
                 }
                 m_GearDownFlag = false;
             }
+
+            if (speed < topSpeed[m_Gear - 1])
+            {
+                --m_Gear;
+                m_Topspeed = topSpeed[m_Gear];
+            }
         }
 
         private void GearChanging()
