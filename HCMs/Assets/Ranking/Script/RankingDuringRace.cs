@@ -15,7 +15,7 @@ public class RankingDuringRace : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _playerNum = GameObject.FindGameObjectsWithTag("RacingCar").Length;
+        _playerNum = FindInfoByScene.Instance.GetPlayerNum();
         _rankingList = new List<int[]> (_playerNum);
         imageNo = new List<ImageNo> (_playerNum);
 
@@ -25,7 +25,7 @@ public class RankingDuringRace : MonoBehaviour
             rankTextList[playerID].text = RankingToString(playerID + 1);
 
             imageNo[playerID] = imageNo[playerID].GetComponent<ImageNo>();
-        }      
+        }
     }
 
     // Update is called once per frame

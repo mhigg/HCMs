@@ -64,7 +64,7 @@ public class GoalFlag : MonoBehaviour
                     Vector3 pos = new Vector3((_playerNum - 1) * 500 * (playerID * 2 - 1) + 960, 540, 0);
                     Text _goalText = Instantiate(goalText, pos, Quaternion.identity);
                     _goalText.text = "ＦＩＮＩＳＨ！";
-                    _goalText.transform.SetParent(GameObject.Find("CounterCanvas").transform);
+                    _goalText.transform.SetParent(GameObject.FindGameObjectWithTag("CounterCanvas").transform);
                     timeCounter.FinishCount(playerID);
                     _finishCall[playerID] = true;
                 }

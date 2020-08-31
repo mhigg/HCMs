@@ -9,7 +9,7 @@ public class AddPlayer : MonoBehaviour
     GameObject _childObject2;    // 子のオブジェクト
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         string[] cName = Input.GetJoystickNames();
         _padNum = 0;
@@ -32,6 +32,8 @@ public class AddPlayer : MonoBehaviour
             _childObject1.SetActive(true);
             _childObject2.SetActive(false);
         }
+
+        FindInfoByScene.Instance.EntryPlayerName();
     }
 
     // Update is called once per frame

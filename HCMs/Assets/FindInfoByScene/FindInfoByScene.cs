@@ -10,6 +10,9 @@ public class FindInfoByScene : MonoBehaviour
     // プレイヤー名を保存
     private List<string> _playerName;
 
+    // エントリーしているプレイヤー数
+    private int _playerNum;
+
     #region Singleton
 
     private static FindInfoByScene instance;
@@ -70,17 +73,39 @@ public class FindInfoByScene : MonoBehaviour
     void Start()
     {
         Debug.Log("FindInfoBySceneStart");
-        GameObject[] racingCars = GameObject.FindGameObjectsWithTag("RacingCar");
         _playerName = new List<string>();
-        for (int idx = 0; idx < racingCars.Length; idx++)
+
+        if(GameObject.Find("Player2") == null)
         {
-            // 全プレイヤー分のプレイヤー名を保存
-            Debug.Log("登録：" + racingCars[idx].transform.parent.name);
-            _playerName.Add(racingCars[idx].transform.parent.name);
+            // プレイヤー２が複数無いならそのままエントリーする
+            EntryPlayerName();
         }
     }
 
-    // Update is called once per frame
+    // アクティブ状態のプレイヤーをエントリーする(名前を記録する)
+    public void EntryPlayerName()
+    {
+        Debug.Log("EntryPlayerName");
+        GameObject[] racingCars = GameObject.FindGameObjectsWithTag("RacingCar");
+        _playerName.Clear();
+        for (int idx = 0; idx < racingCars.Length; idx++)
+        {
+            if (racingCars[idx].transform.parent.gameObject.activeSelf)
+            {
+                // 全プレイヤー分のプレイヤー名を保存
+                Debug.Log("登録：" + racingCars[idx].transform.parent.name);
+                _playerName.Add(racingCars[idx].transform.parent.name);
+            }
+        }
+
+        _playerNum = _playerName.Count;
+    }
+
+    public int GetPlayerNum()
+    {
+        return _playerNum;
+    }
+
     public int GetLapMax(string activeStageName)
     {
         int retLapMax = _stageLapMax[activeStageName];

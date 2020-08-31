@@ -14,14 +14,13 @@ public class OtherRootCheckPoint : MonoBehaviour
     public CheckPointFlag cp = null;
 
     public CPType cpType;
-    private int _playerNum;             // プレイヤー人数
     private bool[] _isThrough;          // このチェックポイントを通過したかのフラグを保存
 
     // Start is called before the first frame update
     void Start()
     {
         GameObject[] racingCars = GameObject.FindGameObjectsWithTag("RacingCar");
-        _playerNum = racingCars.Length;
+        int _playerNum = racingCars.Length;
         _isThrough = new bool[_playerNum];
         for (int idx = 0; idx < _playerNum; idx++)
         {
