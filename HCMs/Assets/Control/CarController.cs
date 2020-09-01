@@ -82,9 +82,12 @@ namespace UnityStandardAssets.Vehicles.Car
         private void Update()
         {
             var obj = GameObject.FindGameObjectsWithTag("CPU");
-            if (transform.gameObject != obj[0])
+            if (obj.Length > 0)
             {
-                GearShift();
+                if (transform.gameObject != obj[0])
+                {
+                    GearShift();
+                }
             }
         }
 
