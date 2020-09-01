@@ -8,7 +8,7 @@ public class FindInfoByScene : MonoBehaviour
     private Dictionary<string, int> _stageLapMax;
 
     // プレイヤー名を保存
-    private List<string> _playerName;
+    private List<string> _playerName = new List<string>();
 
     // エントリーしているプレイヤー数
     private int _playerNum;
@@ -67,13 +67,6 @@ public class FindInfoByScene : MonoBehaviour
         {
             _stageLapMax.Add(stageName, 3);
         }
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        Debug.Log("FindInfoBySceneStart");
-        _playerName = new List<string>();
 
         if(GameObject.Find("Player2") == null)
         {
@@ -87,7 +80,6 @@ public class FindInfoByScene : MonoBehaviour
     {
         Debug.Log("EntryPlayerName");
         GameObject[] racingCars = GameObject.FindGameObjectsWithTag("RacingCar");
-        _playerName.Clear();
         for (int idx = 0; idx < racingCars.Length; idx++)
         {
             if (racingCars[idx].transform.parent.gameObject.activeSelf)

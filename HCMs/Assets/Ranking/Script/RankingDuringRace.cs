@@ -16,15 +16,14 @@ public class RankingDuringRace : MonoBehaviour
     void Start()
     {
         _playerNum = FindInfoByScene.Instance.GetPlayerNum();
-        _rankingList = new List<int[]> (_playerNum);
-        imageNo = new List<ImageNo> (_playerNum);
+        _rankingList = new List<int[]>(_playerNum);
 
         for (int playerID = 0; playerID < _playerNum; playerID++)
         {
             // 順位表示の初期化
             rankTextList[playerID].text = RankingToString(playerID + 1);
 
-            imageNo[playerID] = imageNo[playerID].GetComponent<ImageNo>();
+            //imageNo[playerID] = imageNo[playerID].GetComponent<ImageNo>();
         }
     }
 
