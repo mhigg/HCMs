@@ -232,8 +232,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97399fdd570f5a04485b30566575412e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  imageNo: {fileID: 0}
   speedImage: {fileID: 0}
-  speedText: {fileID: 0}
   percentage: 0
 --- !u!114 &8895135910792353240
 MonoBehaviour:
@@ -1556,7 +1556,7 @@ GameObject:
   - component: {fileID: 7140748140301273208}
   m_Layer: 0
   m_Name: Body
-  m_TagString: Untagged
+  m_TagString: RacingCar
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6870,11 +6870,6 @@ PrefabInstance:
       propertyPath: m_LocalPosition.x
       value: -0.6
       objectReference: {fileID: 0}
-    - target: {fileID: 5262113626592695568, guid: 3bb1c865cda955e4ca95c071cf61ad29,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5262113627968632827, guid: 3bb1c865cda955e4ca95c071cf61ad29,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -6890,12 +6885,17 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 3.5
       objectReference: {fileID: 0}
-    - target: {fileID: 5262113626988178096, guid: 3bb1c865cda955e4ca95c071cf61ad29,
+    - target: {fileID: 5262113626592695568, guid: 3bb1c865cda955e4ca95c071cf61ad29,
         type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5262113627968632826, guid: 3bb1c865cda955e4ca95c071cf61ad29,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5262113626988178096, guid: 3bb1c865cda955e4ca95c071cf61ad29,
         type: 3}
       propertyPath: m_IsActive
       value: 0
