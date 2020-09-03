@@ -119,7 +119,7 @@ public class FindInfoByScene : MonoBehaviour
             {
                 // プレイヤー名を照合して、playerIDに変換
                 retID = idx;
-                Debug.Log("ID:" + retID);
+                //Debug.Log("ID:" + retID);
             }
         }
 

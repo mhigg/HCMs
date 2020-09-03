@@ -4,15 +4,22 @@ using UnityEngine;
 
 public class CarCustom : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [SerializeField] private GameObject _carObj;
+    Vector3 _roteVec;
+
     void Start()
     {
-        
+        _roteVec = new Vector3(0f, 1.5f, 0f);
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        _carObj.gameObject.transform.Rotate(_roteVec);
+        ModelSelecting();
+    }
+
+    void ModelSelecting()
+    {
+        DontDestroyOnLoad(_carObj);
     }
 }

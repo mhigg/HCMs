@@ -84,10 +84,17 @@ namespace UnityStandardAssets.Vehicles.Car
             var obj = GameObject.FindGameObjectsWithTag("CPU");
             if (obj.Length > 0)
             {
+                // CPUがいるとき
                 if (transform.gameObject != obj[0])
                 {
+                    // 自分がCPUじゃなければギア変更可能
                     GearShift();
                 }
+            }
+            else
+            {
+                // CPUがいないときはギア変更可能
+                GearShift();
             }
         }
 
@@ -124,10 +131,13 @@ namespace UnityStandardAssets.Vehicles.Car
                 m_GearDownFlag = false;
             }
 
-            if (speed < topSpeed[m_Gear - 1])
+            if(m_Gear > 0)
             {
-                --m_Gear;
-                m_Topspeed = topSpeed[m_Gear];
+                if (speed < topSpeed[m_Gear - 1])
+                {
+                    --m_Gear;
+                    m_Topspeed = topSpeed[m_Gear];
+                }
             }
         }
 

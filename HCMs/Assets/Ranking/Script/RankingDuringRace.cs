@@ -22,8 +22,6 @@ public class RankingDuringRace : MonoBehaviour
         {
             // 順位表示の初期化
             rankTextList[playerID].text = RankingToString(playerID + 1);
-
-            //imageNo[playerID] = imageNo[playerID].GetComponent<ImageNo>();
         }
     }
 
