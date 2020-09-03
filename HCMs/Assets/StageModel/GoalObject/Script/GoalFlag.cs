@@ -68,6 +68,8 @@ public class GoalFlag : MonoBehaviour
                     timeCounter.FinishCount(playerID);
                     _finishCall[playerID] = true;
                 }
+
+                throughObject.GetComponent<CheckPointCount>().LastThroughCheckPoint(this.name);
             }
         }
     }

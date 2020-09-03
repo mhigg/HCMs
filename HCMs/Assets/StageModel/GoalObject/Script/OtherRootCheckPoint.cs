@@ -47,7 +47,8 @@ public class OtherRootCheckPoint : MonoBehaviour
         {
             if (throughObject.tag == "RacingCar")
             {
-                if(cpType == CPType.StartOtherRoot)
+                if ( cpType == CPType.StartOtherRoot
+                 || (cpType == CPType.OtherRoot && gameObject.name == cpCount.GetNextCPName()))
                 {
                     Debug.Log("別ルートcp通過");
                     // orチェックポイントのナンバー+1を次のチェックポイントとする
@@ -55,18 +56,7 @@ public class OtherRootCheckPoint : MonoBehaviour
                     Debug.Log($"次チェックポイント：or{(thisCPName + 1)}");
                     Debug.Log(gameObject.name);
                     cpCount.CountCheckPoint($"or{(thisCPName + 1)}");
-                }
-                else if(cpType == CPType.OtherRoot)
-                {
-                    if (gameObject.name == cpCount.GetNextCPName())
-                    {
-                        Debug.Log("別ルートcp通過");
-                        // orチェックポイントのナンバー+1を次のチェックポイントとする
-                        int thisCPName = int.Parse(gameObject.name.Trim("or".ToCharArray()));
-                        Debug.Log($"次チェックポイント：or{(thisCPName + 1)}");
-                        Debug.Log(gameObject.name);
-                        cpCount.CountCheckPoint($"or{(thisCPName + 1)}");
-                    }
+                    cpCount.LastThroughCheckPoint(this.name);
                 }
                 else
                 {
@@ -74,9 +64,9 @@ public class OtherRootCheckPoint : MonoBehaviour
                     Debug.Log($"次チェックポイント：or{cp.name}");
                     Debug.Log(gameObject.name);
                     cpCount.CountCheckPoint(cp.name);
+                    cpCount.LastThroughCheckPoint(this.name);
                 }
                 _isThrough[playerID] = true;
-
             }
         }
     }

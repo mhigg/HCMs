@@ -5,14 +5,20 @@ using UnityEngine;
 // 各プレイヤーごとにチェックポイントの通過数を加算する
 public class CheckPointCount : MonoBehaviour
 {
+
     private int _checkPointCnt;     // チェックポイント通過カウント
     private int _checkPointCntMax;  // チェックポイントの数
     private string _nextCheckPoint;     // 次に通る必要のあるチェックポイント
+    private string _lastThroughPoint;   // 最後に通過したチェックポイント
+    private string _lastCheckPoint;     // 最後に通過する必要のあるチェックポイント
 
     void Start()
     {
         _checkPointCnt = 0;
         _nextCheckPoint = "cp1";
+        _lastThroughPoint = "";
+        CheckPointFlag[] cp = GameObject.Find("CheckPoint").GetComponentsInChildren<CheckPointFlag>();
+        _lastCheckPoint = cp[cp.Length - 1].name;
 
         _checkPointCntMax = GameObject.FindGameObjectsWithTag("CheckPoint").Length;
         Debug.Log("チェックポイント全" + _checkPointCntMax + "個");
@@ -35,6 +41,11 @@ public class CheckPointCount : MonoBehaviour
         _nextCheckPoint = nextCPName;
     }
 
+    public void LastThroughCheckPoint(string lastCPName)
+    {
+        _lastThroughPoint = lastCPName;
+    }
+
     public string GetNextCPName()
     {
         return _nextCheckPoint;
@@ -49,15 +60,19 @@ public class CheckPointCount : MonoBehaviour
     // GoalSpaceを通過可能か判定し結果を返す
     public bool JudgThroughGoalSpace()
     {
-        bool retFlag = (_checkPointCnt >= _checkPointCntMax);
-        if (retFlag)
+        if (_checkPointCnt >= _checkPointCntMax)
         {
-            // 通過可能なら通過数を0にする
-            _checkPointCnt = 0;
-            // 次チェックポイントの設定
-            _nextCheckPoint = $"cp{_checkPointCnt + 1}";
+            if(_lastThroughPoint == _lastCheckPoint)
+            {
+                // 通過可能なら通過数を0にする
+                _checkPointCnt = 0;
+                // 次チェックポイントの設定
+                _nextCheckPoint = $"cp{_checkPointCnt + 1}";
+
+                return true;
+            }
         }
 
-        return retFlag;
+        return false;
     }
 }

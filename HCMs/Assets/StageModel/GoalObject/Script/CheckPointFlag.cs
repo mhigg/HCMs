@@ -47,6 +47,7 @@ public class CheckPointFlag : MonoBehaviour
                     Debug.Log("次チェックポイント：" + $"cp{(checkPointCnt + 2)}");
                     Debug.Log(gameObject.name);
                     cpCount.CountCheckPoint();
+                    cpCount.LastThroughCheckPoint(this.name);
                     _isThrough[playerID] = true;
                 }
             }
