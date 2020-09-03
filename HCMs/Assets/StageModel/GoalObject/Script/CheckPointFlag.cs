@@ -37,9 +37,9 @@ public class CheckPointFlag : MonoBehaviour
         Debug.Log("第" + (checkPointCnt + 1) + "チェックポイント");
         Debug.Log("通過数：" + checkPointCnt);
 
-        if (!_isThrough[playerID])
+        if (throughObject.tag == "RacingCar")
         {
-            if (throughObject.tag == "RacingCar")
+            if (!_isThrough[playerID])
             {
                 if (gameObject.name == cpCount.GetNextCPName())
                 {
@@ -47,10 +47,10 @@ public class CheckPointFlag : MonoBehaviour
                     Debug.Log("次チェックポイント：" + $"cp{(checkPointCnt + 2)}");
                     Debug.Log(gameObject.name);
                     cpCount.CountCheckPoint();
-                    cpCount.LastThroughCheckPoint(this.name);
                     _isThrough[playerID] = true;
                 }
             }
+            cpCount.LastThroughCheckPoint(this.name);
         }
     }
 }

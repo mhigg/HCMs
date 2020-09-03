@@ -43,9 +43,9 @@ public class OtherRootCheckPoint : MonoBehaviour
         CheckPointCount cpCount = throughObject.GetComponent<CheckPointCount>();
         int checkPointCnt = cpCount.GetNowThroughCheckPointNum();
 
-        if (!_isThrough[playerID])
+        if (throughObject.tag == "RacingCar")
         {
-            if (throughObject.tag == "RacingCar")
+            if (!_isThrough[playerID])
             {
                 if ( cpType == CPType.StartOtherRoot
                  || (cpType == CPType.OtherRoot && gameObject.name == cpCount.GetNextCPName()))
@@ -56,7 +56,6 @@ public class OtherRootCheckPoint : MonoBehaviour
                     Debug.Log($"次チェックポイント：or{(thisCPName + 1)}");
                     Debug.Log(gameObject.name);
                     cpCount.CountCheckPoint($"or{(thisCPName + 1)}");
-                    cpCount.LastThroughCheckPoint(this.name);
                 }
                 else
                 {
@@ -64,10 +63,10 @@ public class OtherRootCheckPoint : MonoBehaviour
                     Debug.Log($"次チェックポイント：or{cp.name}");
                     Debug.Log(gameObject.name);
                     cpCount.CountCheckPoint(cp.name);
-                    cpCount.LastThroughCheckPoint(this.name);
                 }
                 _isThrough[playerID] = true;
             }
+            cpCount.LastThroughCheckPoint(this.name);
         }
     }
 }

@@ -43,6 +43,7 @@ public class CheckPointCount : MonoBehaviour
 
     public void LastThroughCheckPoint(string lastCPName)
     {
+        Debug.Log("最終通過CP：" + lastCPName);
         _lastThroughPoint = lastCPName;
     }
 
