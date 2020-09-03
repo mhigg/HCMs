@@ -84,10 +84,17 @@ namespace UnityStandardAssets.Vehicles.Car
             var obj = GameObject.FindGameObjectsWithTag("CPU");
             if (obj.Length > 0)
             {
+                // CPUがいるとき
                 if (transform.gameObject != obj[0])
                 {
+                    // 自分がCPUじゃなければギア変更可能
                     GearShift();
                 }
+            }
+            else
+            {
+                // CPUがいないときはギア変更可能
+                GearShift();
             }
         }
 
