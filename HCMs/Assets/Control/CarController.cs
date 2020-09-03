@@ -131,10 +131,13 @@ namespace UnityStandardAssets.Vehicles.Car
                 m_GearDownFlag = false;
             }
 
-            if (speed < topSpeed[m_Gear - 1])
+            if(m_Gear > 0)
             {
-                --m_Gear;
-                m_Topspeed = topSpeed[m_Gear];
+                if (speed < topSpeed[m_Gear - 1])
+                {
+                    --m_Gear;
+                    m_Topspeed = topSpeed[m_Gear];
+                }
             }
         }
 
