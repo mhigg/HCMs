@@ -10,7 +10,7 @@ public class IdleState : CarState
         pos += way.normalized * dis;
         if (Physics.Raycast(pos, vert, out _hitW[num], 3))
         {
-            move = (num % 2 * 2 - 1f) * -1f;
+            move = num % 2 * 2 - 1f;
         }
         //意味ない
         if (_brakeFlag)
@@ -38,7 +38,7 @@ public class IdleState : CarState
         else
         {
             _brake = 1f;
-            _speed /= 2;
+            _speed -= 0.1f;
             _brakeFlag = true;
         }
         DebugDraw(pos, vert, 3, _hitF.collider);
