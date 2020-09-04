@@ -42,7 +42,7 @@ namespace UnityStandardAssets.Vehicles.Car
             var rad = new Random();
             float v = CheckFront();
             float h = CheckWay();
-            float b = _state.GetBrake();
+            float b = 0;// _state.GetBrake();
             _carCtl.Move(h, v, v, b);
         }
         float CheckWay()
