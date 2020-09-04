@@ -9,6 +9,9 @@ namespace UnityStandardAssets.Vehicles.Car
         private CarState _state = null;     // 車の状態
         private CarController _carCtl;      // 車の操作
 
+        // レイキャストに使う変数
+        public GameObject[] _target;
+
         private Vector3 _offset = new Vector3(0,1.5f,4.5f);
         float _froDis = 45f;                        // 直線レイの長さ
         Vector3[] _wayDir = new Vector3[]           // 左右のレイの方向
@@ -43,6 +46,15 @@ namespace UnityStandardAssets.Vehicles.Car
             float v = CheckFront();
             float h = CheckWay();
             float b = 0;// _state.GetBrake();
+            var sp = _carCtl.CurrentSpeed;
+            if(sp >= 40 && sp <= 60)
+            {
+                _carCtl.m_GearUpPush = true;
+            }
+            else if(sp >= 60)
+            {
+                _carCtl.m_GearUpPush = false;
+            }
             _carCtl.Move(h, v, v, b);
         }
         float CheckWay()
