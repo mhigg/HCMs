@@ -1,30 +1,52 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using UnityStandardAssets.CrossPlatformInput;
+using UnityEngine.SceneManagement;
 
 public class CarCustom : MonoBehaviour
 {
     [SerializeField] private List<GameObject> _carObj;
     private int _carIndex = 0;
     private int _idxMax = 2;
-
     private Vector3 _roteVec;
+    private bool _firstRun;
 
     void Start()
     {
         _roteVec = new Vector3(0f, 1.5f, 0f);
+        _firstRun = true;
     }
 
     void Update()
     {
-        _carObj[_carIndex].gameObject.transform.Rotate(_roteVec);
-
-        CarIndexSelecting();
-        ChangeCarModel(_carIndex);
-        if (CrossPlatformInputManager.GetButtonDown("Decision"))
+        if (SceneManager.GetActiveScene().name == "TimeAttackCustom")
         {
-            DontDestroyOnLoad(_carObj[_carIndex]);
-            FadeManager.Instance.LoadScene("TimeAttack01", 2.0f);
+            _carObj[_carIndex].gameObject.transform.Rotate(_roteVec);
+
+            CarIndexSelecting();
+            ChangeCarModel(_carIndex);
+            if (CrossPlatformInputManager.GetButtonDown("Decision"))
+            {
+                DontDestroyOnLoad(_carObj[_carIndex]);
+                DontDestroyOnLoad(this);
+
+                FadeManager.Instance.LoadScene("TimeAttack01", 2.0f);
+            }
+        }
+
+        if (SceneManager.GetActiveScene().name == "TimeAttack01")
+        {
+            if (_firstRun)
+            {
+                GameObject startCarPos = GameObject.Find("StartCarPosition");
+                _carObj[_carIndex].gameObject.transform.position = startCarPos.gameObject.transform.position;
+                _carObj[_carIndex].gameObject.transform.rotation = startCarPos.gameObject.transform.rotation;
+
+                GameObject startCountObj = GameObject.Find("StartCountAndStopObj");
+                _carObj[_carIndex].gameObject.transform.parent = startCountObj.transform;
+
+                _firstRun = false;
+            }
         }
     }
 

@@ -1,5 +1,5 @@
-using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityStandardAssets.CrossPlatformInput;
 
 namespace UnityStandardAssets.Vehicles.Car
@@ -30,10 +30,16 @@ namespace UnityStandardAssets.Vehicles.Car
 #if !MOBILE_INPUT
             float handbrake = CrossPlatformInputManager.GetAxis("Jump");
 
+            if(SceneManager.GetActiveScene().name != "BattleCustom"
+                && SceneManager.GetActiveScene().name != "TimeAttackCustom")
+            {
+
             m_Car.Move(h, v, v, handbrake);
 #else
             m_Car.Move(h, v, v, 0f);
 #endif
+            }
+
         }
     }
 }

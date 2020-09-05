@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 
@@ -14,7 +13,7 @@ public class ViewpointChange : MonoBehaviour
 
     void Start()
     {
-        _pivotCamera.SetActive(true);
+        _pivotCamera.SetActive(false);
         _insideCamera.SetActive(false);
         _frontCamera.SetActive(false);
         _upsideCamera.SetActive(false);
@@ -24,6 +23,15 @@ public class ViewpointChange : MonoBehaviour
 
     void Update()
     {
+        if (SceneManager.GetActiveScene().name != "BattleCustom"
+            && SceneManager.GetActiveScene().name != "TimeAttackCustom")
+        {
+            ViewChanging();
+        }
+    }
+
+    private void ViewChanging()
+    {
         if (Input.GetKeyDown("joystick button 1"))
         {
             ++_keyCount;
@@ -32,7 +40,6 @@ public class ViewpointChange : MonoBehaviour
         {
             ++_keyCount;
         }
-
 
         switch (_keyCount)
         {
@@ -56,6 +63,5 @@ public class ViewpointChange : MonoBehaviour
                 _keyCount = 0;//0～3以外は0に戻す
                 break;
         }
-
     }
 }
