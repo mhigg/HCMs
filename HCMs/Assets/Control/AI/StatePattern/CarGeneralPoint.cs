@@ -1,5 +1,6 @@
 ﻿// CPUの情報を統括するクラス
 using UnityEngine;
+using System.Collections.Generic;
 
 namespace UnityStandardAssets.Vehicles.Car
 {
@@ -9,29 +10,44 @@ namespace UnityStandardAssets.Vehicles.Car
         private CarState _state = null;     // 車の状態
         private CarController _carCtl;      // 車の操作
 
-        public GameObject[] _target;
+        // 目標地点を決めるための変数
+        public GameObject _target;          // ターゲットを持つオブジェクト
+        private List<Vector3> _points;      // 目標地点の座標
+        private Vector3 _plateSize;         // ターゲットのサイズ
+        private Vector3 _plateOffset;       // ターゲットのオフセット
 
         // レイキャストに使う変数
-        private Vector3 _offset = new Vector3(0, 1.5f, 4.5f);
-        float _froDis = 45f;                        // 直線レイの長さ
-        Vector3 _froDir = new Vector3(0, 0, 1);       // 直線レイ
-
-        float[] _wayDis = { 5.0f, 30f, 45f };         // 左右レイの長さ
-        Vector3[] _wayDir = new Vector3[]           // 左右レイの方向
+        private Vector3 _offset = 
+            new Vector3(0, 1.5f, 4.5f);     // レイのオフセット
+        private float _froDis = 45f;        // 直線レイの長さ
+        private Vector3 _froDir = 
+            new Vector3(0, 0, 1);           // 直線レイ   
+        private float[] _wayDis = 
+            { 5.0f, 30f, 45f };             // 左右レイの長さ                               
+        private Vector3[] _wayDir =         // 左右レイの方向 
+            new Vector3[]                  
         {
-            new Vector3(-3f,0,1f),         // 右
-            new Vector3(3f,0,1f),          // 左
-            new Vector3(-1f,0,4f),         // 斜め右
-            new Vector3(1f,0,4f),          // 斜め左
-            new Vector3(-1f,0,9f),         // 直線右
-            new Vector3(1f,0,9f)           // 直線左
+            new Vector3(-3f,0,1f),          // 右
+            new Vector3(3f,0,1f),           // 左
+            new Vector3(-1f,0,4f),          // 斜め右
+            new Vector3(1f,0,4f),           // 斜め左
+            new Vector3(-1f,0,9f),          // 直線右
+            new Vector3(1f,0,9f)            // 直線左
         };
-        Vector3 _vertDir = new Vector3(0, -2f, 0);  // 垂直のレイ
-        float[] _turnVol = { 0.4f, 0.35f, 0.15f };
+        private Vector3 _vertDir = 
+            new Vector3(0, -2f, 0);         // 垂直レイ
+        private float[] _turnVol = 
+            { 0.4f, 0.35f, 0.15f };         // ウェイによって曲がる量
 
         private void Awake()
         {
             _carCtl = GetComponent<CarController>();
+            if(_target != null)
+            {
+                _plateSize = _target.transform.GetChild(0).transform.localScale;
+                _plateOffset = _target.transform.GetChild(0).transform.localPosition;
+            }
+            SetRandomPoints();
         }
         public CarGeneralPoint()
         {
@@ -58,6 +74,27 @@ namespace UnityStandardAssets.Vehicles.Car
             }
             _carCtl.Move(h, v, v, b);
         }
+
+        // ランダムにポイントを決める
+        void SetRandomPoints()
+        {
+            _points = new List<Vector3>();
+            for (var i = 0; i < _target.transform.childCount; i++) 
+            {
+                // 座標を決める
+                var posx = GetRandomVec() * _plateSize.x;
+                var posy = GetRandomVec() * _plateSize.y;
+                var posz = GetRandomVec() * _plateSize.z;
+                var position = new Vector3(posx,posy,posz) + _plateOffset;
+                _points.Add(position);
+            }
+        }
+        float GetRandomVec()
+        {
+            float range = Random.Range(-0.5f, 0.5f);
+            return range;
+        }
+
         float CheckWay()
         {
             float f = 0;
