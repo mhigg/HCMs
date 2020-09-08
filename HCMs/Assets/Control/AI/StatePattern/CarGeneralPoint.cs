@@ -4,7 +4,7 @@ using UnityEngine;
 namespace UnityStandardAssets.Vehicles.Car
 {
     [RequireComponent(typeof(CarController))]
-    public class CarGeneral : MonoBehaviour
+    public class CarGeneralPoint : MonoBehaviour
     {
         private CarState _state = null;     // 車の状態
         private CarController _carCtl;      // 車の操作
@@ -12,11 +12,11 @@ namespace UnityStandardAssets.Vehicles.Car
         public GameObject[] _target;
 
         // レイキャストに使う変数
-        private Vector3 _offset = new Vector3(0,1.5f,4.5f);
+        private Vector3 _offset = new Vector3(0, 1.5f, 4.5f);
         float _froDis = 45f;                        // 直線レイの長さ
-        Vector3 _froDir = new Vector3(0,0,1);       // 直線レイ
+        Vector3 _froDir = new Vector3(0, 0, 1);       // 直線レイ
 
-        float[] _wayDis = { 5.0f,30f,45f };         // 左右レイの長さ
+        float[] _wayDis = { 5.0f, 30f, 45f };         // 左右レイの長さ
         Vector3[] _wayDir = new Vector3[]           // 左右レイの方向
         {
             new Vector3(-3f,0,1f),         // 右
@@ -33,7 +33,7 @@ namespace UnityStandardAssets.Vehicles.Car
         {
             _carCtl = GetComponent<CarController>();
         }
-        public CarGeneral()
+        public CarGeneralPoint()
         {
             if (_state == null)
             {
@@ -48,11 +48,11 @@ namespace UnityStandardAssets.Vehicles.Car
             float h = CheckWay();
             float b = 0;// _state.GetBrake();
             var sp = _carCtl.CurrentSpeed;
-            if(sp >= 40 && sp <= 60)
+            if (sp >= 40 && sp <= 60)
             {
                 _carCtl.m_GearUpPush = true;
             }
-            else if(sp >= 60)
+            else if (sp >= 60)
             {
                 _carCtl.m_GearUpPush = false;
             }
