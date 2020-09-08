@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityStandardAssets.Vehicles.Car;
 
 public class GoalFlag : MonoBehaviour
 {
     public Text goalText;               // ゴール時に表示するテキスト
     public TimeCount timeCounter;       // タイムをカウントする
     public ParentCheckPoint parentCp;   // 全チェックポイントの親
+    public GameObject car1;
+    public GameObject car2;
 
     private bool[] _finishCall;
     private int _playerNum;             // プレイヤー人数
@@ -31,6 +34,19 @@ public class GoalFlag : MonoBehaviour
         bool retFinish = true;
         for(int playerID = 0; playerID < _playerNum; playerID++)
         {
+            if (_finishCall[playerID])
+            {
+                if(playerID == 0)
+                {
+                    car1.GetComponent<CarUserControl>().enabled = false;
+                    car1.GetComponent<CarGeneral>().enabled = true;
+                }
+                if (playerID == 1)
+                {
+                    car2.GetComponent<CarUserControl>().enabled = false;
+                    car2.GetComponent<CarGeneral>().enabled = true;
+                }
+            }
             // 一つでもfalseがあるとfalseになり、まだゴールしていないプレイヤーがいると判断
             retFinish &= _finishCall[playerID];
         }
