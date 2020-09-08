@@ -33,11 +33,11 @@ public class OutputCarSpeed : MonoBehaviour
         {
             if (firstRun)
             {
-                GameObject speedImgNo = GameObject.Find("SpeedImageNo");
-                imageNo = speedImgNo.GetComponent<ImageNo>();
+                //GameObject speedImgNo = GameObject.Find("SpeedImageNo");
+                imageNo = imageNo.GetComponent<ImageNo>();
 
-                GameObject speedImg = GameObject.Find("SpeedMeterImage");
-                speedImage = speedImg.GetComponent<Image>();
+                //GameObject speedImg = GameObject.Find("SpeedMeterImage");
+                speedImage = speedImage.GetComponent<Image>();
             }
         }
 

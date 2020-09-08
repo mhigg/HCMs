@@ -26,7 +26,7 @@ public class TimeAttack : MonoBehaviour
 
         timeRanking = timeRanking.GetComponent<TimeRanking>();
         // 第一引数をコース名にする
-        timeRanking.SetUpTimeRanking(_activeStageName, 11, lapMax);
+        timeRanking.SetUpTimeRanking(_activeStageName, 6, lapMax);
 
         goalFlag = goalFlag.GetComponent<GoalFlag>();
 
