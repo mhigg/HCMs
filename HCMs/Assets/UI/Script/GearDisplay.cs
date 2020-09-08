@@ -12,14 +12,15 @@ public class GearDisplay : MonoBehaviour
     [SerializeField] private CarController m_Car = null;
     private int m_GearNum;
     private GameObject carObj;
-    private int carNumMax = 2;
+    private int carNumMax;
 
     // Start is called before the first frame update
     void Start()
     {
+        carNumMax = FindInfoByScene.Instance.GetPlayerNum();
         for(int i = 0; i < carNumMax; i++)
         {
-            carObj = GameObject.Find("RacingCar_" + $"{i + 1}");
+            carObj = GameObject.FindGameObjectsWithTag("RacingCar")[i].transform.parent.gameObject;
         }
 
         m_Car = carObj.GetComponent<CarController>();
