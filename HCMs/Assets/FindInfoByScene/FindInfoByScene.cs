@@ -9,7 +9,7 @@ public class FindInfoByScene : MonoBehaviour
 
     // プレイヤー名を保存
     private List<string> _playerName = new List<string>();
-
+    
     // エントリーしているプレイヤー数
     private int _playerNum;
 
