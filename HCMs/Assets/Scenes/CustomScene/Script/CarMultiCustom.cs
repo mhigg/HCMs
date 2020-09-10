@@ -14,11 +14,14 @@ public class CarMultiCustom : MonoBehaviour
     private bool _nonUpFlag1 = false, _nonUpFlag2 = false;
     private bool _nonDownFlag1 = false, _nonDownFlag2 = false;
 
+    private string[] _getJoystick;
+
     void Start()
     {
         _idxMax = _carObj_1P.Count;
         _roteVec = new Vector3(0f, 0.5f, 0f);
         _firstRun = true;
+        _getJoystick = Input.GetJoystickNames();
     }
 
     void Update()
@@ -28,31 +31,51 @@ public class CarMultiCustom : MonoBehaviour
             _carObj_1P[_carIndex1].gameObject.transform.Rotate(_roteVec);
             _carObj_2P[_carIndex2].gameObject.transform.Rotate(-(_roteVec));
 
-            CarIndexSelecting_1P();
-            CarIndexSelecting_2P();
+            CarIndexSelecting_1P();//1P車体選択
+
+            if(_getJoystick.Length > 1)
+            {
+                CarIndexSelecting_2P();//2P存在時のみ車体選択
+            }
 
             ChangeCarModel(_carIndex1, _carIndex2);
 
             if (CrossPlatformInputManager.GetButtonDown("Decision"))
             {
+                if (_getJoystick.Length <= 1)
+                {
+                    _carIndex2 = Random.Range(0, 3);//CPUの車体をランダムで設定
+                }
+
                 DontDestroyOnLoad(this);
                 FadeManager.Instance.LoadScene("BattleSelectScene", 2.0f);
             }
         }
 
-        if (SceneManager.GetActiveScene().name == "BattleScene_01")
+        for(int i = 0; i < 6; i++)
         {
-            if (_firstRun)
+            if (SceneManager.GetActiveScene().name == "BattleScene_0" + $"{i}")
             {
-                GameObject raceCar1 = GameObject.Find("RacingCar1P");
-                GameObject raceCarObj1 = raceCar1.transform.Find("RacingCar_" + $"{_carIndex1}").gameObject;
-                raceCarObj1.SetActive(true);
+                if (_firstRun)
+                {
+                    GameObject raceCar1 = GameObject.Find("RacingCar1P");
+                    GameObject raceCarObj1 = raceCar1.transform.Find("RacingCar_" + $"{_carIndex1}").gameObject;
+                    raceCarObj1.SetActive(true);
 
-                GameObject raceCar2 = GameObject.Find("RacingCar2P");
-                GameObject raceCarObj2 = raceCar1.transform.Find("RacingCar_" + $"{_carIndex2}").gameObject;
-                raceCarObj2.SetActive(true);
+                    if (_getJoystick.Length > 1)
+                    {
+                        GameObject raceCar2 = GameObject.Find("RacingCar2P");
+                        GameObject raceCarObj2 = raceCar1.transform.Find("RacingCar_" + $"{_carIndex2}").gameObject;
+                        raceCarObj2.SetActive(true);
+                    }
+                    else
+                    {
+                        GameObject raceCarCPU = GameObject.Find("RacingCarCPU");
+                        GameObject raceCarObjCPU = raceCar1.transform.Find("RacingCar_" + $"{_carIndex2}").gameObject;
+                    }
 
-                _firstRun = false;
+                    _firstRun = false;
+                }
             }
         }
     }

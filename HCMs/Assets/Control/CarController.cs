@@ -57,7 +57,7 @@ namespace UnityStandardAssets.Vehicles.Car
         public float BrakeInput { get; private set; }
         public float CurrentSteerAngle{ get { return m_SteerAngle; }}
         public float CurrentSpeed{ get { return m_Rigidbody.velocity.magnitude*2.23693629f; }}
-        public float MaxSpeed{get { return m_Topspeed; }}
+        public float[] MaxSpeed{get { return topSpeed; }}
         public float Revs { get; private set; }
         public float AccelInput { get; private set; }
         public bool m_GearUpPush { get; set; }
@@ -141,22 +141,22 @@ namespace UnityStandardAssets.Vehicles.Car
             }
         }
 
-        private void GearChanging()
-        {
-            float f = Mathf.Abs(CurrentSpeed/MaxSpeed);
-            float upgearlimit = (1/(float) NoOfGears)*(m_GearNum + 1);
-            float downgearlimit = (1/(float) NoOfGears)*m_GearNum;
+        //private void GearChanging()
+        //{
+        //    float f = Mathf.Abs(CurrentSpeed/MaxSpeed);
+        //    float upgearlimit = (1/(float) NoOfGears)*(m_GearNum + 1);
+        //    float downgearlimit = (1/(float) NoOfGears)*m_GearNum;
 
-            if (m_GearNum > 0 && f < downgearlimit)
-            {
-                m_GearNum--;
-            }
+        //    if (m_GearNum > 0 && f < downgearlimit)
+        //    {
+        //        m_GearNum--;
+        //    }
 
-            if (f > upgearlimit && (m_GearNum < (NoOfGears - 1)))
-            {
-                m_GearNum++;
-            }
-        }
+        //    if (f > upgearlimit && (m_GearNum < (NoOfGears - 1)))
+        //    {
+        //        m_GearNum++;
+        //    }
+        //}
        
         private static float CurveFactor(float factor)
         {
@@ -169,22 +169,22 @@ namespace UnityStandardAssets.Vehicles.Car
         }
 
 
-        private void CalculateGearFactor()
-        {
-            float f = (1/(float) NoOfGears);          
-            var targetGearFactor = Mathf.InverseLerp(f*m_GearNum, f*(m_GearNum + 1), Mathf.Abs(CurrentSpeed/MaxSpeed));
-            m_GearFactor = Mathf.Lerp(m_GearFactor, targetGearFactor, Time.deltaTime*5f);
-        }
+        //private void CalculateGearFactor()
+        //{
+        //    float f = (1/(float) NoOfGears);          
+        //    var targetGearFactor = Mathf.InverseLerp(f*m_GearNum, f*(m_GearNum + 1), Mathf.Abs(CurrentSpeed/MaxSpeed));
+        //    m_GearFactor = Mathf.Lerp(m_GearFactor, targetGearFactor, Time.deltaTime*5f);
+        //}
 
 
-        private void CalculateRevs()
-        {           
-            CalculateGearFactor();
-            var gearNumFactor = m_GearNum/(float) NoOfGears;
-            var revsRangeMin = ULerp(0f, m_RevRangeBoundary, CurveFactor(gearNumFactor));
-            var revsRangeMax = ULerp(m_RevRangeBoundary, 1f, gearNumFactor);
-            Revs = ULerp(revsRangeMin, revsRangeMax, m_GearFactor);
-        }
+        //private void CalculateRevs()
+        //{           
+        //    CalculateGearFactor();
+        //    var gearNumFactor = m_GearNum/(float) NoOfGears;
+        //    var revsRangeMin = ULerp(0f, m_RevRangeBoundary, CurveFactor(gearNumFactor));
+        //    var revsRangeMax = ULerp(m_RevRangeBoundary, 1f, gearNumFactor);
+        //    Revs = ULerp(revsRangeMin, revsRangeMax, m_GearFactor);
+        //}
 
 
         public void Move(float steering, float accel, float footbrake, float handbrake)
@@ -220,8 +220,8 @@ namespace UnityStandardAssets.Vehicles.Car
             }
 
 
-            CalculateRevs();
-            GearChanging();
+            //CalculateRevs();
+            //GearChanging();
 
             AddDownForce();
             CheckForWheelSpin();

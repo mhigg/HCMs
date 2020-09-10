@@ -40,11 +40,25 @@ public class OutputCarSpeed : MonoBehaviour
             }
         }
 
+        //  各ギアでのメーター最小値の割り当て
+        float minSpeed = 0f;
+        if (carController.CurrentGearNum > 0)
+        {
+            minSpeed = carController.MaxSpeed[carController.CurrentGearNum - 1];
+        }
+
         //　Imageの表示率を最大速度に対する現在の速度で計算する
-        var ratio = Mathf.InverseLerp(0f, 1f, Mathf.Abs(carController.CurrentSpeed) / 140f);
+        var ratio = Mathf.InverseLerp(0f, 1f, (Mathf.Abs(carController.CurrentSpeed) - minSpeed) / (carController.MaxSpeed[carController.CurrentGearNum] - minSpeed));
+
         //　速度用のImageの最小と最大を補正した値で計算
-        speedImage.fillAmount = Mathf.Lerp(percentage / 140f, (140f - percentage) / 140f, ratio);
+        speedImage.fillAmount
+            = Mathf.Lerp(
+                percentage / carController.MaxSpeed[carController.CurrentGearNum],
+                (carController.MaxSpeed[carController.CurrentGearNum] - percentage) / carController.MaxSpeed[carController.CurrentGearNum],
+                ratio);
+
         //　現在の速度をテキストに表示する
         imageNo.SetNo(Mathf.FloorToInt(carController.CurrentSpeed), "0");
+
     }
 }
