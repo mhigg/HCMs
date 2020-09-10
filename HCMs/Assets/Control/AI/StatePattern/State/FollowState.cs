@@ -8,15 +8,19 @@ public class FollowState : CarState
     {
         float move = 0;
         DebugDraw(pos, way, dis, _hitW[num].collider);
-        // 内積をとり、逆走していないか判定する
+        // 車から目標までのベクトル
+        var targetVec = way - pos;
+        //車の向き
+        var carVec = new Vector3(0, 0, 1);
+        //内積をとり、逆走していないか判定する
         // 逆走していれば、何らかの処理をする
-        if(Vector3.Dot(pos, way) <= 0)
+        if (Vector3.Dot(targetVec, carVec) <= 0)
         {
             // 何らかの処理
             return -1f;
         }
         // 外積を取りハンドルを切る方向を判定する
-        Vector3.Cross()
+        //Vector3.Cross()
         return move;
     }
 
