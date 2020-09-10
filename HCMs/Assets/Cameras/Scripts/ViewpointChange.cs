@@ -13,7 +13,7 @@ public class ViewpointChange : MonoBehaviour
 
     void Start()
     {
-        _pivotCamera.SetActive(false);
+        _pivotCamera.SetActive(true);
         _insideCamera.SetActive(false);
         _frontCamera.SetActive(false);
         _upsideCamera.SetActive(false);

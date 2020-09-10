@@ -24,7 +24,7 @@ public class TitleScene : MonoBehaviour
             {
                 pushSE.PlayOneShot(pushSE.clip);
                 isCalledOnce = true;
-                FadeManager.Instance.LoadScene("MenuScene", 2.0f);
+                FadeManager.Instance.LoadScene("MenuScene", 0.3f);
                 Debug.Log("Menuへ");
             }
         }

@@ -73,6 +73,7 @@ public class BattleSel : MonoBehaviour
                 if (Input.GetButtonDown("Decision"))
                 {
                     isCalledOnce = true;
+                    Destroy(GameObject.Find("SoundObject")); // DontDestroyOnLoadで保持したオブジェクトを削除
                     FadeManager.Instance.LoadScene("BattleScene_0" + $"{_num[_nowSelected]}", 1.5f);
                     Debug.Log("BattleSceneへ");
                 }
