@@ -7,13 +7,17 @@ public class CarCustom : MonoBehaviour
 {
     [SerializeField] private List<GameObject> _carObj;
     private int _carIndex = 0;
-    private int _idxMax = 2;
+    private int _idxMax;
     private Vector3 _roteVec;
     private bool _firstRun;
 
+    private bool _nonUpFlag = false;
+    private bool _nonDownFlag = false;
+
     void Start()
     {
-        _roteVec = new Vector3(0f, 1.5f, 0f);
+        _idxMax = _carObj.Count;
+        _roteVec = new Vector3(0f, 0.5f, 0f);
         _firstRun = true;
     }
 
@@ -27,23 +31,18 @@ public class CarCustom : MonoBehaviour
             ChangeCarModel(_carIndex);
             if (CrossPlatformInputManager.GetButtonDown("Decision"))
             {
-                DontDestroyOnLoad(_carObj[_carIndex]);
                 DontDestroyOnLoad(this);
-
-                FadeManager.Instance.LoadScene("TimeAttack01", 2.0f);
+                FadeManager.Instance.LoadScene("TimeAttack02", 2.0f);
             }
         }
 
-        if (SceneManager.GetActiveScene().name == "TimeAttack01")
+        if (SceneManager.GetActiveScene().name == "TimeAttack02")
         {
             if (_firstRun)
             {
-                GameObject startCarPos = GameObject.Find("StartCarPosition");
-                _carObj[_carIndex].gameObject.transform.position = startCarPos.gameObject.transform.position;
-                _carObj[_carIndex].gameObject.transform.rotation = startCarPos.gameObject.transform.rotation;
-
-                GameObject startCountObj = GameObject.Find("StartCountAndStopObj");
-                _carObj[_carIndex].gameObject.transform.parent = startCountObj.transform;
+                GameObject raceCar = GameObject.Find("RacingCar");
+                GameObject raceCarObj = raceCar.transform.Find("RacingCar_" + $"{_carIndex}").gameObject;
+                raceCarObj.SetActive(true);
 
                 _firstRun = false;
             }
@@ -54,19 +53,36 @@ public class CarCustom : MonoBehaviour
     {
         if (_carIndex < _idxMax - 1)
         {
-            if (CrossPlatformInputManager.GetAxis("Horizontal") > 0)
+            if (CrossPlatformInputManager.GetAxisRaw("Horizontal") > 0)
             {
-                _carIndex++;
-                _carObj[_carIndex].gameObject.transform.rotation = _carObj[_carIndex - 1].gameObject.transform.rotation;
+                if (!_nonUpFlag)
+                {
+                    _carIndex++;
+                    _carObj[_carIndex].gameObject.transform.rotation = _carObj[_carIndex - 1].gameObject.transform.rotation;
+                    _nonUpFlag = true;
+                }
+            }
+            else
+            {
+                _nonUpFlag = false;
             }
         }
 
         if (_carIndex > 0)
         {
-            if (CrossPlatformInputManager.GetAxis("Horizontal") < 0)
+            if (CrossPlatformInputManager.GetAxisRaw("Horizontal") < 0)
             {
-                _carIndex--;
-                _carObj[_carIndex].gameObject.transform.rotation = _carObj[_carIndex + 1].gameObject.transform.rotation;
+                if (!(_nonDownFlag))
+                {
+                    _carIndex--;
+                    _carObj[_carIndex].gameObject.transform.rotation = _carObj[_carIndex + 1].gameObject.transform.rotation;
+                    _nonDownFlag = true;
+
+                }
+            }
+            else
+            {
+                _nonDownFlag = false;
             }
         }
     }
