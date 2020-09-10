@@ -9,7 +9,8 @@ public class RetryGame : MonoBehaviour
     public enum Pause
     {
         Resume,
-        Retry
+        Retry,
+        BackMenu
     };
     Pause _pause;
 
@@ -28,6 +29,7 @@ public class RetryGame : MonoBehaviour
         _buttonNames = new List<string>();
         _buttonNames.Add("ButtonResume");
         _buttonNames.Add("ButtonRetry");
+        _buttonNames.Add("ButtonBuckMenu");
 
         OnUnPause();
     }
@@ -81,6 +83,9 @@ public class RetryGame : MonoBehaviour
                     case Pause.Retry:
                         OnRetry();
                         break;
+                    case Pause.BackMenu:
+                        OnBackMenu();
+                        break;
                     default:
                         OnResume();
                         break;
@@ -116,6 +121,11 @@ public class RetryGame : MonoBehaviour
     public void OnRetry()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void OnBackMenu()
+    {
+        SceneManager.LoadScene("MenuScene");
     }
 
     public void OnResume()
