@@ -1,6 +1,7 @@
 ﻿// CPUの情報を統括するクラス
 using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 namespace UnityStandardAssets.Vehicles.Car
 {
@@ -15,6 +16,7 @@ namespace UnityStandardAssets.Vehicles.Car
         private List<Vector3> _points;      // 目標地点の座標
         private Vector3 _plateSize;         // ターゲットのサイズ
         private Vector3 _plateOffset;       // ターゲットのオフセット
+        private int _pointNum = 0;          // 現在のポイントの番号
 
         // レイキャストに使う変数
         private Vector3 _offset = 
@@ -42,11 +44,6 @@ namespace UnityStandardAssets.Vehicles.Car
         private void Awake()
         {
             _carCtl = GetComponent<CarController>();
-            if(_target != null)
-            {
-                _plateSize = _target.transform.GetChild(0).transform.localScale;
-                _plateOffset = _target.transform.GetChild(0).transform.localPosition;
-            }
             SetRandomPoints();
         }
         public CarGeneralPoint()
@@ -58,8 +55,13 @@ namespace UnityStandardAssets.Vehicles.Car
         }
         void FixedUpdate()
         {
+            var child = _target.transform;
+            var cnt = child.childCount;
+            for (int i = 0; i < cnt; i++)
+            {
+                DrawRayRoot(_points[i], _points[(i + 1) % cnt]);
+            }
             CheckEnemy();
-            var rad = new Random();
             float v = CheckFront();
             float h = CheckWay();
             float b = 0;// _state.GetBrake();
@@ -75,37 +77,30 @@ namespace UnityStandardAssets.Vehicles.Car
             _carCtl.Move(h, v, v, b);
         }
 
-        // ランダムにポイントを決める
-        void SetRandomPoints()
+        float CheckPoints()
         {
-            _points = new List<Vector3>();
-            for (var i = 0; i < _target.transform.childCount; i++) 
-            {
-                // 座標を決める
-                var posx = GetRandomVec() * _plateSize.x;
-                var posy = GetRandomVec() * _plateSize.y;
-                var posz = GetRandomVec() * _plateSize.z;
-                var position = new Vector3(posx,posy,posz) + _plateOffset;
-                _points.Add(position);
-            }
+            float f = 0.0f;
+            return f;
         }
-        float GetRandomVec()
+
+        private void OnTriggerEnter(Collider other)
         {
-            float range = Random.Range(-0.5f, 0.5f);
-            return range;
+            if(other.tag == "target")
+            {
+                _pointNum++;
+            }
         }
 
         float CheckWay()
         {
-            float f = 0;
-            for (int i = 0; i < _wayDir.Length; i++)
-            {
-                var pos = transform.TransformPoint(_offset);
-                var way = transform.TransformDirection(_wayDir[i]);
-                var vert = transform.TransformDirection(_vertDir);
-                f += _state.IsHitWay(pos, way, vert, _wayDis[i / 2], i) * _turnVol[i / 2];
-            }
-            return f;
+            float handle = 0;
+            var pos = transform.TransformPoint(_offset);
+            var way = _points[_pointNum] - pos;
+            var vert = transform.TransformDirection(_vertDir);
+            var dis = (float)Math.Sqrt(way.x * way.x + way.z * way.z);
+            handle += _state.IsHitWay(pos, way, vert, dis, 0);// * _turnVol[i / 2];
+
+            return handle;
         }
         float CheckFront()
         {
@@ -138,6 +133,38 @@ namespace UnityStandardAssets.Vehicles.Car
         CarState ChangeState()
         {
             return _state;
+        }
+
+        // ランダムにポイントを決める
+        void SetRandomPoints()
+        {
+            _points = new List<Vector3>();
+            for (var i = 0; i < _target.transform.childCount; i++)
+            {
+                var tra = _target.transform.GetChild(i).transform;
+                _plateSize = tra.localScale;
+                _plateOffset = tra.localPosition;
+                // 座標を決める
+                var posx = GetRandomVec() * _plateSize.x;
+                var posy = 5;// GetRandomVec() * _plateSize.y;
+                var posz = GetRandomVec() * _plateSize.z;
+                var pos = new Vector3(tra.position.x, 0, tra.position.z);
+                var position = new Vector3(posx, posy, posz) + pos;
+                //position = pos - position;
+                _points.Add(position);
+            }
+        }
+        float GetRandomVec()
+        {
+            float range = UnityEngine.Random.Range(-0.5f, 0.5f);
+            return range;
+        }
+
+        void DrawRayRoot(Vector3 vec1,Vector3 vec2)
+        {
+            Color color = Color.green;
+            var dir = vec2 - vec1;
+            Debug.DrawRay(vec1, dir, color, 0, false);
         }
     }
 }

@@ -38,7 +38,7 @@ public class IdleState : CarState
         else
         {
             _brake = 1f;
-            _speed -= 0.1f;
+            _speed -= 0.03f;
             _brakeFlag = true;
         }
         DebugDraw(pos, vert, 3, _hitF.collider);
