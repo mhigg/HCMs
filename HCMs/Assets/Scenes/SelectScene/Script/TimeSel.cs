@@ -15,6 +15,7 @@ public class TimeSel : MonoBehaviour
     List<string> _imageName;
     public List<bool> _stageAble;
     public Image _disableImg;
+    public AudioSource audioSource;
 
     void Start()
     {
@@ -73,6 +74,7 @@ public class TimeSel : MonoBehaviour
                 if (Input.GetButtonDown("Decision"))
                 {
                     isCalledOnce = true;
+                    audioSource.Stop();
                     FadeManager.Instance.LoadScene("TimeAttack0" + $"{_num[_nowSelected]}", 1.5f);
                     Debug.Log("01へ");
                 }
