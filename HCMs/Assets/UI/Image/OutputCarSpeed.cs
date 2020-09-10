@@ -8,6 +8,7 @@ using UnityStandardAssets.Vehicles.Car;
 public class OutputCarSpeed : MonoBehaviour
 {
     public ImageNo imageNo = null;
+    public int playerNo;
 
     //　スタンダードアセットのCarの速度を保持しているスクリプト
     private CarController carController;
@@ -20,7 +21,7 @@ public class OutputCarSpeed : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        carController = GetComponent<CarController>();
+        carController = GameObject.FindGameObjectsWithTag("RacingCar")[playerNo].transform.parent.gameObject.GetComponent<CarController>();
 
         firstRun = true;
     }
