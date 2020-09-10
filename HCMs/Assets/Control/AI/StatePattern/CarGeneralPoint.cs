@@ -50,7 +50,7 @@ namespace UnityStandardAssets.Vehicles.Car
         {
             if (_state == null)
             {
-                _state = new IdleState();
+                _state = new FollowState();
             }
         }
         void FixedUpdate()
@@ -91,15 +91,19 @@ namespace UnityStandardAssets.Vehicles.Car
             }
         }
 
+        // 進行方向と目標地点との内・外積を求めて
+        // ハンドルの量を決める
         float CheckWay()
         {
             float handle = 0;
+            //車の座標(始点)
             var pos = transform.TransformPoint(_offset);
+            // 目標の座標(終点)
             var way = _points[_pointNum] - pos;
             var vert = transform.TransformDirection(_vertDir);
+            // 目標までの距離
             var dis = (float)Math.Sqrt(way.x * way.x + way.z * way.z);
-            handle += _state.IsHitWay(pos, way, vert, dis, 0);// * _turnVol[i / 2];
-
+            handle += _state.HandleDir(pos, way, vert, dis, 0);// * _turnVol[i / 2];
             return handle;
         }
         float CheckFront()
@@ -108,7 +112,7 @@ namespace UnityStandardAssets.Vehicles.Car
             var pos = transform.TransformPoint(_offset);
             var way = transform.TransformDirection(_froDir);
             var vert = transform.TransformDirection(_vertDir);
-            f += _state.IsHitFront(pos, way, vert, _froDis);
+            f += _state.AcceleStep(pos, way, vert, _froDis);
             return f;
         }
         void CheckEnemy()
@@ -162,7 +166,7 @@ namespace UnityStandardAssets.Vehicles.Car
 
         void DrawRayRoot(Vector3 vec1,Vector3 vec2)
         {
-            Color color = Color.green;
+            Color color = Color.yellow;
             var dir = vec2 - vec1;
             Debug.DrawRay(vec1, dir, color, 0, false);
         }

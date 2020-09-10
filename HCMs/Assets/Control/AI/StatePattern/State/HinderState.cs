@@ -4,7 +4,7 @@ using System.Collections;
 // 敵の邪魔をするステート
 public class HiderState : CarState
 {
-    public override float IsHitWay(Vector3 vec1, Vector3 vec2, Vector3 vec3, float dis, int num)
+    public override float HandleDir(Vector3 vec1, Vector3 vec2, Vector3 vec3, float dis, int num)
     {
         var pos = vec1;
         float move = 0;
@@ -24,7 +24,7 @@ public class HiderState : CarState
         return move;
     }
 
-    public override float IsHitFront(Vector3 vec1, Vector3 vec2, Vector3 vec3, float dis)
+    public override float AcceleStep(Vector3 vec1, Vector3 vec2, Vector3 vec3, float dis)
     {
         _brakeFlag = false;
         float f = 0;

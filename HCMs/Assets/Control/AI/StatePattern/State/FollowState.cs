@@ -1,59 +1,47 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System;
 
 // 追従するステート
 public class FollowState : CarState
 {
-    public override float IsHitWay(Vector3 vec1, Vector3 vec2, Vector3 vec3, float dis, int num)
+    public override float HandleDir(Vector3 pos, Vector3 way, Vector3 vert, float dis, int num)
     {
-        var pos = vec1;
         float move = 0;
-        Physics.Raycast(pos, vec2, out _hitW[num], dis);
-        DebugDraw(pos, vec2, dis, _hitW[num].collider);
-        pos += vec2.normalized * dis;
-        if (Physics.Raycast(pos, vec3, out _hitW[num], 3))
+        DebugDraw(pos, way, dis, _hitW[num].collider);
+        // 内積をとり、逆走していないか判定する
+        // 逆走していれば、何らかの処理をする
+        if(Vector3.Dot(pos, way) <= 0)
         {
-            move = (num % 2 * 2 - 1f) * -1f;
+            // 何らかの処理
+            return -1f;
         }
-        //意味ない
-        if (_brakeFlag)
-        {
-            move *= 2;
-        }
-        DebugDraw(pos, vec3, 3, _hitW[num].collider);
+        // 外積を取りハンドルを切る方向を判定する
+        Vector3.Cross()
         return move;
     }
 
-    public override float IsHitFront(Vector3 vec1, Vector3 vec2, Vector3 vec3, float dis)
+    public override float AcceleStep(Vector3 pos, Vector3 way, Vector3 vert, float dis)
     {
         _brakeFlag = false;
         float f = 0;
-        var pos = vec1;
-        Physics.Raycast(pos, vec2, out _hitF, dis);
-        DebugDraw(pos, vec2, dis, _hitF.collider);
-        pos += vec2.normalized * dis;
-        if (Physics.Raycast(pos, vec3, out _hitF, 3))
+        Physics.Raycast(pos, way, out _hitF, dis);
+        DebugDraw(pos, way, dis, _hitF.collider);
+        pos += way.normalized * dis;
+        // 前方の地面判定がある時
+        if (Physics.Raycast(pos, vert, out _hitF, 3))
         {
-            f = _speed > -1f ? -0.1f : 0;
+            f = _speed < 1.0f ? 0.1f : 0;
             _brake += _brake > 0 ? -0.1f : 0f;
         }
+        // ないとき
         else
         {
             _brake = 1f;
-            _speed /= 2;
+            _speed -= 0.03f;
             _brakeFlag = true;
         }
-        DebugDraw(pos, vec3, 3, _hitF.collider);
+        DebugDraw(pos, vert, 3, _hitF.collider);
         _speed += f;
         return _speed;
     }
-    //public override CarState IsHitEnemy(Vector3 pos, Vector3 way, float dis, int num)
-    //{
-    //    if (Physics.Raycast(pos, way, out _hitEnemy[num], dis))
-    //    {
-    //        _nextState = new FollowState();
-    //    }
-    //    DebugDraw(pos, way, dis, _hitEnemy[num].collider);
-    //    return _nextState;
-    //}
 }

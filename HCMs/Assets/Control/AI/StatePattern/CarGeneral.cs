@@ -66,7 +66,7 @@ namespace UnityStandardAssets.Vehicles.Car
                 var pos = transform.TransformPoint(_offset);
                 var way = transform.TransformDirection(_wayDir[i]);
                 var vert = transform.TransformDirection(_vertDir);
-                f += _state.IsHitWay(pos, way, vert, _wayDis[i / 2], i) * _turnVol[i / 2];
+                f += _state.HandleDir(pos, way, vert, _wayDis[i / 2], i) * _turnVol[i / 2];
             }
             return f;
         }
@@ -76,7 +76,7 @@ namespace UnityStandardAssets.Vehicles.Car
             var pos = transform.TransformPoint(_offset);
             var way = transform.TransformDirection(_froDir);
             var vert = transform.TransformDirection(_vertDir);
-            f += _state.IsHitFront(pos, way, vert, _froDis);
+            f += _state.AcceleStep(pos, way, vert, _froDis);
             return f;
         }
         void CheckEnemy()

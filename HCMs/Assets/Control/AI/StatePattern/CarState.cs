@@ -12,9 +12,9 @@ public abstract class CarState
     public CarState _nextState = null;
     public float _enemyDis = 10000;
     // ハンドルの値を決定するための関数
-    public abstract float IsHitWay(Vector3 vec1, Vector3 vec2,Vector3 vec3, float dis,int num);
+    public abstract float HandleDir(Vector3 pos, Vector3 way,Vector3 vert, float dis,int num);
     // 速度を決定するための関数
-    public abstract float IsHitFront(Vector3 vec1, Vector3 vec2, Vector3 vec3,float dis);
+    public abstract float AcceleStep(Vector3 vec1, Vector3 vec2, Vector3 vec3,float dis);
     // 敵の検知
     // public abstract CarState ChangeState(Vector3 pos, Vector3 way, float dis, int num);
     public void SerchEnemy(Vector3 pos, Vector3 way, float dis, int num)

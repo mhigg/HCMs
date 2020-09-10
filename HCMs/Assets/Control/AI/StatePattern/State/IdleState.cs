@@ -2,11 +2,11 @@
 //普通の挙動をするステート 
 public class IdleState : CarState
 {    
-    public override float IsHitWay(Vector3 pos, Vector3 way, Vector3 vert, float dis, int num)
+    public override float HandleDir(Vector3 pos, Vector3 way, Vector3 vert, float dis, int num)
     {
         float move = 0;
         Physics.Raycast(pos, way, out _hitW[num], dis);
-        DebugDraw(pos, way, dis, _hitW[num].collider);
+        DebugDraw(pos, way, dis, null);
         pos += way.normalized * dis;
         if (Physics.Raycast(pos, vert, out _hitW[num], 3))
         {
@@ -21,7 +21,7 @@ public class IdleState : CarState
         return move;
     }
 
-    public override float IsHitFront(Vector3 pos, Vector3 way, Vector3 vert, float dis)
+    public override float AcceleStep(Vector3 pos, Vector3 way, Vector3 vert, float dis)
     {
         _brakeFlag = false;
         float f = 0;
