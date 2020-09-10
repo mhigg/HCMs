@@ -18,7 +18,7 @@ public class RankingDuringRace : MonoBehaviour
         _playerNum = FindInfoByScene.Instance.GetPlayerNum();
         _rankingList = new List<int[]>(_playerNum);
 
-        for (int playerID = 0; playerID < _playerNum; playerID++)
+        for (int playerID = 0; playerID < _playerNum && playerID < rankTextList.Count; playerID++)
         {
             // 順位表示の初期化
             rankTextList[playerID].text = RankingToString(playerID + 1);
