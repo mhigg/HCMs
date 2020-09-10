@@ -62,6 +62,7 @@ public class TimeSel : MonoBehaviour
                         stages[i - 1].transform.localPosition = pos;
                     }
                     _nowSelected = i;
+                    break;
                 }
             }
         }
@@ -73,9 +74,9 @@ public class TimeSel : MonoBehaviour
                 ///ここを任意のボタンにしましょう。
                 if (Input.GetButtonDown("Decision"))
                 {
-                    isCalledOnce = true;
-                    audioSource.Stop();
+                    isCalledOnce = true;                   
                     FadeManager.Instance.LoadScene("TimeAttack0" + $"{_num[_nowSelected]}", 1.5f);
+                    audioSource.Stop();
                     Debug.Log("01へ");
                 }
             }

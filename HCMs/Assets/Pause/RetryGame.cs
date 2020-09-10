@@ -1,16 +1,34 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
-using System.Collections;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 public class RetryGame : MonoBehaviour
 {
+    public enum Pause
+    {
+        Resume,
+        Retry
+    };
+    Pause _pause;
+
+    [SerializeField] private EventSystem _eventSystem;
+    private GameObject _selectObj;
+    public List<Pause> pauseList;
+    private List<string> _buttonNames;
+
     public GameObject player;
     public GameObject OnPanel;
-    private bool pauseGame = false;
+    private bool _pauseGame = false;
+
 
     void Start()
     {
+        _buttonNames = new List<string>();
+        _buttonNames.Add("ButtonResume");
+        _buttonNames.Add("ButtonRetry");
+
         OnUnPause();
     }
 
@@ -18,11 +36,11 @@ public class RetryGame : MonoBehaviour
     {
         // パッドのボタンでポーズ切り替えする
 
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetButtonDown("Pause"))
         {
-            pauseGame = !pauseGame;
+            _pauseGame = !_pauseGame;
 
-            if (pauseGame == true)
+            if (_pauseGame == true)
             {
                 OnPause();
             }
@@ -32,9 +50,42 @@ public class RetryGame : MonoBehaviour
             }
         }
 
-        if(pauseGame)
+        if (_pauseGame)
         {
-            // 左右？でResumeとRetryを切り替え、決定ボタンで決定
+            if (_eventSystem.currentSelectedGameObject.gameObject == _selectObj)
+            {
+                // 選択を移動していない間は何もしない
+            }
+            else
+            {
+                // 選択を移動したら現在選んでいるボタンを変更する
+                _selectObj = _eventSystem.currentSelectedGameObject.gameObject;
+                
+                for(int idx = 0; idx < _buttonNames.Count; idx++)
+                {
+                    if(_selectObj.name == _buttonNames[idx])
+                    {
+                        _pause = pauseList[idx];
+                        break;
+                    }
+                }
+            }
+
+            if(Input.GetButtonDown("Decision"))
+            {
+                switch(_pause)
+                {
+                    case Pause.Resume:
+                        OnResume();
+                        break;
+                    case Pause.Retry:
+                        OnRetry();
+                        break;
+                    default:
+                        OnResume();
+                        break;
+                }
+            }
         }
         else
         {
@@ -46,7 +97,7 @@ public class RetryGame : MonoBehaviour
     {
         OnPanel.SetActive(true);
         Time.timeScale = 0;
-        pauseGame = true;
+        _pauseGame = true;
         //CarControl car = player.GetComponent<CarControl>();
         //car.enabled = false;
         
@@ -58,7 +109,7 @@ public class RetryGame : MonoBehaviour
     {
         OnPanel.SetActive(false);
         Time.timeScale = 1;
-        pauseGame = false;
+        _pauseGame = false;
         //CarControl car = player.GetComponent<CarControl>();
         //car.enabled = true;
 
