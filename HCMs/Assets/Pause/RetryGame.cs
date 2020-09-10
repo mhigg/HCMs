@@ -35,7 +35,6 @@ public class RetryGame : MonoBehaviour
     public void Update()
     {
         // パッドのボタンでポーズ切り替えする
-
         if (Input.GetButtonDown("Pause"))
         {
             _pauseGame = !_pauseGame;
@@ -73,6 +72,7 @@ public class RetryGame : MonoBehaviour
 
             if(Input.GetButtonDown("Decision"))
             {
+
                 switch(_pause)
                 {
                     case Pause.Resume:
@@ -86,10 +86,6 @@ public class RetryGame : MonoBehaviour
                         break;
                 }
             }
-        }
-        else
-        {
-
         }
     }
 
