@@ -15,6 +15,7 @@ public class MenuScene : MonoBehaviour
     public Button _battle;
     public Button _timeAtt;
     GameObject _selectObj;
+    public AudioSource audioSource;
     // Start is called before the first frame update
     void Start()
     {

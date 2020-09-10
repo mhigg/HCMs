@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class TimeSel : MonoBehaviour
@@ -15,7 +16,6 @@ public class TimeSel : MonoBehaviour
     List<string> _imageName;
     public List<bool> _stageAble;
     public Image _disableImg;
-    public AudioSource audioSource;
 
     void Start()
     {
@@ -70,14 +70,14 @@ public class TimeSel : MonoBehaviour
         {
             _disableImg.gameObject.SetActive(false);
             if (!isCalledOnce)
-            {
+            {               
                 ///ここを任意のボタンにしましょう。
                 if (Input.GetButtonDown("Decision"))
-                {
-                    isCalledOnce = true;                   
-                    FadeManager.Instance.LoadScene("TimeAttack0" + $"{_num[_nowSelected]}", 1.5f);
-                    audioSource.Stop();
-                    Debug.Log("01へ");
+                {                               
+                    isCalledOnce = true;
+                    Destroy(GameObject.Find("SoundObject")); // DontDestroyOnLoadで保持したオブジェクトを削除
+                    FadeManager.Instance.LoadScene("TimeAttack0" + $"{_num[_nowSelected]}", 1.5f);                       
+                    Debug.Log("01へ");                    
                 }
             }
         }
