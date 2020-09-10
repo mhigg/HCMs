@@ -4,23 +4,35 @@ using System;
 // 追従するステート
 public class FollowState : CarState
 {
+    public static float Cross2D(Vector2 a, Vector2 b)
+    {
+        return a.x * b.y - a.y * b.x;
+    }
     public override float HandleDir(Vector3 pos, Vector3 way, Vector3 vert, float dis, int num)
     {
         float move = 0;
         DebugDraw(pos, way, dis, _hitW[num].collider);
         // 車から目標までのベクトル
         var targetVec = way - pos;
+        Vector2 target2D = new Vector2(-pos.x, -pos.z);
+        Vector2 vert2D = new Vector2(vert.x, vert.z);
         //車の向き
-        var carVec = new Vector3(0, 0, 1);
         //内積をとり、逆走していないか判定する
         // 逆走していれば、何らかの処理をする
-        if (Vector3.Dot(targetVec, carVec) <= 0)
-        {
-            // 何らかの処理
-            return -1f;
-        }
+
         // 外積を取りハンドルを切る方向を判定する
-        //Vector3.Cross()
+        if (Cross2D(target2D, vert2D) > 0)
+        {
+            // 左へ曲げる
+            move = -0.1f;
+            Debug.Log("左");
+        }
+        else if (Cross2D(target2D, vert2D) < 0)
+        {
+            // 左へ曲げる
+            move = 0.1f;
+            Debug.Log("右");
+        }
         return move;
     }
 
@@ -38,12 +50,12 @@ public class FollowState : CarState
             _brake += _brake > 0 ? -0.1f : 0f;
         }
         // ないとき
-        else
-        {
-            _brake = 1f;
-            _speed -= 0.03f;
-            _brakeFlag = true;
-        }
+        //else
+        //{
+        //    _brake = 1f;
+        //    _speed -= 0.03f;
+        //    _brakeFlag = true;
+        //}
         DebugDraw(pos, vert, 3, _hitF.collider);
         _speed += f;
         return _speed;

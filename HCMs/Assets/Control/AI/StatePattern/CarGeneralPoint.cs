@@ -103,7 +103,7 @@ namespace UnityStandardAssets.Vehicles.Car
             var vert = transform.TransformDirection(_vertDir);
             // 目標までの距離
             var dis = (float)Math.Sqrt(way.x * way.x + way.z * way.z);
-            handle += _state.HandleDir(pos, way, vert, dis, 0);// * _turnVol[i / 2];
+            handle += _state.HandleDir(transform.position, way, transform.TransformDirection(_froDir), dis, 0);// * _turnVol[i / 2];
             return handle;
         }
         float CheckFront()
