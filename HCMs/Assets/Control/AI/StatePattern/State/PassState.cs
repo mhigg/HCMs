@@ -5,7 +5,7 @@ using System.Collections;
 // Followで一定距離内に敵が来たらこれに移る
 public class PassState : CarState
 {
-    public override float IsHitWay(Vector3 vec1, Vector3 vec2, Vector3 vec3, float dis, int num)
+    public override float HandleDir(Vector3 vec1, Vector3 vec2, Vector3 vec3, float dis, int num)
     {
         var pos = vec1;
         float move = 0;
@@ -25,7 +25,7 @@ public class PassState : CarState
         return move;
     }
 
-    public override float IsHitFront(Vector3 vec1, Vector3 vec2, Vector3 vec3, float dis)
+    public override float AcceleStep(Vector3 vec1, Vector3 vec2, Vector3 vec3, float dis)
     {
         _brakeFlag = false;
         float f = 0;

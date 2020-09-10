@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 
 namespace UnityStandardAssets.Vehicles.Car
 {
@@ -43,17 +44,21 @@ namespace UnityStandardAssets.Vehicles.Car
         void FixedUpdate()
         {
             CheckEnemy();
-            var rad = new Random();
+            var rad = new UnityEngine.Random();
             float v = CheckFront();
             float h = CheckWay();
             var sp = _carCtl.CurrentSpeed;
-            if (sp >= 40 && sp <= 60)
+            if (sp >= 40 && sp <= 75)
             {
                 _carCtl.m_GearUpPush = true;
             }
-            else if (sp >= 60)
+            else if (sp >= 80)
             {
                 _carCtl.m_GearUpPush = false;
+            }
+            if(Math.Abs(h) > 0)
+            {
+                v = -0.05f;
             }
             _carCtl.Move(h, v, v, 0);
         }
