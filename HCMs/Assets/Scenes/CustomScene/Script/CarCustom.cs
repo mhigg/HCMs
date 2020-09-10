@@ -32,7 +32,7 @@ public class CarCustom : MonoBehaviour
             if (CrossPlatformInputManager.GetButtonDown("Decision"))
             {
                 DontDestroyOnLoad(this);
-                FadeManager.Instance.LoadScene("TimeAttack02", 2.0f);
+                FadeManager.Instance.LoadScene("TimeSelectScene", 2.0f);
             }
         }
 
