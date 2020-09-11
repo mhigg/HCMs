@@ -17,19 +17,11 @@ public class LapCount : MonoBehaviour
         Debug.Log("LapCountStart");
         _lapCnt = 1;    // 初期値は１
         _lapMax = FindInfoByScene.Instance.GetLapMax(SceneManager.GetActiveScene().name);
-
-        //lapText = lapText.GetComponent<TextMeshProUGUI>();
-        //lapText.text = _lapCnt + " / " + _lapMax;
     }
 
     public void CountLap()
     {
         _lapCnt++;
-        //if (_lapCnt <= _lapMax)
-        //{
-        //    lapText.text = _lapCnt + " / " + _lapMax;
-        //}
-        //Debug.Log(lapText.text);
     }
 
     public bool CheckLapCount()

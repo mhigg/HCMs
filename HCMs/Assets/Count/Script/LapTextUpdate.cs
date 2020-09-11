@@ -10,13 +10,11 @@ public class LapTextUpdate : MonoBehaviour
 
     public int playerNo;
     private LapCount _lapCount;
-    private string _playerName;
     private int _lapMax;
 
     void Start()
     {
         _lapCount = GameObject.FindGameObjectsWithTag("RacingCar")[playerNo].gameObject.GetComponent<LapCount>();
-        _playerName = _lapCount.name;
         _lapMax = FindInfoByScene.Instance.GetLapMax(SceneManager.GetActiveScene().name);
     }
 
