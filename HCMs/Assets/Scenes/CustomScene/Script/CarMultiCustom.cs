@@ -41,7 +41,7 @@ public class CarMultiCustom : MonoBehaviour
             _carObj_2P[_carIndex2].gameObject.transform.Rotate(-(_roteVec));
 
             CarIndexSelecting_1P();//1P車体選択
-            _joystickQuantity = 2;
+
             if (_joystickQuantity > 1)
             {
                 CarIndexSelecting_2P();//2P存在時のみ車体選択
@@ -140,32 +140,29 @@ public class CarMultiCustom : MonoBehaviour
         {
             _nonUpFlag2 = false;
         }
-    
-        if (_carIndex2 > 0)
-        {
-            if (CrossPlatformInputManager.GetAxisRaw("Horizontal_2") < 0)
-            {
-                if (!(_nonDownFlag2))
-                {
-                    if (_carIndex2 > 0)
-                    {
-                        _carIndex2--;
-                        _carObj_2P[_carIndex2].gameObject.transform.rotation = _carObj_2P[_carIndex2 + 1].gameObject.transform.rotation;
-                        _nonDownFlag2 = true;
-                    }
-                    else
-                    {
-                        _carIndex2 = _idxMax - 1;
-                        _carObj_2P[_carIndex2].gameObject.transform.rotation = _carObj_2P[0].gameObject.transform.rotation;
-                        _nonDownFlag2 = true;
 
-                    }
+        if (CrossPlatformInputManager.GetAxisRaw("Horizontal_2") < 0)
+        {
+            if (!(_nonDownFlag2))
+            {
+                if (_carIndex2 > 0)
+                {
+                    _carIndex2--;
+                    _carObj_2P[_carIndex2].gameObject.transform.rotation = _carObj_2P[_carIndex2 + 1].gameObject.transform.rotation;
+                    _nonDownFlag2 = true;
+                }
+                else
+                {
+                    _carIndex2 = _idxMax - 1;
+                    _carObj_2P[_carIndex2].gameObject.transform.rotation = _carObj_2P[0].gameObject.transform.rotation;
+                    _nonDownFlag2 = true;
+
                 }
             }
-            else
-            {
-                _nonDownFlag2 = false;
-            }
+        }
+        else
+        {
+            _nonDownFlag2 = false;
         }
     }
 
