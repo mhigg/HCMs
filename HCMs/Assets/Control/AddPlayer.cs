@@ -5,8 +5,6 @@ using UnityEngine;
 public class AddPlayer : MonoBehaviour
 {
     int _padNum;                // パッドの数
-    GameObject _childObject1;    // 子のオブジェクト
-    GameObject _childObject2;    // 子のオブジェクト
 
     // Start is called before the first frame update
     void Awake()
@@ -20,17 +18,13 @@ public class AddPlayer : MonoBehaviour
                 _padNum++;
             }
         }
-        _childObject1 = transform.GetChild(0).gameObject;   // player2
-        _childObject2 = transform.GetChild(1).gameObject;   // cpu
         if (_padNum <= 1)
         {
-            _childObject1.SetActive(false);
-            _childObject2.SetActive(true);
+            this.gameObject.SetActive(false);
         }
         if (_padNum >= 2)       
         {
-            _childObject1.SetActive(true);
-            _childObject2.SetActive(false);
+            this.gameObject.SetActive(true);
         }
 
         FindInfoByScene.Instance.EntryPlayerName();
