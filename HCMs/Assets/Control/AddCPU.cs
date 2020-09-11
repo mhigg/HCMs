@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AddPlayer : MonoBehaviour
+public class AddCPU : MonoBehaviour
 {
     int _padNum;                // パッドの数
 
@@ -20,11 +20,11 @@ public class AddPlayer : MonoBehaviour
         }
         if (_padNum <= 1)
         {
-            this.gameObject.SetActive(false);
-        }
-        if (_padNum >= 2)       
-        {
             this.gameObject.SetActive(true);
+        }
+        if (_padNum >= 2)
+        {
+            this.gameObject.SetActive(false);
         }
 
         FindInfoByScene.Instance.EntryPlayerName();
@@ -33,6 +33,6 @@ public class AddPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }

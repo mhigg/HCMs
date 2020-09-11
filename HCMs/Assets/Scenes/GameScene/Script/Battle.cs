@@ -24,6 +24,13 @@ public class Battle : MonoBehaviour
         int lapMax = FindInfoByScene.Instance.GetLapMax(_activeStageName);
         Debug.Log("lapMax:" + lapMax);
 
+        GameObject[] racingCars = GameObject.FindGameObjectsWithTag("RacingCar");
+        for (int idx = 0; idx < FindInfoByScene.Instance.GetPlayerNum(); idx++)
+        {
+            racingCars[idx].GetComponent<LapCount>().SetUp();
+            racingCars[idx].GetComponent<CheckPointCount>().SetUp();
+        }
+
         timeRanking = timeRanking.GetComponent<TimeRanking>();
         timeRanking.SetUpTimeRanking("Battle", playerNum, lapMax);
 
