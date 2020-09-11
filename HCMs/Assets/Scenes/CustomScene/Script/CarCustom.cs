@@ -35,20 +35,25 @@ public class CarCustom : MonoBehaviour
                 FadeManager.Instance.LoadScene("TimeSelectScene", 1.5f);
             }
         }
-        for(int i = 0; i < 6; i++)
-        {
-            if (SceneManager.GetActiveScene().name == "TimeAttack0" + $"{i}")
-            {
-                if (_firstRun)
-                {
-                    GameObject raceCar = GameObject.Find("RacingCar");
-                    GameObject raceCarObj = raceCar.transform.Find("RacingCar_" + $"{_carIndex}").gameObject;
-                    raceCarObj.SetActive(true);
+        //for(int i = 0; i < 6; i++)
+        //{
+        //    if (SceneManager.GetActiveScene().name == "TimeAttack0" + $"{i}")
+        //    {
+        //        if (_firstRun)
+        //        {
+        //            GameObject raceCar = GameObject.Find("RacingCar");
+        //            GameObject raceCarObj = raceCar.transform.Find("RacingCar_" + $"{_carIndex}").gameObject;
+        //            raceCarObj.SetActive(true);
 
-                    _firstRun = false;
-                }
-            }
-        }
+        //            _firstRun = false;
+        //        }
+        //    }
+        //}
+    }
+
+    public int GetCarID()
+    {
+        return _carIndex;
     }
 
     private void CarIndexSelecting()

@@ -68,11 +68,11 @@ public class FindInfoByScene : MonoBehaviour
             _stageLapMax.Add(stageName, 3);
         }
 
-        if(GameObject.Find("Player2") == null)
-        {
-            // プレイヤー２が複数無いならそのままエントリーする
-            EntryPlayerName();
-        }
+        //if(GameObject.Find("Player2") == null)
+        //{
+        //    // プレイヤー２が複数無いならそのままエントリーする
+        //    EntryPlayerName();
+        //}
     }
 
     // アクティブ状態のプレイヤーをエントリーする(名前を記録する)

@@ -12,7 +12,7 @@ public class LapCount : MonoBehaviour
     private int _lapCnt;        // ラップカウント
     private int _lapMax;        // 最大周回数
 
-    void Start()
+    public void SetUp()
     {
         Debug.Log("LapCountStart");
         _lapCnt = 1;    // 初期値は１

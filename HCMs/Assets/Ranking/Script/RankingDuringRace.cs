@@ -183,8 +183,8 @@ public class RankingDuringRace : MonoBehaviour
             }
         }
 
-//        Debug.Log("Total.1P" + retRanking[0]);
-//        Debug.Log("Total.2P" + retRanking[1]);
+        //Debug.Log("Total.1P" + retRanking[0]);
+        //Debug.Log("Total.2P" + retRanking[1]);
         _rankingList.Clear();   // 次の順位付けのためにクリア
         return retRanking;
     }

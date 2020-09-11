@@ -12,7 +12,7 @@ public class CheckPointCount : MonoBehaviour
     private string _lastThroughPoint;   // 最後に通過したチェックポイント
     private string _lastCheckPoint;     // 最後に通過する必要のあるチェックポイント
 
-    void Start()
+    public void SetUp()
     {
         _checkPointCnt = 0;
         _nextCheckPoint = "cp1";

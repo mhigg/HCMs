@@ -21,8 +21,17 @@ public class TimeAttack : MonoBehaviour
         Debug.Log("TimeAttackStart");
         _activeStageName = SceneManager.GetActiveScene().name;
 
+        FindInfoByScene.Instance.EntryPlayerName();
+
         int lapMax = FindInfoByScene.Instance.GetLapMax(_activeStageName);
         Debug.Log("lapMax:" + lapMax);
+
+        GameObject[] racingCars = GameObject.FindGameObjectsWithTag("RacingCar");
+        for(int idx = 0; idx < FindInfoByScene.Instance.GetPlayerNum(); idx++)
+        {
+            racingCars[idx].GetComponent<LapCount>().SetUp();
+            racingCars[idx].GetComponent<CheckPointCount>().SetUp();
+        }
 
         timeRanking = timeRanking.GetComponent<TimeRanking>();
         // 第一引数をコース名にする
