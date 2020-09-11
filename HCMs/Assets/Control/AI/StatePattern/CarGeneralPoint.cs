@@ -8,17 +8,17 @@ namespace UnityStandardAssets.Vehicles.Car
     [RequireComponent(typeof(CarController))]
     public class CarGeneralPoint : MonoBehaviour
     {
+        // 車の情報
         private CarState _state = null;     // 車の状態
         private CarController _carCtl;      // 車の操作
+        private Vector3 _pos;               // 車の座標
 
         // 目標地点を決めるための変数
         public GameObject _target;          // ターゲットを持つオブジェクト
         private List<Vector3> _points;      // 目標地点の座標
         private Vector3 _plateSize;         // ターゲットのサイズ
-        private Vector3 _plateOffset;       // ターゲットのオフセット
         private int _pointNum = 0;          // 現在のポイントの番号
 
-        // レイキャストに使う変数
         private Vector3 _offset = 
             new Vector3(0, 1.5f, 4.5f);     // レイのオフセット
         private float _froDis = 45f;        // 直線レイの長さ
@@ -96,14 +96,22 @@ namespace UnityStandardAssets.Vehicles.Car
         float CheckWay()
         {
             float handle = 0;
-            //車の座標(始点)
-            var pos = transform.TransformPoint(_offset);
-            // 目標の座標(終点)
-            var way = _points[_pointNum] - pos;
-            var vert = transform.TransformDirection(_vertDir);
-            // 目標までの距離
-            var dis = (float)Math.Sqrt(way.x * way.x + way.z * way.z);
-            handle += _state.HandleDir(transform.position, way, transform.TransformDirection(_froDir), dis, 0);// * _turnVol[i / 2];
+            // 車の座標(ワールド)
+            _pos = this.transform.position;
+
+            // 車からのオフセット
+            _pos += this.transform.forward;
+
+            
+
+            ////車の座標(始点)
+            //var pos = transform.TransformPoint(_offset);
+            //// 目標の座標(終点)
+            //var way = _points[_pointNum] - pos;
+            //var vert = transform.TransformDirection(_vertDir);
+            //// 目標までの距離
+            //var dis = (float)Math.Sqrt(way.x * way.x + way.z * way.z);
+            //handle += _state.HandleDir(transform.position, way, transform.TransformDirection(_froDir), dis, 0);// * _turnVol[i / 2];
             return handle;
         }
         float CheckFront()
@@ -147,7 +155,6 @@ namespace UnityStandardAssets.Vehicles.Car
             {
                 var tra = _target.transform.GetChild(i).transform;
                 _plateSize = tra.localScale;
-                _plateOffset = tra.localPosition;
                 // 座標を決める
                 var posx = GetRandomVec() * _plateSize.x;
                 var posy = 5;// GetRandomVec() * _plateSize.y;
