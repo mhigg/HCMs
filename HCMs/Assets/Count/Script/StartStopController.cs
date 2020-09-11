@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityStandardAssets.Vehicles.Car;
 
 public class RigidbodyVelocity
 {
@@ -82,10 +83,19 @@ public class StartStopController : MonoBehaviour
             waitingRigidbody[i].WakeUp();
             waitingRigidbody[i].velocity = rigidbodyVelocity[i].velocity;
             waitingRigidbody[i].angularVelocity = rigidbodyVelocity[i].angularVelocity;
+            
         }
         foreach (var monoBehaviour in waitingMonoBehaviour)
         {
             monoBehaviour.enabled = true;
+            if (monoBehaviour.name == "RacingCarCPU")
+            {
+                var it = this.transform.GetChild(0);///.Find("AutoRun");
+            for(int i = 0;i < it.childCount; i++)
+                {
+                    it.GetChild(i).GetComponent<AutoRun>().enabled = true;
+                }
+            }
         }
     }
 
