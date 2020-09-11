@@ -26,6 +26,7 @@ public class StartStopController : MonoBehaviour
     MonoBehaviour[] waitingMonoBehaviour;
 
     public Text countText;
+    public Image startImage;
     private float startCount = 0f;
 
     void Update()
@@ -107,8 +108,6 @@ public class StartStopController : MonoBehaviour
     {
         if(startCount <= 3f)
         {
-            if (startCount >= 0.8f) countText.text = null;
-            if (startCount >= 1.6f) countText.text = null;
             if (startCount >= 2.4f) countText.text = null;
         }
         else
@@ -116,8 +115,9 @@ public class StartStopController : MonoBehaviour
             if (startCount >= 3f) countText.text = "３";
             if (startCount >= 4f) countText.text = "２";
             if (startCount >= 5f) countText.text = "１";
-            if (startCount >= 6f) countText.text = "ＳＴＡＲＴ！！！";
-            if (startCount >= 7f) countText.text = "";
+            if (startCount >= 6f) countText.gameObject.SetActive(false);
+            if (startCount >= 6f) startImage.gameObject.SetActive(true);
+            if (startCount >= 7f) startImage.gameObject.SetActive(false);
         }
     }
 }

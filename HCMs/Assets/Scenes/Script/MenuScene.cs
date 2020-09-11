@@ -16,12 +16,12 @@ public class MenuScene : MonoBehaviour
     public Button _timeAtt;
     GameObject _selectObj;
     public AudioSource audioSource;
+    public AudioClip sound1;
+    public AudioClip sound2;
     // Start is called before the first frame update
     void Start()
     {
-        //_timeAtt = GameObject.Find("/Canvas/TimeAttack").GetComponent<Button>();
-        //_battle = GameObject.Find("/Canvas/Battle").GetComponent<Button>();
-        //_obst = GameObject.Find("/Canvas/Obs").GetComponent<Button>();
+        audioSource = GetComponent<AudioSource>();
     }
     bool isCalledOnce = false;
 
@@ -30,14 +30,17 @@ public class MenuScene : MonoBehaviour
     {
         if (!isCalledOnce)
         {
-            if (Input.GetButtonDown("Horizontal_2"))
+            if (Input.GetButtonDown("Horizontal") || Input.GetButtonDown("Horizontal"))
             {
-                int i = 0;
-                i++;
+                audioSource.PlayOneShot(sound1);
             }
-                ///ここを任意のボタンにしましょう。
-                ///タイムアタック
-                if (Input.GetButtonDown("Decision"))
+            if (Input.GetButtonDown("Decision") || Input.GetButtonDown("Vertical"))
+            {
+                audioSource.PlayOneShot(sound2);
+            }
+            ///ここを任意のボタンにしましょう。
+            ///タイムアタック
+            if (Input.GetButtonDown("Decision"))
             {
                 _selectObj = eventSystem.currentSelectedGameObject.gameObject;
                 if (_selectObj.name == _timeAtt.name)
