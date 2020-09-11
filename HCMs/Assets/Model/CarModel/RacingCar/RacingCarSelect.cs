@@ -8,7 +8,7 @@ public class RacingCarSelect : MonoBehaviour
     void Start()
     {
         Debug.Log("RacingCarSelectStart");
-        int carIndex = GameObject.Find("CarCustom").GetComponent<CarCustom>().GetCarID();
+        int carIndex = GameObject.Find("CarCustom").GetComponent<CarCustom>().GetCarID;
 
         GameObject raceCar = transform.GetChild(carIndex).gameObject;
         raceCar.SetActive(true);

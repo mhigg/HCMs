@@ -42,14 +42,14 @@ public class MenuScene : MonoBehaviour
                 _selectObj = eventSystem.currentSelectedGameObject.gameObject;
                 if (_selectObj.name == _timeAtt.name)
                 {
-                    FadeManager.Instance.LoadScene("TimeSelectScene", 1.5f);
-                    Debug.Log("TimeSelectScene");
+                    FadeManager.Instance.LoadScene("TimeAttackCustom", 1.5f);
+                    Debug.Log("TimeCarCustomScene");
                     isCalledOnce = true;
                 }
                 if (_selectObj.name == _battle.name)
                 {
-                    FadeManager.Instance.LoadScene("BattleSelectScene", 1.5f);
-                    Debug.Log("BattleSelectScene");
+                    FadeManager.Instance.LoadScene("BattleCustom", 1.5f);
+                    Debug.Log("BattleCarCustomScene");
                     isCalledOnce = true;
                 }
             }
