@@ -9,7 +9,6 @@ public class CarCustom : MonoBehaviour
     private int _carIndex = 0;
     private int _idxMax;
     private Vector3 _roteVec;
-    private bool _firstRun;
 
     private bool _nonUpFlag = false;
     private bool _nonDownFlag = false;
@@ -20,7 +19,6 @@ public class CarCustom : MonoBehaviour
     {
         _idxMax = _carObj.Count;
         _roteVec = new Vector3(0f, 0.5f, 0f);
-        _firstRun = true;
     }
 
     void Update()

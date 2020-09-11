@@ -9,7 +9,6 @@ public class CarMultiCustom : MonoBehaviour
     private int _carIndex1 = 0, _carIndex2 = 0;
     private int _idxMax;
     private Vector3 _roteVec;
-    private bool _firstRun;
 
     private bool _nonUpFlag1 = false, _nonUpFlag2 = false;
     private bool _nonDownFlag1 = false, _nonDownFlag2 = false;
@@ -26,7 +25,6 @@ public class CarMultiCustom : MonoBehaviour
     {
         _idxMax = _carObj_1P.Count;
         _roteVec = new Vector3(0f, 0.5f, 0f);
-        _firstRun = true;
 
         _getJoystick = Input.GetJoystickNames();
         for (int i = 0; i < _getJoystick.Length; i++)
@@ -43,7 +41,7 @@ public class CarMultiCustom : MonoBehaviour
             _carObj_2P[_carIndex2].gameObject.transform.Rotate(-(_roteVec));
 
             CarIndexSelecting_1P();//1P車体選択
-
+            _joystickQuantity = 2;
             if (_joystickQuantity > 1)
             {
                 CarIndexSelecting_2P();//2P存在時のみ車体選択
