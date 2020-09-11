@@ -104,9 +104,9 @@ public class StartStopController : MonoBehaviour
     {
         if(startCount <= 3f)
         {
-            if (startCount >= 0.8f) countText.text = "ＷＡＩＴ．";
-            if (startCount >= 1.6f) countText.text = "ＷＡＩＴ．．";
-            if (startCount >= 2.4f) countText.text = "ＷＡＩＴ．．．";
+            if (startCount >= 0.8f) countText.text = null;
+            if (startCount >= 1.6f) countText.text = null;
+            if (startCount >= 2.4f) countText.text = null;
         }
         else
         {
