@@ -6,7 +6,7 @@ using UnityStandardAssets.Vehicles.Car;
 
 public class GoalFlag : MonoBehaviour
 {
-    public Text goalText;               // ゴール時に表示するテキスト
+    public Image finishImage;           // ゴール時に表示するテキスト
     public TimeCount timeCounter;       // タイムをカウントする
     public ParentCheckPoint parentCp;   // 全チェックポイントの親
     public GameObject car1;
@@ -78,9 +78,8 @@ public class GoalFlag : MonoBehaviour
                 {
                     Debug.Log("プレイヤー" + playerID + "ゴール");
                     Vector3 pos = new Vector3((_playerNum - 1) * 500 * (playerID * 2 - 1) + 960, 540, 0);
-                    Text _goalText = Instantiate(goalText, pos, Quaternion.identity);
-                    _goalText.text = "ＦＩＮＩＳＨ！";
-                    _goalText.transform.SetParent(GameObject.FindGameObjectWithTag("CounterCanvas").transform);
+                    Image _finishImage = Instantiate(finishImage, pos, Quaternion.identity);
+                    _finishImage.transform.SetParent(GameObject.FindGameObjectWithTag("CounterCanvas").transform);
                     timeCounter.FinishCount(playerID);
                     _finishCall[playerID] = true;
                 }

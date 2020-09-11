@@ -92,7 +92,7 @@ public class RankingDuringRace : MonoBehaviour
         {
             int id = FindInfoByScene.Instance.GetPlayerID(player.transform.parent.name);
             checkPointCounts[id] = player.GetComponentInChildren<CheckPointCount>().GetNowThroughCheckPointNum();
-//            Debug.Log("プレイヤー:" + id + " チェックポイント通過数:" + checkPointCounts[id]);
+            Debug.Log("プレイヤー:" + id + " チェックポイント通過数:" + checkPointCounts[id]);
         }
 
         Ranking(checkPointCounts, false);
