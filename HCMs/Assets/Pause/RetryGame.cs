@@ -19,7 +19,6 @@ public class RetryGame : MonoBehaviour
     public List<Pause> pauseList;
     private List<string> _buttonNames;
 
-    public GameObject player;
     public GameObject OnPanel;
     private bool _pauseGame = false;
 
@@ -99,8 +98,6 @@ public class RetryGame : MonoBehaviour
         OnPanel.SetActive(true);
         Time.timeScale = 0;
         _pauseGame = true;
-        //CarControl car = player.GetComponent<CarControl>();
-        //car.enabled = false;
         
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
@@ -111,8 +108,6 @@ public class RetryGame : MonoBehaviour
         OnPanel.SetActive(false);
         Time.timeScale = 1;
         _pauseGame = false;
-        //CarControl car = player.GetComponent<CarControl>();
-        //car.enabled = true;
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
