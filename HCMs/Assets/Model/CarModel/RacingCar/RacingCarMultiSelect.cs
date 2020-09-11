@@ -13,18 +13,18 @@ public class RacingCarMultiSelect : MonoBehaviour
         Debug.Log("RacingCarSelectStart");
         if(transform.name == "RacingCar1P")
         {
-            carIndex = multiCustom.GetCarID_1();
+            carIndex = multiCustom.GetCarID_1;
 
             GameObject raceCar = transform.GetChild(carIndex).gameObject;
             raceCar.SetActive(true);
         }
         else
         {
-            if(multiCustom.GetJoyPad() > 1)
+            if(multiCustom.GetJoyPad > 1)
             {
                 if (transform.name == "RacingCar2P")
                 {
-                    carIndex = multiCustom.GetCarID_2();
+                    carIndex = multiCustom.GetCarID_2;
 
                     GameObject raceCar = transform.GetChild(carIndex).gameObject;
                     raceCar.SetActive(true);
@@ -34,7 +34,7 @@ public class RacingCarMultiSelect : MonoBehaviour
             {
                 if (transform.name == "RacingCarCPU")
                 {
-                    carIndex = multiCustom.GetCarID_2();
+                    carIndex = multiCustom.GetCarID_2;
 
                     GameObject raceCar = transform.GetChild(carIndex).gameObject;
                     raceCar.SetActive(true);

@@ -14,6 +14,8 @@ public class CarCustom : MonoBehaviour
     private bool _nonUpFlag = false;
     private bool _nonDownFlag = false;
 
+    public int GetCarID { get { return _carIndex; } }
+
     void Start()
     {
         _idxMax = _carObj.Count;
@@ -37,46 +39,53 @@ public class CarCustom : MonoBehaviour
         }
     }
 
-    public int GetCarID()
-    {
-        return _carIndex;
-    }
-
     private void CarIndexSelecting()
     {
-        if (_carIndex < _idxMax - 1)
+        if (CrossPlatformInputManager.GetAxisRaw("Horizontal") > 0)
         {
-            if (CrossPlatformInputManager.GetAxisRaw("Horizontal") > 0)
+            if (!_nonUpFlag)
             {
-                if (!_nonUpFlag)
+                if (_carIndex < _idxMax - 1)
                 {
                     _carIndex++;
                     _carObj[_carIndex].gameObject.transform.rotation = _carObj[_carIndex - 1].gameObject.transform.rotation;
                     _nonUpFlag = true;
                 }
-            }
-            else
-            {
-                _nonUpFlag = false;
+                else
+                {
+                    _carIndex = 0;
+                    _carObj[_carIndex].gameObject.transform.rotation = _carObj[_idxMax - 1].gameObject.transform.rotation;
+                    _nonUpFlag = true;
+                }
+
             }
         }
-
-        if (_carIndex > 0)
+        else
         {
-            if (CrossPlatformInputManager.GetAxisRaw("Horizontal") < 0)
+            _nonUpFlag = false;
+        }
+
+        if (CrossPlatformInputManager.GetAxisRaw("Horizontal") < 0)
+        {
+            if (!(_nonDownFlag))
             {
-                if (!(_nonDownFlag))
+                if (_carIndex > 0)
                 {
                     _carIndex--;
                     _carObj[_carIndex].gameObject.transform.rotation = _carObj[_carIndex + 1].gameObject.transform.rotation;
                     _nonDownFlag = true;
-
+                }
+                else
+                {
+                    _carIndex = _idxMax - 1;
+                    _carObj[_carIndex].gameObject.transform.rotation = _carObj[0].gameObject.transform.rotation;
+                    _nonDownFlag = true;
                 }
             }
-            else
-            {
-                _nonDownFlag = false;
-            }
+        }
+        else
+        {
+            _nonDownFlag = false;
         }
     }
 
