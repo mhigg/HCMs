@@ -115,8 +115,11 @@ public class StartStopController : MonoBehaviour
             if (startCount >= 3f) countText.text = "３";
             if (startCount >= 4f) countText.text = "２";
             if (startCount >= 5f) countText.text = "１";
-            if (startCount >= 6f) countText.gameObject.SetActive(false);
-            if (startCount >= 6f) startImage.gameObject.SetActive(true);
+            if (startCount >= 6f)
+            {
+                countText.gameObject.SetActive(false);
+                startImage.gameObject.SetActive(true);
+            }
             if (startCount >= 7f) startImage.gameObject.SetActive(false);
         }
     }
