@@ -9,6 +9,8 @@ public class TimeAttack : MonoBehaviour
     public TimeCount timeCounter = null;
 
     public TimeRanking timeRanking = null;
+    public DispRanking dispRanking = null;  // 表示用ランキング用
+    public GameObject resultCanvas = null;
     public GoalFlag goalFlag = null;
 
     public StartStopController startCounter = null;
@@ -37,6 +39,12 @@ public class TimeAttack : MonoBehaviour
         // 第一引数をコース名にする
         timeRanking.SetUpTimeRanking(_activeStageName, 6, lapMax);
 
+        _activeStageName = SceneManager.GetActiveScene().name;
+
+        dispRanking = dispRanking.GetComponent<DispRanking>();
+        // ランキング表示数は5+ランク外で6、最大周回数はコースごとに異なる
+        dispRanking.SetUpDispRanking(_activeStageName, 6, FindInfoByScene.Instance.GetLapMax(_activeStageName), true, 1000.0f);
+
         goalFlag = goalFlag.GetComponent<GoalFlag>();
 
         timeCounter = timeCounter.GetComponent<TimeCount>();
@@ -59,33 +67,27 @@ public class TimeAttack : MonoBehaviour
                 ///ここを任意のボタンにしましょう。
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
-                    string stageNo = _activeStageName.Substring(_activeStageName.Length - 2);
+                    Debug.Log("Result");
+                    resultCanvas.SetActive(true);
+                    //string stageNo = _activeStageName.Substring(_activeStageName.Length - 2);
                     _isCalledOnce = true;
-                    Debug.Log("Result" + stageNo);
-                    FadeManager.Instance.LoadScene("TimeAttackResult" + stageNo, 2.0f);
+                    //FadeManager.Instance.LoadScene("TimeAttackResult" + stageNo, 2.0f);
                 }
 
                 if (_afterTime > 10.0f)
                 {
-                    string stageNo = _activeStageName.Substring(_activeStageName.Length - 2);
+                    Debug.Log("Result");
+                    resultCanvas.SetActive(true);
+                    //string stageNo = _activeStageName.Substring(_activeStageName.Length - 2);
                     _isCalledOnce = true;
-                    Debug.Log("Result" + stageNo);
-                    FadeManager.Instance.LoadScene("TimeAttackResult" + stageNo, 2.0f);
+                    //FadeManager.Instance.LoadScene("TimeAttackResult" + stageNo, 2.0f);
                 }
 
                 _afterTime += Time.deltaTime;
             }
-        }
-
-        // Debug用　横転等で動けなくなったとき用
-        if (!_isCalledOnce)
-        {
-            ///ここを任意のボタンにしましょう。
-            if (Input.GetKeyDown(KeyCode.Return))
+            else
             {
-                _isCalledOnce = true;
-                FadeManager.Instance.LoadScene(_activeStageName, 2.0f);
-                Debug.Log("再スタート");
+                FinishGame();
             }
         }
 
@@ -99,5 +101,10 @@ public class TimeAttack : MonoBehaviour
                 timeCounter.StartCount();
             }
         }
+    }
+
+    private void FinishGame()
+    {
+        FadeManager.Instance.LoadScene("MenuScene", 2.0f);
     }
 }
