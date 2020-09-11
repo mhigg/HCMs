@@ -10,7 +10,6 @@ using System.Collections.Generic;
 /// </summary>
 public class FadeManager : MonoBehaviour
 {
-
 	#region Singleton
 
 	private static FadeManager instance;
@@ -120,23 +119,25 @@ public class FadeManager : MonoBehaviour
 		//だんだん暗く .
 		this.isFading = true;
 		float time = 0;
-		while (time <= interval) {
-			this.fadeAlpha = Mathf.Lerp (0f, 1f, time / interval);      
+		while (time <= interval)
+		{
+			this.fadeAlpha = Mathf.Lerp(0f, 1f, time / interval);
 			time += Time.deltaTime;
 			yield return 0;
 		}
-		
+
 		//シーン切替 .
 		SceneManager.LoadScene (scene);
 
 		//だんだん明るく .
 		time = 0;
-		while (time <= interval) {
-			this.fadeAlpha = Mathf.Lerp (1f, 0f, time / interval);
+		while (time <= interval)
+		{
+			this.fadeAlpha = Mathf.Lerp(1f, 0f, time / interval);
 			time += Time.deltaTime;
 			yield return 0;
 		}
-		
+
 		this.isFading = false;
 	}
 }

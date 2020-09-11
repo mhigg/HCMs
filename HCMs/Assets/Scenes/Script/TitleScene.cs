@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TitleScene : MonoBehaviour
 {
@@ -24,12 +25,12 @@ public class TitleScene : MonoBehaviour
             {
                 pushSE.PlayOneShot(pushSE.clip);
                 isCalledOnce = true;
-                FadeManager.Instance.LoadScene("MenuScene", 0.3f);
+                FadeManager.Instance.LoadScene("MenuScene", 0.5f);  
                 Debug.Log("Menuへ");
             }
         }
 
-//------------------------------デバッグ用機能------------------------------------
+        //------------------------------デバッグ用機能------------------------------------
         if (!isDeleteOnce)
         {
             if (Input.GetKeyDown(KeyCode.F1))
