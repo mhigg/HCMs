@@ -26,8 +26,6 @@ public class AddCPU : MonoBehaviour
         {
             this.gameObject.SetActive(false);
         }
-
-        FindInfoByScene.Instance.EntryPlayerName();
     }
 
     // Update is called once per frame

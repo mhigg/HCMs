@@ -27,7 +27,6 @@ public class AddPlayer : MonoBehaviour
             this.gameObject.SetActive(true);
         }
 
-        FindInfoByScene.Instance.EntryPlayerName();
     }
 
     // Update is called once per frame

@@ -92,7 +92,7 @@ public class StartStopController : MonoBehaviour
             {
                 //for (int n = 0; n < 3; n++)
                 //{
-                    var it = this.transform.GetChild(2);///.Find("AutoRun");
+                    var it = this.transform.GetChild(3);///.Find("AutoRun");
                     for (int i = 0; i < it.childCount; i++)
                     {
                         it.GetChild(i).GetComponent<AutoRun>().enabled = true;

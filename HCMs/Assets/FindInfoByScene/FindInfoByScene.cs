@@ -79,6 +79,10 @@ public class FindInfoByScene : MonoBehaviour
     public void EntryPlayerName()
     {
         Debug.Log("EntryPlayerName");
+        if(_playerName.Count > 0)
+        {
+            _playerName.Clear();
+        }
         GameObject[] racingCars = GameObject.FindGameObjectsWithTag("RacingCar");
         for (int idx = 0; idx < racingCars.Length; idx++)
         {

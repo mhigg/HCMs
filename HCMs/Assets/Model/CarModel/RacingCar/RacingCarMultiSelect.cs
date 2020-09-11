@@ -17,6 +17,8 @@ public class RacingCarMultiSelect : MonoBehaviour
 
             GameObject raceCar = transform.GetChild(carIndex).gameObject;
             raceCar.SetActive(true);
+
+            FindInfoByScene.Instance.EntryPlayerName();
         }
         else
         {
@@ -40,7 +42,8 @@ public class RacingCarMultiSelect : MonoBehaviour
                     raceCar.SetActive(true);
                 }
             }
-        }
 
+            FindInfoByScene.Instance.EntryPlayerName();
+        }
     }
 }
