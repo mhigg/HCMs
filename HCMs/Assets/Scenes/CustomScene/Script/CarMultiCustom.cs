@@ -15,13 +15,19 @@ public class CarMultiCustom : MonoBehaviour
     private bool _nonDownFlag1 = false, _nonDownFlag2 = false;
 
     private string[] _getJoystick;
+    int _joystickQuantity = 0;
 
     void Start()
     {
         _idxMax = _carObj_1P.Count;
         _roteVec = new Vector3(0f, 0.5f, 0f);
         _firstRun = true;
+
         _getJoystick = Input.GetJoystickNames();
+        for(int i = 0; i < _getJoystick.Length; i++)
+        {
+            if(_getJoystick[i] != "") _joystickQuantity++;  //パッドの接続数取得
+        }
     }
 
     void Update()
@@ -33,7 +39,7 @@ public class CarMultiCustom : MonoBehaviour
 
             CarIndexSelecting_1P();//1P車体選択
 
-            if(_getJoystick.Length > 1)
+            if(_joystickQuantity > 1)
             {
                 CarIndexSelecting_2P();//2P存在時のみ車体選択
             }
@@ -42,7 +48,7 @@ public class CarMultiCustom : MonoBehaviour
 
             if (CrossPlatformInputManager.GetButtonDown("Decision"))
             {
-                if (_getJoystick.Length <= 1)
+                if (_joystickQuantity <= 1)
                 {
                     _carIndex2 = Random.Range(0, 3);//CPUの車体をランダムで設定
                 }
@@ -52,32 +58,48 @@ public class CarMultiCustom : MonoBehaviour
             }
         }
 
-        for(int i = 0; i < 6; i++)
-        {
-            if (SceneManager.GetActiveScene().name == "BattleScene_0" + $"{i}")
-            {
-                if (_firstRun)
-                {
-                    GameObject raceCar1 = GameObject.Find("RacingCar1P");
-                    GameObject raceCarObj1 = raceCar1.transform.Find("RacingCar_" + $"{_carIndex1}").gameObject;
-                    raceCarObj1.SetActive(true);
+        //for(int i = 0; i < 6; i++)
+        //{
+        //    if (SceneManager.GetActiveScene().name == "BattleScene_0" + $"{i}")
+        //    {
+        //        if (_firstRun)
+        //        {
+        //            GameObject raceCar1 = GameObject.Find("RacingCar1P");
+        //            GameObject raceCarObj1 = raceCar1.transform.Find("RacingCar_" + $"{_carIndex1}").gameObject;
+        //            raceCarObj1.SetActive(true);
 
-                    if (_getJoystick.Length > 1)
-                    {
-                        GameObject raceCar2 = GameObject.Find("RacingCar2P");
-                        GameObject raceCarObj2 = raceCar1.transform.Find("RacingCar_" + $"{_carIndex2}").gameObject;
-                        raceCarObj2.SetActive(true);
-                    }
-                    else
-                    {
-                        GameObject raceCarCPU = GameObject.Find("RacingCarCPU");
-                        GameObject raceCarObjCPU = raceCar1.transform.Find("RacingCar_" + $"{_carIndex2}").gameObject;
-                    }
+        //            if (_joystickQuantity > 1)
+        //            {
+        //                GameObject raceCar2 = GameObject.Find("RacingCar2P");
+        //                GameObject raceCarObj2 = raceCar2.transform.Find("RacingCar_" + $"{_carIndex2}").gameObject;
+        //                raceCarObj2.SetActive(true);
+        //            }
+        //            else
+        //            {
+        //                GameObject raceCarCPU = GameObject.Find("RacingCarCPU");
+        //                GameObject raceCarObjCPU = raceCarCPU.transform.Find("RacingCar_" + $"{_carIndex2}").gameObject;
+        //                raceCarObjCPU.SetActive(true);
+        //            }
 
-                    _firstRun = false;
-                }
-            }
-        }
+        //            _firstRun = false;
+        //        }
+        //    }
+        //}
+    }
+
+    public int GetCarID_1()
+    {
+        return _carIndex1;
+    }
+
+    public int GetCarID_2()
+    {
+        return _carIndex2;
+    }
+
+    public int GetJoyPad()
+    {
+        return _joystickQuantity;
     }
 
     private void CarIndexSelecting_1P()
