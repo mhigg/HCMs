@@ -39,12 +39,12 @@ public class GoalFlag : MonoBehaviour
                 if(playerID == 0)
                 {
                     car1.GetComponent<CarUserControl>().enabled = false;
-                    car1.GetComponent<CarGeneral>().enabled = true;
+                    car1.GetComponent<AutoRun>().enabled = true;
                 }
                 if (playerID == 1)
                 {
                     car2.GetComponent<CarUserControl>().enabled = false;
-                    car2.GetComponent<CarGeneral>().enabled = true;
+                    car2.GetComponent<AutoRun>().enabled = true;
                 }
             }
             // 一つでもfalseがあるとfalseになり、まだゴールしていないプレイヤーがいると判断
