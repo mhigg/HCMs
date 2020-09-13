@@ -1,9 +1,8 @@
-﻿using System;
-using UnityEngine.SceneManagement;
+﻿using UnityEngine.SceneManagement;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 
-public class ViewpointChange : MonoBehaviour
+public class ViewpointChange2 : MonoBehaviour
 {
     [SerializeField] private GameObject _pivotCamera;
     [SerializeField] private GameObject _frontCamera;
