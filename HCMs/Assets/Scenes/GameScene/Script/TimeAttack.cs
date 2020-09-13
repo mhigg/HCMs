@@ -39,11 +39,9 @@ public class TimeAttack : MonoBehaviour
         // 第一引数をコース名にする
         timeRanking.SetUpTimeRanking(_activeStageName, 6, lapMax);
 
-        _activeStageName = SceneManager.GetActiveScene().name;
-
         dispRanking = dispRanking.GetComponent<DispRanking>();
         // ランキング表示数は5+ランク外で6、最大周回数はコースごとに異なる
-        dispRanking.SetUpDispRanking(_activeStageName, 6, FindInfoByScene.Instance.GetLapMax(_activeStageName), true, 1000.0f);
+        dispRanking.SetUpDispRanking(_activeStageName, 6, lapMax, true, 1000.0f);
 
         goalFlag = goalFlag.GetComponent<GoalFlag>();
 

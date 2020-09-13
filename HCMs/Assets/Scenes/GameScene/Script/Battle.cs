@@ -9,6 +9,8 @@ public class Battle : MonoBehaviour
     public TimeCount timeCounter;               // タイムカウント用
     
     public TimeRanking timeRanking;             // ランキング記録用
+    public DispRanking dispRanking = null;      // 表示用ランキング用
+    public GameObject resultCanvas = null;
     public GoalFlag goalFlag;                   // ゴール判定取得用
 
     private string _activeStageName;    // 現在のステージ名
@@ -34,6 +36,10 @@ public class Battle : MonoBehaviour
         timeRanking = timeRanking.GetComponent<TimeRanking>();
         timeRanking.SetUpTimeRanking("Battle", playerNum, lapMax);
 
+        dispRanking = dispRanking.GetComponent<DispRanking>();
+        dispRanking.SetUpDispRanking("Battle", playerNum, lapMax, true, 1000.0f);
+
+
         goalFlag = goalFlag.GetComponent<GoalFlag>();
 
         timeCounter = timeCounter.GetComponent<TimeCount>();
@@ -50,26 +56,25 @@ public class Battle : MonoBehaviour
         if (goalFlag.CheckFinish())
         {
             Debug.Log("Spaceキーを押してリザルトへ");
-            if (!_isCalledOnce)
+            if (goalFlag.CheckFinish())
             {
-                ///ここを任意のボタンにしましょう。
-                if (Input.GetKeyDown(KeyCode.Space))
+                Debug.Log("Spaceキーを押してリザルトへ");
+                if (!_isCalledOnce)
                 {
-                    string stageNo = _activeStageName.Substring(_activeStageName.Length - 2);
-                    _isCalledOnce = true;
-                    FadeManager.Instance.LoadScene("BattleResult" + stageNo, 2.0f);
-                    Debug.Log("Result" + stageNo);
-                }
+                    if (_afterTime > 10.0f
+                     || Input.GetButtonDown("Decision"))
+                    {
+                        Debug.Log("Result");
+                        resultCanvas.SetActive(true);
+                        _isCalledOnce = true;
+                    }
 
-                if (_afterTime > 300.0f)
+                    _afterTime += Time.deltaTime;
+                }
+                else
                 {
-                    string stageNo = _activeStageName.Substring(_activeStageName.Length - 2);
-                    _isCalledOnce = true;
-                    FadeManager.Instance.LoadScene("BattleResult" + stageNo, 2.0f);
-                    Debug.Log("Result" + stageNo);
+                    FinishGame();
                 }
-
-                _afterTime += Time.deltaTime;
             }
         }
 
@@ -81,6 +86,14 @@ public class Battle : MonoBehaviour
                 _startCall = true;
                 timeCounter.StartCount();
             }
+        }
+    }
+
+    private void FinishGame()
+    {
+        if (Input.GetButtonDown("Decision"))
+        {
+            FadeManager.Instance.LoadScene("MenuScene", 2.0f);
         }
     }
 }
