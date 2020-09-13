@@ -73,18 +73,6 @@ public class Battle : MonoBehaviour
             }
         }
 
-        // Debug用　横転等で動けなくなったとき用
-        if (!_isCalledOnce)
-        {
-            ///ここを任意のボタンにしましょう。
-            if (Input.GetKeyDown(KeyCode.Return))
-            {
-                _isCalledOnce = true;
-                FadeManager.Instance.LoadScene(_activeStageName, 2.0f);
-                Debug.Log("再スタート");
-            }
-        }
-
         if (!_startCall)
         {
             if (!(startCounter.startWait))

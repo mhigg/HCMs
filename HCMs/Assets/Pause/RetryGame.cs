@@ -115,6 +115,7 @@ public class RetryGame : MonoBehaviour
 
     public void OnRetry()
     {
+        OnUnPause();
         FadeManager.Instance.LoadScene(SceneManager.GetActiveScene().name, 2.0f);
     }
 
