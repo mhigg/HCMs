@@ -77,7 +77,15 @@ public class GoalFlag : MonoBehaviour
                 if (throughObject.GetComponent<LapCount>().CheckLapCount())
                 {
                     Debug.Log("プレイヤー" + playerID + "ゴール");
-                    Vector3 pos = new Vector3((_playerNum - 1) * 500 * (playerID * 2 - 1) + 960, 540, 0);
+                    Vector3 pos;
+                    if(throughObject.transform.parent.GetComponent<BattleModeCamera>().IsAllScreen())
+                    {
+                        pos = new Vector3(Screen.width / 2, Screen.height / 2, 0);
+                    }
+                    else
+                    {
+                        pos = new Vector3((_playerNum - 1) * 500 * (playerID * 2 - 1) + Screen.width / 2, Screen.height / 2, 0);
+                    }
                     Image _finishImage = Instantiate(finishImage, pos, Quaternion.identity);
                     _finishImage.transform.SetParent(GameObject.FindGameObjectWithTag("CounterCanvas").transform);
                     timeCounter.FinishCount(playerID);
