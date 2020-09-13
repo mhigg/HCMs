@@ -115,12 +115,13 @@ public class RetryGame : MonoBehaviour
 
     public void OnRetry()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        FadeManager.Instance.LoadScene(SceneManager.GetActiveScene().name, 2.0f);
     }
 
     public void OnBackMenu()
     {
-        SceneManager.LoadScene("MenuScene");
+        OnUnPause();
+        FadeManager.Instance.LoadScene("MenuScene", 2.0f);
     }
 
     public void OnResume()

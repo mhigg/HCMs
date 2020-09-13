@@ -64,15 +64,8 @@ public class TimeAttack : MonoBehaviour
             Debug.Log("Spaceキーを押してリザルトへ");
             if (!_isCalledOnce)
             {
-                ///ここを任意のボタンにしましょう。
-                if (Input.GetKeyDown(KeyCode.Space))
-                {
-                    Debug.Log("Result");
-                    resultCanvas.SetActive(true);
-                    _isCalledOnce = true;
-                }
-
-                if (_afterTime > 10.0f)
+                if (_afterTime > 10.0f
+                 || Input.GetButtonDown("Decision"))
                 {
                     Debug.Log("Result");
                     resultCanvas.SetActive(true);
@@ -101,6 +94,9 @@ public class TimeAttack : MonoBehaviour
 
     private void FinishGame()
     {
-        FadeManager.Instance.LoadScene("MenuScene", 2.0f);
+        if (Input.GetButtonDown("Decision"))
+        {
+            FadeManager.Instance.LoadScene("MenuScene", 2.0f);
+        }
     }
 }
