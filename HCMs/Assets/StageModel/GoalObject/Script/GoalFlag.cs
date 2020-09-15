@@ -36,21 +36,10 @@ public class GoalFlag : MonoBehaviour
         {
             if (_finishCall[playerID])
             {
-                // ゴールしたプレイヤーを自動操縦に切り替える
+                // ゴールしたプレイヤーを自動操縦に切り替える(自動操縦が必要なければ消しても問題なし)
                 GameObject finishPlayer = GameObject.Find(FindInfoByScene.Instance.GetPlayerName(playerID));
                 finishPlayer.GetComponent<CarUserControl>().enabled = false;
                 finishPlayer.GetComponent<AutoRun>().enabled = true;
-
-                //if (playerID == 0)
-                //{
-                //    car1.GetComponent<CarUserControl>().enabled = false;
-                //    car1.GetComponent<AutoRun>().enabled = true;
-                //}
-                //if (playerID == 1)
-                //{
-                //    car2.GetComponent<CarUserControl>().enabled = false;
-                //    car2.GetComponent<AutoRun>().enabled = true;
-                //}
             }
             // 一つでもfalseがあるとfalseになり、まだゴールしていないプレイヤーがいると判断
             retFinish &= _finishCall[playerID];

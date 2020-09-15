@@ -65,14 +65,9 @@ public class FindInfoByScene : MonoBehaviour
         _stageLapMax = new Dictionary<string, int>();
         foreach (string stageName in _stageNameTbl)
         {
+            // ステージごとに最大周回数を設定(今回は３周で統一)
             _stageLapMax.Add(stageName, 3);
         }
-
-        //if(GameObject.Find("Player2") == null)
-        //{
-        //    // プレイヤー２が複数無いならそのままエントリーする
-        //    EntryPlayerName();
-        //}
     }
 
     // アクティブ状態のプレイヤーをエントリーする(名前を記録する)
