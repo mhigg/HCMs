@@ -13,12 +13,16 @@ public class CarCustom : MonoBehaviour
     private bool _nonUpFlag = false;
     private bool _nonDownFlag = false;
 
+    private bool _idxDecided;
+
     public int GetCarID { get { return _carIndex; } }
+    public bool GetDecidedFlag { get { return _idxDecided; } }
 
     void Start()
     {
         _idxMax = _carObj.Count;
         _roteVec = new Vector3(0f, 0.5f, 0f);
+        _idxDecided = false;
     }
 
     void Update()
@@ -31,8 +35,16 @@ public class CarCustom : MonoBehaviour
             ChangeCarModel(_carIndex);
             if (CrossPlatformInputManager.GetButtonDown("Decision"))
             {
-                DontDestroyOnLoad(this);
-                FadeManager.Instance.LoadScene("TimeSelectScene", 1.5f);
+                _idxDecided = true;
+            }
+
+            if (_idxDecided)
+            {
+                if (CrossPlatformInputManager.GetButtonDown("Pause"))
+                {
+                    DontDestroyOnLoad(this);
+                    FadeManager.Instance.LoadScene("TimeSelectScene", 1.5f);
+                }
             }
         }
     }
