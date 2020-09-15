@@ -31,8 +31,6 @@ public class CarCustom : MonoBehaviour
         {
             _carObj[_carIndex].gameObject.transform.Rotate(_roteVec);
 
-            CarIndexSelecting();
-            ChangeCarModel(_carIndex);
 
             if (CrossPlatformInputManager.GetButtonDown("Decision")) _idxDecided = true;
 
@@ -46,6 +44,12 @@ public class CarCustom : MonoBehaviour
                     FadeManager.Instance.LoadScene("TimeSelectScene", 1.5f);
                 }
             }
+            else
+            {
+                CarIndexSelecting();
+            }
+
+            ChangeCarModel(_carIndex);
         }
     }
 
