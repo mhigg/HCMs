@@ -82,12 +82,29 @@ public class GoalFlag : MonoBehaviour
                 if (throughObject.GetComponent<LapCount>().CheckLapCount())
                 {
                     Debug.Log("プレイヤー" + playerID + "ゴール");
-                    Transform canvasTF = GameObject.FindGameObjectWithTag("CounterCanvas").transform;
-                    float tmpX = (canvasTF.parent.name == "DualScreenCanvas" ? (_playerNum - 1) * 500 * (playerID * 2 - 1) + Screen.width / 2 : Screen.width / 2);
-                    Vector3 pos = new Vector3(tmpX, Screen.height / 2, 0);
 
-                    Image _finishImage = Instantiate(finishImage, pos, Quaternion.identity);
-                    _finishImage.transform.SetParent(canvasTF);
+                    // 相手がCPUの時は、1Pゴール時のみFINISHを表示
+                    Transform canvasTF = GameObject.FindGameObjectWithTag("CounterCanvas").transform;
+
+                    if(canvasTF.parent.name == "DualScreenCanvas")
+                    {
+                        // 画面分割時はそれぞれの画面にFINISH表示
+                        Vector3 imagePos = new Vector3((_playerNum - 1) * 500 * (playerID * 2 - 1) + Screen.width / 2, Screen.height / 2, 0);
+                        Image _finishImage = Instantiate(finishImage, imagePos, Quaternion.identity);
+                        _finishImage.transform.SetParent(canvasTF);
+                    }
+                    else if(throughObject.transform.parent.tag != "CPU")
+                    {
+                        // 分割してない時でゴールしたのがCPUじゃなければ画面の真ん中にFINISH表示
+                        Vector3 imagePos = new Vector3(Screen.width / 2, Screen.height / 2, 0);
+                        Image _finishImage = Instantiate(finishImage, imagePos, Quaternion.identity);
+                        _finishImage.transform.SetParent(canvasTF);
+                    }
+                    else
+                    {
+                        // それ以外は表示処理なし
+                    }
+
                     timeCounter.FinishCount(playerID);
                     _finishCall[playerID] = true;
                 }
