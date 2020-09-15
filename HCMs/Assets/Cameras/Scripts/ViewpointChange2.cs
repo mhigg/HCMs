@@ -29,7 +29,7 @@ public class ViewpointChange2 : MonoBehaviour
 
     private void ViewChanging()
     {
-        if (CrossPlatformInputManager.GetButtonDown("Camera"))
+        if (CrossPlatformInputManager.GetButtonDown("Camera_2"))
         {
             ++_keyCount;
         }
