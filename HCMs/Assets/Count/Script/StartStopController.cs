@@ -91,14 +91,11 @@ public class StartStopController : MonoBehaviour
             monoBehaviour.enabled = true;
             if (monoBehaviour.name == "RacingCarCPU")
             {
-                //for (int n = 0; n < 3; n++)
+                //var it = this.transform.GetChild(3);///.Find("AutoRun");
+                //for (int i = 0; i < it.childCount; i++)
                 //{
-                    var it = this.transform.GetChild(3);///.Find("AutoRun");
-                    for (int i = 0; i < it.childCount; i++)
-                    {
-                        it.GetChild(i).GetComponent<AutoRun>().enabled = true;
-                    }
-               // }
+                //    it.GetChild(i).GetComponent<AutoRun>().enabled = true;
+                //}
             }
         }
     }
