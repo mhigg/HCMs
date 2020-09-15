@@ -19,7 +19,7 @@ public class Battle : MonoBehaviour
     void Start()
     {
         Debug.Log("バトルシーン初期化");
-        int playerNum = GameObject.FindGameObjectsWithTag("RacingCar").Length;
+        int _playerNum = FindInfoByScene.Instance.GetPlayerNum();
 
         _activeStageName = SceneManager.GetActiveScene().name;
 
@@ -27,18 +27,16 @@ public class Battle : MonoBehaviour
         Debug.Log("lapMax:" + lapMax);
 
         GameObject[] racingCars = GameObject.FindGameObjectsWithTag("RacingCar");
-        for (int idx = 0; idx < FindInfoByScene.Instance.GetPlayerNum(); idx++)
+        for (int idx = 0; idx < _playerNum; idx++)
         {
             racingCars[idx].GetComponent<LapCount>().SetUp();
             racingCars[idx].GetComponent<CheckPointCount>().SetUp();
         }
 
         timeRanking = timeRanking.GetComponent<TimeRanking>();
-        timeRanking.SetUpTimeRanking("Battle", playerNum, lapMax);
+        timeRanking.SetUpTimeRanking("Battle", _playerNum, lapMax);
 
         dispRanking = dispRanking.GetComponent<DispRanking>();
-        dispRanking.SetUpDispRanking("Battle", playerNum, lapMax, true, 1000.0f);
-
 
         goalFlag = goalFlag.GetComponent<GoalFlag>();
 
@@ -56,25 +54,22 @@ public class Battle : MonoBehaviour
         if (goalFlag.CheckFinish())
         {
             Debug.Log("Spaceキーを押してリザルトへ");
-            if (goalFlag.CheckFinish())
+            if (!_isCalledOnce)
             {
-                Debug.Log("Spaceキーを押してリザルトへ");
-                if (!_isCalledOnce)
+                if (_afterTime > 10.0f
+                 || Input.GetButtonDown("Decision"))
                 {
-                    if (_afterTime > 10.0f
-                     || Input.GetButtonDown("Decision"))
-                    {
-                        Debug.Log("Result");
-                        resultCanvas.SetActive(true);
-                        _isCalledOnce = true;
-                    }
+                    Debug.Log("Result");
+                    dispRanking.SetUpDispRanking("Battle", FindInfoByScene.Instance.GetPlayerNum(), FindInfoByScene.Instance.GetLapMax(_activeStageName), false, 1000.0f);
+                    resultCanvas.SetActive(true);
+                    _isCalledOnce = true;
+                }
 
-                    _afterTime += Time.deltaTime;
-                }
-                else
-                {
-                    FinishGame();
-                }
+                _afterTime += Time.deltaTime;
+            }
+            else
+            {
+                FinishGame();
             }
         }
 
