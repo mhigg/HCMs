@@ -18,7 +18,7 @@ namespace UnityStandardAssets.Vehicles.Car
         private void Update()
         {
             m_Car.m_GearUpPush = CrossPlatformInputManager.GetButtonDown("GearUp");
-            m_Car.m_GearDownPush = CrossPlatformInputManager.GetButtonDown("GearDown");
+            //m_Car.m_GearDownPush = CrossPlatformInputManager.GetButtonDown("GearDown");
         }
 
         private void FixedUpdate()
