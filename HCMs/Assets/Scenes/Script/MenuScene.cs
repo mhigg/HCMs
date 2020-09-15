@@ -14,6 +14,7 @@ public class MenuScene : MonoBehaviour
     [SerializeField] EventSystem eventSystem;
     public Button _battle;
     public Button _timeAtt;
+    public Button _exit;
     GameObject _selectObj;
     public AudioSource audioSource;
     public AudioClip sound1;
@@ -54,6 +55,11 @@ public class MenuScene : MonoBehaviour
                     FadeManager.Instance.LoadScene("BattleCustom", 1.5f);
                     Debug.Log("BattleCarCustomScene");
                     isCalledOnce = true;
+                }
+                if(_selectObj.name == _exit.name)
+                {
+                    UnityEditor.EditorApplication.isPlaying = false;
+                    Application.Quit();
                 }
             }
         }
