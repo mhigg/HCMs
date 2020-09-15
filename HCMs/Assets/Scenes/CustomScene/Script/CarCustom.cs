@@ -33,14 +33,14 @@ public class CarCustom : MonoBehaviour
 
             CarIndexSelecting();
             ChangeCarModel(_carIndex);
-            if (CrossPlatformInputManager.GetButtonDown("Decision"))
-            {
-                _idxDecided = true;
-            }
+
+            if (CrossPlatformInputManager.GetButtonDown("Decision")) _idxDecided = true;
+
+            if (CrossPlatformInputManager.GetButtonDown("Cancel")) _idxDecided = false;
 
             if (_idxDecided)
             {
-                if (CrossPlatformInputManager.GetButtonDown("Pause"))
+                if (CrossPlatformInputManager.GetButtonDown("Start"))
                 {
                     DontDestroyOnLoad(this);
                     FadeManager.Instance.LoadScene("TimeSelectScene", 1.5f);
