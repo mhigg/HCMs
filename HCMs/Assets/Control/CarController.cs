@@ -100,43 +100,50 @@ namespace UnityStandardAssets.Vehicles.Car
 
         private void GearShift()
         {
-            if (m_GearUpPush && m_Gear < 5)
+            if (this.transform.tag == "CPU")
             {
-                m_GearUpFlag = true;
+                m_Gear = 5;
             }
-            if (m_GearDownPush && m_Gear > 0)
+            else
             {
-                m_GearDownFlag = true;
-            }
-
-            float speed = CurrentSpeed;
-
-            if (m_GearUpFlag)
-            {
-                if (speed > m_Topspeed - 10f)
+                if (m_GearUpPush && m_Gear < 5)
                 {
-                    m_Gear++;
-                    m_Topspeed = topSpeed[m_Gear];
+                    m_GearUpFlag = true;
                 }
-                m_GearUpFlag = false;
-            }
-
-            if (m_GearDownFlag)
-            {
-                if (speed < m_Topspeed + 10f)
+                if (m_GearDownPush && m_Gear > 0)
                 {
-                    --m_Gear;
-                    m_Topspeed = topSpeed[m_Gear];
+                    m_GearDownFlag = true;
                 }
-                m_GearDownFlag = false;
-            }
 
-            if(m_Gear > 0)
-            {
-                if (speed < topSpeed[m_Gear - 1])
+                float speed = CurrentSpeed;
+
+                if (m_GearUpFlag)
                 {
-                    --m_Gear;
-                    m_Topspeed = topSpeed[m_Gear];
+                    if (speed > m_Topspeed - 10f)
+                    {
+                        m_Gear++;
+                        m_Topspeed = topSpeed[m_Gear];
+                    }
+                    m_GearUpFlag = false;
+                }
+
+                if (m_GearDownFlag)
+                {
+                    if (speed < m_Topspeed + 10f)
+                    {
+                        --m_Gear;
+                        m_Topspeed = topSpeed[m_Gear];
+                    }
+                    m_GearDownFlag = false;
+                }
+
+                if (m_Gear > 0)
+                {
+                    if (speed < topSpeed[m_Gear - 1])
+                    {
+                        --m_Gear;
+                        m_Topspeed = topSpeed[m_Gear];
+                    }
                 }
             }
         }
