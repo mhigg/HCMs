@@ -110,10 +110,10 @@ namespace UnityStandardAssets.Vehicles.Car
                 {
                     m_GearUpFlag = true;
                 }
-                if (m_GearDownPush && m_Gear > 0)
-                {
-                    m_GearDownFlag = true;
-                }
+                //if (m_GearDownPush && m_Gear > 0)
+                //{
+                //    m_GearDownFlag = true;
+                //}
 
                 float speed = CurrentSpeed;
 
@@ -127,15 +127,15 @@ namespace UnityStandardAssets.Vehicles.Car
                     m_GearUpFlag = false;
                 }
 
-                if (m_GearDownFlag)
-                {
-                    if (speed < m_Topspeed + 10f)
-                    {
-                        --m_Gear;
-                        m_Topspeed = topSpeed[m_Gear];
-                    }
-                    m_GearDownFlag = false;
-                }
+                //if (m_GearDownFlag)
+                //{
+                //    if (speed < m_Topspeed + 10f)
+                //    {
+                //        --m_Gear;
+                //        m_Topspeed = topSpeed[m_Gear];
+                //    }
+                //    m_GearDownFlag = false;
+                //}
 
                 if (m_Gear > 0)
                 {
