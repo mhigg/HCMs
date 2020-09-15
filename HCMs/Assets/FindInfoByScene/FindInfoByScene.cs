@@ -92,10 +92,7 @@ public class FindInfoByScene : MonoBehaviour
         _playerNum = _playerName.Count;
     }
 
-    public int GetPlayerNum()
-    {
-        return _playerNum;
-    }
+    public int GetPlayerNum { get { return _playerNum; } }
 
     public int GetLapMax(string activeStageName)
     {

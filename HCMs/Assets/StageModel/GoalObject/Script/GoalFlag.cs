@@ -9,8 +9,6 @@ public class GoalFlag : MonoBehaviour
     public Image finishImage;           // ゴール時に表示するテキスト
     public TimeCount timeCounter;       // タイムをカウントする
     public ParentCheckPoint parentCp;   // 全チェックポイントの親
-    public GameObject car1;
-    public GameObject car2;
 
     private bool[] _finishCall;
     private int _playerNum;             // プレイヤー人数

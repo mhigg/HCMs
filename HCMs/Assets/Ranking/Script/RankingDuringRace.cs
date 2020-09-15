@@ -15,7 +15,7 @@ public class RankingDuringRace : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _playerNum = FindInfoByScene.Instance.GetPlayerNum();
+        _playerNum = FindInfoByScene.Instance.GetPlayerNum;
         _rankingList = new List<int[]>(_playerNum);
 
         for (int playerID = 0; playerID < _playerNum && playerID < rankTextList.Count; playerID++)

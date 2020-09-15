@@ -52,29 +52,39 @@ public class RetryGame : MonoBehaviour
 
         if (_pauseGame)
         {
-            if (_eventSystem.currentSelectedGameObject.gameObject == _selectObj)
-            {
-                // 選択を移動していない間は何もしない
-            }
-            else
-            {
-                // 選択を移動したら現在選んでいるボタンを変更する
-                _selectObj = _eventSystem.currentSelectedGameObject.gameObject;
+            //if (_eventSystem.currentSelectedGameObject.gameObject == _selectObj)
+            //{
+            //    // 選択を移動していない間は何もしない
+            //}
+            //else
+            //{
+            //    // 選択を移動したら現在選んでいるボタンを変更する
+            //    _selectObj = _eventSystem.currentSelectedGameObject.gameObject;
                 
-                for(int idx = 0; idx < _buttonNames.Count; idx++)
+            //    for(int idx = 0; idx < _buttonNames.Count; idx++)
+            //    {
+            //        if(_selectObj.name == _buttonNames[idx])
+            //        {
+            //            _pause = pauseList[idx];
+            //            break;
+            //        }
+            //    }
+            //}
+
+            if(Input.GetButtonDown("Decision"))
+            {
+                _selectObj = _eventSystem.currentSelectedGameObject.gameObject;
+
+                for (int idx = 0; idx < _buttonNames.Count; idx++)
                 {
-                    if(_selectObj.name == _buttonNames[idx])
+                    if (_selectObj.name == _buttonNames[idx])
                     {
                         _pause = pauseList[idx];
                         break;
                     }
                 }
-            }
 
-            if(Input.GetButtonDown("Decision"))
-            {
-
-                switch(_pause)
+                switch (_pause)
                 {
                     case Pause.Resume:
                         OnResume();
