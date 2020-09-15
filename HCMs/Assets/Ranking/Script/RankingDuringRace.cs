@@ -179,6 +179,7 @@ public class RankingDuringRace : MonoBehaviour
             for (int comparison = 0; comparison < _playerNum; comparison++)
             {
                 // 順位比較
+                // ×××ここで渡しているplayerIDとcomparisonがインスタンス順によってずれが生じる可能性がある
                 retRanking = RankDown(retRanking, rankingList, playerID, comparison);
             }
         }

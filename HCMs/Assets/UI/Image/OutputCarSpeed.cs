@@ -21,6 +21,9 @@ public class OutputCarSpeed : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+//        carController = this.GetComponent<CarController>();
+        // playerNo = 1ならRacingCar1P、playerNo = 2ならRacingCar2PかCPUの子から
+        // アクティブなRacingCarをFindして名前でPlayerID検索する
         carController = GameObject.FindGameObjectsWithTag("RacingCar")[playerNo].transform.parent.gameObject.GetComponent<CarController>();
 
         firstRun = true;

@@ -134,4 +134,21 @@ public class FindInfoByScene : MonoBehaviour
 
         return retID;
     }
+
+    public string GetPlayerName(int playerNo)
+    {
+        string retName = "noPlayer";
+        if (playerNo < _playerName.Count)
+        {
+            // プレイヤー名を取得
+            retName = _playerName[playerNo];
+        }
+
+        if (retName == "noPlayer")
+        {
+            Debug.LogError("プレイヤーIDが未登録です");
+        }
+
+        return retName;
+    }
 }
