@@ -29,7 +29,7 @@ public class TimeAttack : MonoBehaviour
         Debug.Log("lapMax:" + lapMax);
 
         GameObject[] racingCars = GameObject.FindGameObjectsWithTag("RacingCar");
-        for(int idx = 0; idx < FindInfoByScene.Instance.GetPlayerNum(); idx++)
+        for(int idx = 0; idx < FindInfoByScene.Instance.GetPlayerNum; idx++)
         {
             racingCars[idx].GetComponent<LapCount>().SetUp();
             racingCars[idx].GetComponent<CheckPointCount>().SetUp();

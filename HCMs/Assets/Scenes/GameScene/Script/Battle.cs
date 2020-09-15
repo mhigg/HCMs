@@ -19,7 +19,7 @@ public class Battle : MonoBehaviour
     void Start()
     {
         Debug.Log("バトルシーン初期化");
-        int _playerNum = FindInfoByScene.Instance.GetPlayerNum();
+        int _playerNum = FindInfoByScene.Instance.GetPlayerNum;
 
         _activeStageName = SceneManager.GetActiveScene().name;
 
@@ -60,7 +60,7 @@ public class Battle : MonoBehaviour
                  || Input.GetButtonDown("Decision"))
                 {
                     Debug.Log("Result");
-                    dispRanking.SetUpDispRanking("Battle", FindInfoByScene.Instance.GetPlayerNum(), FindInfoByScene.Instance.GetLapMax(_activeStageName), false, 1000.0f);
+                    dispRanking.SetUpDispRanking("Battle", FindInfoByScene.Instance.GetPlayerNum, FindInfoByScene.Instance.GetLapMax(_activeStageName), false, 1000.0f);
                     resultCanvas.SetActive(true);
                     _isCalledOnce = true;
                 }
