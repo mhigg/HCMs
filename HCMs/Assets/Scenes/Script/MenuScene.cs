@@ -58,8 +58,11 @@ public class MenuScene : MonoBehaviour
                 }
                 if(_selectObj.name == _exit.name)
                 {
+                    #if UNITY_EDITOR
                     UnityEditor.EditorApplication.isPlaying = false;
+                    #else
                     Application.Quit();
+                    #endif
                 }
             }
         }
