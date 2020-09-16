@@ -9,7 +9,7 @@ public class Attach : MonoBehaviour
     {
         for (int i = 0; i < this.transform.childCount; i++)
         {
-            this.transform.GetChild(i).gameObject.AddComponent<BoxCollision>();
+            this.transform.GetChild(i).gameObject.AddComponent<Resporn>();
         }
     }
 
