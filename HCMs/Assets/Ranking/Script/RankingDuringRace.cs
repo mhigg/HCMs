@@ -12,10 +12,12 @@ public class RankingDuringRace : MonoBehaviour
     private int _playerNum;             // プレイヤー人数
     private List<int[]> _rankingList;   // 順位リスト
 
+    private FindInfoByScene findInfoByScene = FindInfoByScene.Instance;
+
     // Start is called before the first frame update
     void Start()
     {
-        _playerNum = FindInfoByScene.Instance.GetPlayerNum;
+        _playerNum = findInfoByScene.GetPlayerNum;
         _rankingList = new List<int[]>(_playerNum);
 
         for (int playerID = 0; playerID < _playerNum && playerID < rankTextList.Count; playerID++)
@@ -35,6 +37,11 @@ public class RankingDuringRace : MonoBehaviour
 
         int[] ranking = Ranking();  // 総合した順位
         int idx = 0;
+        //int canvasNo = 0;
+        //for(int idx = 0; idx < findInfoByScene.GetPlayerNum; idx++)
+        //{
+
+        //}
         foreach (TextMeshProUGUI rankText in rankTextList)
         {
             rankText.text = RankingToString(ranking[idx]);
@@ -75,7 +82,7 @@ public class RankingDuringRace : MonoBehaviour
         int[] lapCounts = new int[racingCars.Length];
         foreach (GameObject player in racingCars)
         {
-            int id = FindInfoByScene.Instance.GetPlayerID(player.transform.parent.name);
+            int id = findInfoByScene.GetPlayerID(player.transform.parent.name);
             lapCounts[id] = player.GetComponentInChildren<LapCount>().GetLapCount();
 //            Debug.Log("プレイヤー:" + id + " 周回数:" + lapCounts[id]);
         }
@@ -90,7 +97,7 @@ public class RankingDuringRace : MonoBehaviour
         int[] checkPointCounts = new int[racingCars.Length];
         foreach (GameObject player in racingCars)
         {
-            int id = FindInfoByScene.Instance.GetPlayerID(player.transform.parent.name);
+            int id = findInfoByScene.GetPlayerID(player.transform.parent.name);
             checkPointCounts[id] = player.GetComponentInChildren<CheckPointCount>().GetNowThroughCheckPointNum();
             Debug.Log("プレイヤー:" + id + " チェックポイント通過数:" + checkPointCounts[id]);
         }
@@ -109,7 +116,7 @@ public class RankingDuringRace : MonoBehaviour
 
         foreach (GameObject player in racingCars)
         {
-            int playerID = FindInfoByScene.Instance.GetPlayerID(player.transform.parent.name);
+            int playerID = findInfoByScene.GetPlayerID(player.transform.parent.name);
 
             for (int idx = 0; idx < checkPoints.Length; idx++)
             {
