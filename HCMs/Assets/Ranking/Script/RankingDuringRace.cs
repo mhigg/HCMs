@@ -36,17 +36,29 @@ public class RankingDuringRace : MonoBehaviour
         CompareDistanceToNextPoint();
 
         int[] ranking = Ranking();  // 総合した順位
-        int idx = 0;
-        //int canvasNo = 0;
-        //for(int idx = 0; idx < findInfoByScene.GetPlayerNum; idx++)
-        //{
 
-        //}
-        foreach (TextMeshProUGUI rankText in rankTextList)
+        int canvasNo;
+        // 順位表示処理
+        for (int idx = 0; idx < findInfoByScene.GetPlayerNum; idx++)
         {
-            rankText.text = RankingToString(ranking[idx]);
-            imageNo[idx].SetNo(ranking[idx]);
-            idx++;
+            GameObject racingCar = GameObject.Find(findInfoByScene.GetPlayerName(idx));
+            string playerName = racingCar.transform.parent.name;
+            if(playerName != "RacingCarCPU")
+            {
+                if (playerName == "RacingCar" || playerName == "RacingCar1P")
+                {
+                    canvasNo = 0;
+                }
+                else
+                {
+                    canvasNo = 1;
+                }
+
+                rankTextList[canvasNo].text = RankingToString(ranking[idx]);
+                imageNo[canvasNo].SetNo(ranking[idx]);
+                //rankText.text = RankingToString(ranking[canvasNo]);
+                //imageNo[canvasNo].SetNo(ranking[canvasNo]);
+            }
         }
     }
 
