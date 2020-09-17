@@ -86,7 +86,7 @@ public class CarMultiCustom : MonoBehaviour
 
     private void CarIndexSelecting_1P()
     {
-        if (CrossPlatformInputManager.GetAxisRaw("Horizontal") > 0)
+        if (CrossPlatformInputManager.GetAxisRaw("Crosswise") > 0)
         {
             if (!_nonUpFlag1)
             {
@@ -110,7 +110,7 @@ public class CarMultiCustom : MonoBehaviour
         }
 
 
-        if (CrossPlatformInputManager.GetAxisRaw("Horizontal") < 0)
+        if (CrossPlatformInputManager.GetAxisRaw("Crosswise") < 0)
         {
             if (!(_nonDownFlag1))
             {
@@ -138,7 +138,7 @@ public class CarMultiCustom : MonoBehaviour
 
     private void CarIndexSelecting_2P()
     {
-        if (CrossPlatformInputManager.GetAxisRaw("Horizontal_2") > 0)
+        if (CrossPlatformInputManager.GetAxisRaw("Crosswise_2") > 0)
         {
             if (!_nonUpFlag2)
             {
@@ -162,7 +162,7 @@ public class CarMultiCustom : MonoBehaviour
             _nonUpFlag2 = false;
         }
 
-        if (CrossPlatformInputManager.GetAxisRaw("Horizontal_2") < 0)
+        if (CrossPlatformInputManager.GetAxisRaw("Crosswise_2") < 0)
         {
             if (!(_nonDownFlag2))
             {
