@@ -31,7 +31,8 @@ public class MenuScene : MonoBehaviour
     {
         if (!isCalledOnce)
         {
-            if (Input.GetButtonDown("Horizontal") || Input.GetButtonDown("Horizontal"))
+            if (Input.GetButtonDown("Horizontal") || Input.GetButtonDown("Horizontal_2")
+             || Input.GetButtonDown("Crosswise") || Input.GetButtonDown("Crosswise_2"))
             {
                 audioSource.PlayOneShot(sound1);
             }
