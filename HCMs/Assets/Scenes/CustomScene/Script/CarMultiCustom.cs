@@ -49,7 +49,7 @@ public class CarMultiCustom : MonoBehaviour
                 _idxDecided1 = true;
                 if (_joystickQuantity <= 1)
                 {
-                    _carIndex2 = Random.Range(0, 3);//CPUの車体をランダムで設定
+                    _carIndex2 = Random.Range(0, 2);//CPUの車体をランダムで設定
                     _idxDecided2 = true;
                 }
             }
