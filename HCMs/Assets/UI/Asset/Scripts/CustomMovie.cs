@@ -36,7 +36,7 @@ public class CustomMovie : MonoBehaviour
 
             m_videoPlayer.source = VideoSource.VideoClip;
 
-            videoIndex = Random.Range(0, 4);
+            videoIndex = Random.Range(0, videoClipList.Count);
             m_videoPlayer.clip = videoClipList[videoIndex];
 
             m_videoPlayer.isLooping = false;
