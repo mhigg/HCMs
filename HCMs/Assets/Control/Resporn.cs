@@ -1,11 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class Resporn : MonoBehaviour
 {
     Transform _carTrans;            // 現在の車体の情報
+    Rigidbody _carRigid;            // 車のrigidbody  
     Transform _resTra;              // 現在のリスポーン地点の情報
     public GameObject _resporns;
     public int _playerNum = 0;
@@ -14,6 +14,7 @@ public class Resporn : MonoBehaviour
     void Start()
     {
         _carTrans = this.transform;
+        _carRigid = this.GetComponent<Rigidbody>();
         _respornNum = _resporns.transform.childCount;
     }
     // Update is called once per frame
@@ -32,7 +33,7 @@ public class Resporn : MonoBehaviour
         {
             _carTrans.position = _resTra.position;
             _carTrans.rotation = _resTra.rotation;
-            //_carTrans.GetComponent<CarControl>().
+            _carRigid.velocity = new Vector3(0, 0, 0);
         }
     }
     public void SetResBox(Transform tra, int i)
