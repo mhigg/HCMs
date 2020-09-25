@@ -20,7 +20,7 @@ public class TitleScene : MonoBehaviour
     void Update()
     {
         if (!isCalledOnce)
-        {
+        {      
             if (Input.anyKey)
             {
                 pushSE.PlayOneShot(pushSE.clip);
