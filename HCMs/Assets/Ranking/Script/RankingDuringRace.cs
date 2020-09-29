@@ -31,8 +31,8 @@ public class RankingDuringRace : MonoBehaviour
     void Update()
     {
         // 周回数→チェックポイント通過数→次チェックポイントまでの距離の順にランク付けする
-        CompareLapCountAndGetRanking();
-        CompareCheckPointCountAndGetRanking();
+        CompareCountsAndGetRanking(1, false);
+        CompareCountsAndGetRanking(2, false);
         CompareDistanceToNextPoint();
 
         int[] ranking = Ranking();  // 総合した順位
@@ -83,36 +83,33 @@ public class RankingDuringRace : MonoBehaviour
         return retString;
     }
 
-    // この↓2つの順位付け関数、中身ほぼ同じなのでなんとかまとめたい
-
-    // 周回数の順位付け
-    private void CompareLapCountAndGetRanking()
+    // 周回数とチェックポイント通過数の順位付け
+    private void CompareCountsAndGetRanking(int countIdx, bool isAsc)
     {
         GameObject[] racingCars = GameObject.FindGameObjectsWithTag("RacingCar");
-        int[] lapCounts = new int[racingCars.Length];
+        int[] counts = new int[racingCars.Length];
+
         foreach (GameObject player in racingCars)
         {
             int id = findInfoByScene.GetPlayerID(player.transform.parent.name);
-            lapCounts[id] = player.GetComponentInChildren<LapCount>().GetLapCount();
-//            Debug.Log("プレイヤー:" + id + " 周回数:" + lapCounts[id]);
+            switch(countIdx)
+            {
+                case 1:
+                    // 周回数の順位付け
+                    counts[id] = player.GetComponentInChildren<LapCount>().GetLapCount();
+                    // Debug.Log("プレイヤー:" + id + " 周回数:" + counts[id]);
+                    break;
+                case 2:
+                    // チェックポイント通過数の順位付け
+                    counts[id] = player.GetComponentInChildren<CheckPointCount>().GetNowThroughCheckPointNum();
+                    Debug.Log("プレイヤー:" + id + " チェックポイント通過数:" + counts[id]);
+                    break;
+                default:
+                    break;
+            }
         }
 
-        Ranking(lapCounts, false);
-    }
-
-    // チェックポイント通過数の順位付け
-    private void CompareCheckPointCountAndGetRanking()
-    {
-        GameObject[] racingCars = GameObject.FindGameObjectsWithTag("RacingCar");
-        int[] checkPointCounts = new int[racingCars.Length];
-        foreach (GameObject player in racingCars)
-        {
-            int id = findInfoByScene.GetPlayerID(player.transform.parent.name);
-            checkPointCounts[id] = player.GetComponentInChildren<CheckPointCount>().GetNowThroughCheckPointNum();
-            Debug.Log("プレイヤー:" + id + " チェックポイント通過数:" + checkPointCounts[id]);
-        }
-
-        Ranking(checkPointCounts, false);
+        Ranking(counts, isAsc);
     }
 
     //次チェックポイントまでの距離で順位付け
