@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
 
+// 周回数の表示を更新する
 public class LapTextUpdate : MonoBehaviour
 {
     public TextMeshProUGUI lapText;

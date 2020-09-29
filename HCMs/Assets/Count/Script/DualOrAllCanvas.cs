@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// PvPモードで相手がCPUかどうかで画面構成を変更する
 public class DualOrAllCanvas : MonoBehaviour
 {
     // Start is called before the first frame update

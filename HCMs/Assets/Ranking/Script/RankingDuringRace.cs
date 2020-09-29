@@ -56,8 +56,6 @@ public class RankingDuringRace : MonoBehaviour
 
                 rankTextList[canvasNo].text = RankingToString(ranking[idx]);
                 imageNo[canvasNo].SetNo(ranking[idx]);
-                //rankText.text = RankingToString(ranking[canvasNo]);
-                //imageNo[canvasNo].SetNo(ranking[canvasNo]);
             }
         }
     }
@@ -69,16 +67,16 @@ public class RankingDuringRace : MonoBehaviour
         switch(ranking)
         {
             case 1:
-                retString = /*ranking.ToString() + */"st";
+                retString = "st";
                 break;
             case 2:
-                retString = /*ranking.ToString() + */"nd";
+                retString = "nd";
                 break;
             case 3:
-                retString = /*ranking.ToString() + */"rd";
+                retString = "rd";
                 break;
             default:
-                retString = /*ranking.ToString() + */"th";
+                retString = "th";
                 break;
         }
 
@@ -137,7 +135,7 @@ public class RankingDuringRace : MonoBehaviour
                 {
                     // 次のチェックポイントまでの距離
                     float distance = Vector3.Distance(checkPoints[idx].transform.position, player.transform.position);
-//                    Debug.Log(playerID + "P Next:" + checkPoints[idx].name + " distance:" + distance);
+                    // Debug.Log(playerID + "P Next:" + checkPoints[idx].name + " distance:" + distance);
                     // 小数点以下を整数値に上げる
                     distanceBlock[playerID] = Mathf.FloorToInt(distance * 1000);
                 }
@@ -198,13 +196,10 @@ public class RankingDuringRace : MonoBehaviour
             for (int comparison = 0; comparison < _playerNum; comparison++)
             {
                 // 順位比較
-                // ×××ここで渡しているplayerIDとcomparisonがインスタンス順によってずれが生じる可能性がある
                 retRanking = RankDown(retRanking, rankingList, playerID, comparison);
             }
         }
 
-        //Debug.Log("Total.1P" + retRanking[0]);
-        //Debug.Log("Total.2P" + retRanking[1]);
         _rankingList.Clear();   // 次の順位付けのためにクリア
         return retRanking;
     }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// エントリーしているプレイヤーとステージ情報の保存
 public class FindInfoByScene : MonoBehaviour
 {
     // 最大周回数テーブル
