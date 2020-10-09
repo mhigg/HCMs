@@ -226,10 +226,6 @@ namespace UnityStandardAssets.Vehicles.Car
                 m_WheelColliders[3].brakeTorque = hbTorque;
             }
 
-
-            //CalculateRevs();
-            //GearChanging();
-
             AddDownForce();
             CheckForWheelSpin();
             TractionControl();

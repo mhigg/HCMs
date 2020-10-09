@@ -18,6 +18,7 @@ namespace UnityStandardAssets.Vehicles.Car
         Vector3 _froDir = new Vector3(0, 0, 1);       // 直線レイ
 
         float[] _wayDis = { 5.0f, 30f, 45f };         // 左右レイの長さ
+
         Vector3[] _wayDir = new Vector3[]           // 左右レイの方向
         {
             new Vector3(-3f,0,1f),         // 右
@@ -27,6 +28,7 @@ namespace UnityStandardAssets.Vehicles.Car
             new Vector3(-1f,0,9f),         // 直線右
             new Vector3(1f,0,9f)           // 直線左
         };
+
         Vector3 _vertDir = new Vector3(0, -2f, 0);  // 垂直のレイ
         float[] _turnVol = { 0.4f, 0.35f, 0.15f };
 
@@ -48,15 +50,6 @@ namespace UnityStandardAssets.Vehicles.Car
             float v = CheckFront();
             float h = CheckWay();
             var sp = _carCtl.CurrentSpeed;
-            
-            //if (sp >= 40 && sp <= 59)
-            //{
-            //    _carCtl.m_GearUpPush = true;
-            //}
-            //else if (sp >= 60)
-            //{
-            //    _carCtl.m_GearUpPush = false;
-            //}
 
             if(Math.Abs(h) > 0)
             {
@@ -70,7 +63,9 @@ namespace UnityStandardAssets.Vehicles.Car
         }
         float CheckWay()
         {
-            float f = 0;
+            float volume = 0;
+
+
             for (int i = 0; i < _wayDir.Length; i++)
             {
                 var pos = transform.TransformPoint(_offset);
@@ -79,16 +74,17 @@ namespace UnityStandardAssets.Vehicles.Car
 
                 float move = 0;
                 Physics.Raycast(pos, way, out _hitW[i], _wayDis[i / 2]);
-                DebugDraw(pos, way, _wayDis[i / 2], _hitW[i].collider);
                 pos += way.normalized * _wayDis[i / 2];
                 if (Physics.Raycast(pos, vert, out _hitW[i], 3))
                 {
                     move = i % 2 * 2 - 1f;
                 }
                 DebugDraw(pos, vert, 3, _hitW[i].collider);
-                f += move * _turnVol[i / 2]; ;
+                volume += move * _turnVol[i / 2]; ;
             }
-            return f;
+
+
+            return volume;
         }
         float CheckFront()
         {
@@ -127,7 +123,6 @@ namespace UnityStandardAssets.Vehicles.Car
             {
                 var pos = transform.TransformPoint(_offset);
                 var way = transform.TransformDirection(vec[i]);
-                //_state.IsHitEnemy(pos, way, _wayDis[i / 2], i);
             }
         }
         // デバック用レイ描画
