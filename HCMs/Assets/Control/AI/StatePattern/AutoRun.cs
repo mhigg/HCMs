@@ -15,11 +15,11 @@ namespace UnityStandardAssets.Vehicles.Car
         public RaycastHit _hitF = new RaycastHit();
         private Vector3 _offset = new Vector3(0, 1.5f, 4.5f);
         float _froDis = 45f;                        // 直線レイの長さ
-        Vector3 _froDir = new Vector3(0, 0, 1);       // 直線レイ
-
         float[] _wayDis = { 5.0f, 30f, 45f };         // 左右レイの長さ
 
-        Vector3[] _wayDir = new Vector3[]           // 左右レイの方向
+
+        Vector3 _froDir = new Vector3(0, 0, 1); // 直線レイ
+        Vector3[] _wayDir = new Vector3[]
         {
             new Vector3(-3f,0,1f),         // 右
             new Vector3(3f,0,1f),          // 左
@@ -61,11 +61,13 @@ namespace UnityStandardAssets.Vehicles.Car
             }
             _carCtl.Move(h, v, v, 0);
         }
+
+
         float CheckWay()
         {
             float volume = 0;
 
-
+            // 左右の判定でハンドルの値を決める
             for (int i = 0; i < _wayDir.Length; i++)
             {
                 var pos = transform.TransformPoint(_offset);
@@ -82,10 +84,10 @@ namespace UnityStandardAssets.Vehicles.Car
                 DebugDraw(pos, vert, 3, _hitW[i].collider);
                 volume += move * _turnVol[i / 2]; ;
             }
-
-
             return volume;
         }
+
+
         float CheckFront()
         {
             float ret = 0;
@@ -93,17 +95,15 @@ namespace UnityStandardAssets.Vehicles.Car
             var way = transform.TransformDirection(_froDir);
             var vert = transform.TransformDirection(_vertDir);
 
-            float f = 0;
             Physics.Raycast(pos, way, out _hitF, _froDis);
             DebugDraw(pos, way, _froDis, _hitF.collider);
             pos += way.normalized * _froDis;
             // 前方の地面判定がある時
             if (Physics.Raycast(pos, vert, out _hitF, 3))
             {
-                f = _speed < 1.0f ? 0.1f : 0;
+                _speed += _speed < 1.0f ? 0.1f : 0;
             }
             DebugDraw(pos, vert, 3, _hitF.collider);
-            _speed += f;
             ret += _speed;
             return ret;
         }
