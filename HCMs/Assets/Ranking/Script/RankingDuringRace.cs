@@ -91,18 +91,17 @@ public class RankingDuringRace : MonoBehaviour
 
         foreach (GameObject player in racingCars)
         {
+            // プレイヤー名からプレイヤーIDを取得
             int id = findInfoByScene.GetPlayerID(player.transform.parent.name);
             switch(countIdx)
             {
                 case 1:
                     // 周回数の順位付け
                     counts[id] = player.GetComponentInChildren<LapCount>().GetLapCount();
-                    // Debug.Log("プレイヤー:" + id + " 周回数:" + counts[id]);
                     break;
                 case 2:
                     // チェックポイント通過数の順位付け
                     counts[id] = player.GetComponentInChildren<CheckPointCount>().GetNowThroughCheckPointNum();
-                    Debug.Log("プレイヤー:" + id + " チェックポイント通過数:" + counts[id]);
                     break;
                 default:
                     break;
@@ -151,24 +150,30 @@ public class RankingDuringRace : MonoBehaviour
 
         for (int rank = 0; rank < _playerNum; rank++)
         {
+            // 順位の初期化
             retRanking[rank] = 1;
         }
 
+        // あらかじめ集計した順位情報をもとに総合的な順位付けを行う
         for (int playerID = 0; playerID < _playerNum; playerID++)
         {
             for (int comparison = 0; comparison < _playerNum; comparison++)
             {
                 if (isAsc)
                 {
+                    // 昇順
                     if (playerID != comparison && counts[comparison] < counts[playerID])
                     {
+                        // プレイヤーが比較相手より順位が高ければ総合順位を下げる
                         retRanking[playerID]++;
                     }
                 }
                 else
                 {
+                    // 降順
                     if (playerID != comparison && counts[playerID] < counts[comparison])
                     {
+                        // プレイヤーが比較相手より順位が低ければ総合順位を下げる
                         retRanking[playerID]++;
                     }
                 }
