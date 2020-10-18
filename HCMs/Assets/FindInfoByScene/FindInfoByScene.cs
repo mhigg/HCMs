@@ -77,6 +77,7 @@ public class FindInfoByScene : MonoBehaviour
         Debug.Log("EntryPlayerName");
         if(_playerName.Count > 0)
         {
+            // リストに既に名前が記録されていたらリセットする
             _playerName.Clear();
         }
         GameObject[] racingCars = GameObject.FindGameObjectsWithTag("RacingCar");
@@ -84,7 +85,7 @@ public class FindInfoByScene : MonoBehaviour
         {
             if (racingCars[idx].transform.parent.gameObject.activeSelf)
             {
-                // 全プレイヤー分のプレイヤー名を保存
+                // ステージ上に表示されている全プレイヤー分のプレイヤー名を保存
                 Debug.Log("登録：" + racingCars[idx].transform.parent.name);
                 _playerName.Add(racingCars[idx].transform.parent.name);
             }
