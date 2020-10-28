@@ -4,7 +4,7 @@ using System;
 namespace UnityStandardAssets.Vehicles.Car
 {
     [RequireComponent(typeof(CarController))]
-    private class CpuController : MonoBehaviour
+    class CpuController : MonoBehaviour
     {
         private CarController _carCtl;      // 車操作のクラス
 
