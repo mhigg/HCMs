@@ -58,10 +58,7 @@ public class CarMultiCustom : MonoBehaviour
 
             if (CrossPlatformInputManager.GetButtonDown("Decision_2")) _idxDecided2 = true;
 
-            if (CrossPlatformInputManager.GetButtonDown("Cancel_2"))
-            {
-                _idxDecided2 = false;
-            }
+            if (CrossPlatformInputManager.GetButtonDown("Cancel_2")) _idxDecided2 = false;
 
             if (_idxDecided1 && _idxDecided2)
             {
@@ -177,7 +174,6 @@ public class CarMultiCustom : MonoBehaviour
                     _carIndex2 = _idxMax - 1;
                     _carObj_2P[_carIndex2].gameObject.transform.rotation = _carObj_2P[0].gameObject.transform.rotation;
                     _nonDownFlag2 = true;
-
                 }
             }
         }
